@@ -2,6 +2,7 @@ package com.SOR2;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import com.SOR2.AJAX_EXAMPLE.*;
 
 /**
  * Application object for your web application.
@@ -26,6 +27,9 @@ public class WicketApplication extends WebApplication
 	@Override
 	public void init()
 	{
+		// hier ziet u de routing van de webpaginas
+		mountPage("homepage", HomePage.class);
+		mountPage("testpage", TestPage.class);
 		super.init();
 
 		// add your configuration here

@@ -29,4 +29,25 @@
 		<filter-name>wicket.SOR2-v3</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+		<!-- CXF Restful servlet -->
+	<servlet>
+		<display-name>CXFNonSpringJaxrsServlet</display-name>
+		<servlet-name>CXFNonSpringJaxrsServlet</servlet-name>
+		<servlet-class>org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet
+		</servlet-class>
+		<init-param>
+			<param-name>jaxrs.serviceClasses</param-name>
+			<param-value>com.SOR2.REST.ChangeStudentDetailsImpl</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jaxrs.address</param-name>
+			<param-value>/rest</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFNonSpringJaxrsServlet</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
