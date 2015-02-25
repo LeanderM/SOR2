@@ -50,4 +50,24 @@
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- CXF Restful servlet - receiver -->
+	<servlet>
+		<display-name>CXFNonSpringJaxrsServletReceiver</display-name>
+		<servlet-name>CXFNonSpringJaxrsServletReceiver</servlet-name>
+		<servlet-class>org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet
+		</servlet-class>
+		<init-param>
+			<param-name>jaxrs.serviceClasses</param-name>
+			<param-value>com.SOR2.ontvanger.ontvanger</param-value>
+		</init-param>
+		<init-param>
+			<param-name>jaxrs.address</param-name>
+			<param-value>/a2</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CXFNonSpringJaxrsServletReceiver</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	
 </web-app>
