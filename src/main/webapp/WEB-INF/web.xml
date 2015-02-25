@@ -62,7 +62,7 @@
 		</init-param>
 		<init-param>
 			<param-name>jaxrs.address</param-name>
-			<param-value>/a2</param-value>
+			<param-value>/external</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

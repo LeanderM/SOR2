@@ -6,7 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 @Consumes(MediaType.APPLICATION_JSON)
-@Path("/b")
+@Path("/ontvanger")
 public class ontvanger {
 
 	public ontvanger() {
@@ -14,7 +14,7 @@ public class ontvanger {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Path("/c")
+	@Path("/receive")
 	public void receive(String data) {
 		System.out.println("hoi! " + data);
 	}
