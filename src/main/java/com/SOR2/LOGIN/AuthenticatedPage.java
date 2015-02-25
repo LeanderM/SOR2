@@ -8,6 +8,7 @@ import org.apache.wicket.markup.html.link.Link;
 
 public class AuthenticatedPage extends WebPage {
 
+	// onconfigure method
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
