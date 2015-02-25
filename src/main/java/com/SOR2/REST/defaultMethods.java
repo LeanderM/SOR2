@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
-public class defaultMethods {
+abstract class defaultMethods {
 	// dit is de get methode g
 	public static JSONObject readJsonFromUrl(String url) throws IOException,
 			JSONException {
