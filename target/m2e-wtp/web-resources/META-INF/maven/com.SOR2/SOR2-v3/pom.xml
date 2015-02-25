@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
-/
    Licensed to the Apache Software Foundation (ASF) under one or more
    contributor license agreements.  See the NOTICE file distributed with
    this work for additional information regarding copyright ownership.
@@ -63,8 +61,12 @@
             <artifactId>wicket-extensions</artifactId>
             <version>${wicket.version}</version>
         </dependency>
-        
-
+     <!-- WICKET AUTHENTICATIE -->
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-auth-roles</artifactId>
+            <version>${wicket.version}</version>
+        </dependency>
         <!-- LOGGING DEPENDENCIES - LOG4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -92,11 +94,39 @@
             <version>${jetty.version}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!--  hibernate -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>4.3.8.Final</version>
         </dependency>
+
+        <!-- Because this is a web app, we also have a dependency on the servlet api. -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+        <!-- Hibernate uses slf4j for logging, for our purposes here use the simple backend -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>3.12.1.GA</version>
+        </dependency>
+        <!--  for connecting to a DB -->
+        <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.9</version>
+    </dependency>
         <!--  Apache CXF -->
     <dependency>
         <groupId>org.apache.cxf</groupId>
@@ -108,16 +138,15 @@
         <artifactId>cxf-rt-transports-http</artifactId>
         <version>${cxf.version}</version>
     </dependency>
-   		<!-- Apache CXF voor rest front-end -->
-   	<dependency>
-		<groupId>org.apache.cxf</groupId>
-		<artifactId>cxf-rt-frontend-jaxrs</artifactId>
-		<version>${cxf.version}</version>
-	</dependency>
         <!-- Jetty is needed if you're are not using the CXFServlet -->
     <dependency>
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http-jetty</artifactId>
+        <version>${cxf.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
         <version>${cxf.version}</version>
     </dependency>
     </dependencies>
