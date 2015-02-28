@@ -1,4 +1,5 @@
-package com.SOR2.REST;
+package com.SOR2.REST.OLD;
+
 
 // Interface is optioneel voor RESTful services 
 public interface ChangeStudentDetails {

@@ -38,7 +38,7 @@
 		</servlet-class>
 		<init-param>
 			<param-name>jaxrs.serviceClasses</param-name>
-			<param-value>com.SOR2.REST.ChangeStudentDetailsImpl com.SOR2.REST.ChangeStudentDetailsImpl2</param-value>
+			<param-value>com.SOR2.REST.SendDocument</param-value>
 		</init-param>
 		<init-param>
 			<param-name>jaxrs.address</param-name>
@@ -67,7 +67,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CXFNonSpringJaxrsServletReceiver</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/testservices/*</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

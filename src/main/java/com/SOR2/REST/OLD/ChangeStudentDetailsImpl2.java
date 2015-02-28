@@ -1,4 +1,4 @@
-package com.SOR2.REST;
+package com.SOR2.REST.OLD;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
