@@ -29,6 +29,6 @@ public class ontvanger {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/receive")
 	public void receive(String message) {
-		System.out.println("hoi! " + data);
+		System.out.println("hoi! " + message);
 	}
 }
