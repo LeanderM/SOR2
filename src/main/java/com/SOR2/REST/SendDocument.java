@@ -1,6 +1,6 @@
 package com.SOR2.REST;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -17,12 +17,12 @@ import org.codehaus.jettison.json.JSONObject;
 @Path("/document")
 public class SendDocument {
 
-	ArrayList<String> ontvanger = new ArrayList<String>();
+	HashMap<String, String> lijst = new HashMap<String, String>();
 
 	// testurl http://localhost:8080/services/rest/document/send
 	// content type application/json
 	// testdocument
-	// {"title":"sometitle","destination":"somedestination","content":"somecontent"}
+	// {'title':'sometitle','destination':'Belastingsdienst','content':'somecontent'}
 
 	@POST
 	// Routing /services/rest/document/send
@@ -52,7 +52,7 @@ public class SendDocument {
 		if (validator.validate()) {
 			try {
 				PostHandler poster = new PostHandler(jsonDocument,
-						ontvanger.get(0));
+						lijst.get(jsonDocument.get("destination")));
 			} catch (JSONException e) {
 				System.out
 						.println("something went wrong while instantiating PostHandler");
@@ -66,8 +66,8 @@ public class SendDocument {
 
 	private void populateArrayList() {
 
-		ontvanger
-				.add("http://localhost:8080/testservices/external/ontvanger/receive");
+		lijst.put("Belastingsdienst",
+				"http://localhost:8080/testservices/external/ontvanger/receive");
 
 	}
 }
