@@ -35,7 +35,7 @@ public class TestPost {
 	/**
 	 * De werkelijke test om te kijken of wij voldoen aan de eisen van user
 	 * story 1a b en 2 Het verwacht dat er true teruggegeven wordt. Terwijl de
-	 * test draait wordt het meegegeven JSON object uitgeprint in de console
+	 * test draait wordt het meegegeven JSON object uitgeprint in de consoles
 	 *
 	 */
 	@Test

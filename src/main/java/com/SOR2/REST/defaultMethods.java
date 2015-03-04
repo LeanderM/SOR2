@@ -15,7 +15,7 @@ import org.apache.wicket.ajax.json.JSONObject;
 
 /**
  * In deze klasse bevinden zich een aantal klas onafhankelijke methoden die wij
- * misschien op meerdere plekken zouden willen implementeren.
+ * misschien op meerdere plekken zouden willen implementeren. t
  *
  * @author Mark
  * @version 0.1.0
