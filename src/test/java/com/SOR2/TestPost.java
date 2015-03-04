@@ -2,8 +2,6 @@ package com.SOR2;
 
 import static org.junit.Assert.assertTrue;
 
-import org.apache.wicket.ajax.json.JSONException;
-import org.apache.wicket.ajax.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,10 +10,13 @@ import com.SOR2.REST.SendDocument;
 public class TestPost {
 
 	SendDocument send;
+	String document;
 
+	// init
 	@Before
 	public void init() {
 		send = new SendDocument();
+		document = "{'title':'sometitle','destination':'somedestination','content':'somecontent'}";
 		/*
 		 * try { Start.main(null); } catch (Exception e) { // TODO
 		 * Auto-generated catch block e.printStackTrace(); }
@@ -28,14 +29,6 @@ public class TestPost {
 
 	@Test
 	public void test() {
-		JSONObject document = null;
-		try {
-			document = new JSONObject(
-					"{'title':'sometitle','destination':'somedestination','content':'somecontent'}");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		assertTrue(send.send(document.toString()));
 		// System.out.println("ayy lmao");
 	}
