@@ -62,7 +62,8 @@ public class SendDocument {
 				// De lijst met bestemmingen ophalen
 				DestinationList list = DestinationList.getInstance();
 				PostHandler poster = new PostHandler(jsonDocument,
-						list.getValue((String) jsonDocument.get("destination")));
+						list.getValue(jsonDocument.get("destination")
+								.toString()));
 			} catch (JSONException e) {
 				System.out
 						.println("something went wrong while instantiating PostHandler");
