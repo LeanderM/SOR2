@@ -1,5 +1,7 @@
 package com.SOR2.REST;
 
+import java.util.ArrayList;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,13 +16,14 @@ import org.codehaus.jettison.json.JSONObject;
 // Routing /services/rest/document
 @Path("/document")
 public class SendDocument {
-	
 
-	// testurl 			http://localhost:8080/services/rest/document/send
-	// content type 	application/json
-	// testdocument		{"title":"sometitle","destination":"somedestination","content":"somecontent"}
-	
-	
+	ArrayList<String> ontvanger = new ArrayList<String>();
+
+	// testurl http://localhost:8080/services/rest/document/send
+	// content type application/json
+	// testdocument
+	// {"title":"sometitle","destination":"somedestination","content":"somecontent"}
+
 	@POST
 	// Routing /services/rest/document/send
 	@Path("/send")
@@ -28,30 +31,43 @@ public class SendDocument {
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean send(String document) {
 
+		populateArrayList();
 		JSONObject jsonDocument = null;
 
 		// stop de json String in een JSONObject
 		try {
 			jsonDocument = new JSONObject(document);
 		} catch (JSONException e) {
-			System.out.println("something went wrong while converting to JSON object"+ document);
+			System.out
+					.println("something went wrong while converting to JSON object"
+							+ document);
 			e.printStackTrace();
 		}
 
-		// maak een validator die controleerd of alle benodigde waarden aanwezig zijn
+		// maak een validator die controleerd of alle benodigde waarden aanwezig
+		// zijn
 		DocumentValidator validator = new DocumentValidator(jsonDocument);
 
 		// Zo ja verzend het document
 		if (validator.validate()) {
 			try {
-				PostHandler poster = new PostHandler(jsonDocument);
+				PostHandler poster = new PostHandler(jsonDocument,
+						ontvanger.get(0));
 			} catch (JSONException e) {
-				System.out.println("something went wrong while instantiating PostHandler");
+				System.out
+						.println("something went wrong while instantiating PostHandler");
 				e.printStackTrace();
 			}
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	private void populateArrayList() {
+
+		ontvanger
+				.add("http://localhost:8080/testservices/external/ontvanger/receive");
+
 	}
 }
