@@ -9,28 +9,43 @@ import javax.ws.rs.core.MediaType;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
+/**
+ * Dit is de Klasse van de CXF REST API Deze klasse is het aanspreekpunt voor de
+ * verzende partijen Deze klasse focust op het verzenden van documenten
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
+
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-// Routing /services/rest/document
 @Path("/document")
 public class SendDocument {
 
-	// testurl http://localhost:8080/services/rest/document/send
-	// content type application/json
-	// testdocument
-	// {'title':'sometitle','destination':'Belastingsdienst','content':'somecontent'}
+	/**
+	 * De methode voor het verzenden van documenten De ontvangen JSON String
+	 * wordt in een JSONobject opgeslagen Er wordt gecontrolleerd of alle
+	 * verwachte waarden compleet en valide zijn Het JSONobject wordt gepost
+	 * naar de gespecificeerde destination
+	 * 
+	 * @param document
+	 *            Deze parameter vangt een JSON String op Die mee wordt gezonden
+	 *            met een POST bericht
+	 *
+	 * @returns true/false Als het document voeldoet aan de minimum eisen (heeft
+	 *          een title, content & een valide destination)
+	 */
 
 	@POST
-	// Routing /services/rest/document/send
 	@Path("/send")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean send(String document) {
-
+		// leeg json object
 		JSONObject jsonDocument = null;
-
-		// stop de json String in een JSONObject
 		try {
+			// stop de json String in een JSONObject
 			jsonDocument = new JSONObject(document);
 		} catch (JSONException e) {
 			System.out
@@ -38,11 +53,9 @@ public class SendDocument {
 							+ document);
 			e.printStackTrace();
 		}
-
 		// maak een validator die controleerd of alle benodigde waarden aanwezig
 		// zijn
 		DocumentValidator validator = new DocumentValidator(jsonDocument);
-
 		// Zo ja verzend het document
 		if (validator.validate()) {
 			try {
@@ -60,13 +73,4 @@ public class SendDocument {
 			return false;
 		}
 	}
-
-	/*
-	 * private void populateArrayList() {
-	 * 
-	 * lijst.put("Belastingsdienst",
-	 * "http://localhost:8080/testservices/external/ontvanger/receive");
-	 * 
-	 * }
-	 */
 }
