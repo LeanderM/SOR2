@@ -1,0 +1,12 @@
+<hibernate-configuration>
+    <session-factory name="session1">
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://37.59.111.21:3306</property>
+        <property name="hibernate.connection.username">SOR2_dev</property>
+        <property name="hibernate.connection.password">SOR2-troll_password</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
+    </session-factory>
+</hibernate-configuration>

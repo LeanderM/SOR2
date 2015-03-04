@@ -5,10 +5,11 @@ import org.codehaus.jettison.json.JSONObject;
 
 public class PostHandler {
 
-	public PostHandler(JSONObject jsonDocument) throws JSONException {
-		//JSONObject obj = new JSONObject("{" + "id" + ":" + "1" + "}");
+	public PostHandler(JSONObject jsonDocument, String url)
+			throws JSONException {
+		// JSONObject obj = new JSONObject("{" + "id" + ":" + "1" + "}");
 
-		String test = defaultMethods.excutePost("http://localhost:8080/testservices/external/ontvanger/receive", jsonDocument.toString());
+		String test = defaultMethods.excutePost(url, jsonDocument.toString());
 
 	}
 
