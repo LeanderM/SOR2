@@ -22,6 +22,8 @@ public class DocumentValidator {
 			return false;
 		} else if (!hasContent()) {
 			return false;
+		} else if (!validDestination()) {
+			return false;
 		} else {
 			return true;
 		}
@@ -79,5 +81,20 @@ public class DocumentValidator {
 			return false;
 		}
 		return true;
+	}
+
+	private boolean validDestination() {
+		DestinationList destinations = DestinationList.getInstance();
+		boolean valid = false;
+
+		try {
+			valid = destinations.hasKey(jsonDocument.get("destination")
+					.toString());
+		} catch (JSONException e) {
+			System.out.println("destination not valid:");
+			e.printStackTrace();
+		}
+
+		return valid;
 	}
 }

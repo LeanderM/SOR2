@@ -13,8 +13,27 @@ import java.nio.charset.Charset;
 import org.apache.wicket.ajax.json.JSONException;
 import org.apache.wicket.ajax.json.JSONObject;
 
+/**
+ * In deze klasse bevinden zich een aantal klas onafhankelijke methoden die wij
+ * misschien op meerdere plekken zouden willen implementeren.
+ *
+ * @author Mark
+ * @version 0.1.0
+ *
+ */
 abstract class defaultMethods {
-	// dit is de get methode g
+
+	/**
+	 * De methode die de benodigde variabelen en instanties neerzet om een get
+	 * uit te voeren
+	 *
+	 * @param url
+	 *            Een String wat een URL voorsteld.
+	 *
+	 * @throws IOException
+	 *
+	 * @returns het JSONObject waarin de response van de url verwerkt zit
+	 */
 	public static JSONObject readJsonFromUrl(String url) throws IOException,
 			JSONException {
 		InputStream is = new URL(url).openStream();
@@ -29,7 +48,18 @@ abstract class defaultMethods {
 		}
 	}
 
-	// dit hoord bij de get ff
+	/**
+	 * De methode die de benodigde variabelen en instanties neerzet om een get
+	 * uit te voeren
+	 *
+	 * @param rd
+	 *            Een Reader object waarmee het mogelijk is een url response uit
+	 *            te lezen
+	 *
+	 * @throws IOException
+	 *
+	 * @returns een String object dat de response bevat
+	 */
 	private static String readAll(Reader rd) throws IOException {
 		StringBuilder sb = new StringBuilder();
 		int cp;
@@ -39,7 +69,18 @@ abstract class defaultMethods {
 		return sb.toString();
 	}
 
-	// dit is de POST
+	/**
+	 * De methode om een Post mee uit te voeren de methode maakt eerste een
+	 * connectie aan en geeft hem daarna de benodigde configuratie.
+	 *
+	 * @param targetURL
+	 *            Een String waarin de url opgeslagen zit
+	 * 
+	 * @param urlParameters
+	 *            Een String waarin de te versturen variablen staan
+	 *
+	 * @returns het JSONObject waarin de response van de url verwerkt zit
+	 */
 	public static String excutePost(String targetURL, String urlParameters) {
 		URL url;
 		HttpURLConnection connection = null;
@@ -76,14 +117,16 @@ abstract class defaultMethods {
 			}
 			rd.close();
 			return response.toString();
-
+			// vangt fouten op tijdens het configuren en uitvoeren van de post.
+			// Deze foutmelding is alomvattend.
 		} catch (Exception e) {
 
 			e.printStackTrace();
 			return null;
 
 		} finally {
-
+			// wanneer de connectie klaar is zowel de optimale als de negative
+			// situatie
 			if (connection != null) {
 				connection.disconnect();
 			}
