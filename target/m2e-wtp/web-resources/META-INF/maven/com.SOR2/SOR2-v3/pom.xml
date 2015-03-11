@@ -155,7 +155,6 @@
         <version>${cxf.version}</version>
     </dependency>
     </dependencies>
-    
     <build>
         <resources>
             <resource>
