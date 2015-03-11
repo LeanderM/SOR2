@@ -31,20 +31,16 @@ public class PostHandler {
 	 */
 	public PostHandler(DocumentInformation documentInformation,
 			Document document, String url) {
-		// System.out.println(documentInformation + "  " + document);
-
-		/*
-		 * String JSONString = "{'document': {'content': " +
-		 * document.getContent().toString() + "}}";
-		 * 
-		 * String test = defaultMethods.excutePost(url, JSONString);
-		 */
-		buildSOAPRequest();
-
+		buildSOAPRequest(documentInformation, document, url);
 	}
 
-	public void buildSOAPRequest() {
+	public void buildSOAPRequest(DocumentInformation documentInformation,
+			Document document, String url) {
 		try {
+			// TODO
+			// 1. De code opdelen in losse methodes
+			// 2. Het verzend gedeelte testen, afmaken
+
 			// SOAP connection factory
 			SOAPConnectionFactory sfc = SOAPConnectionFactory.newInstance();
 			SOAPConnection connection = sfc.createConnection();
@@ -55,45 +51,52 @@ public class PostHandler {
 			SOAPMessage sm = mf.createMessage();
 
 			// SOAP header
-			SOAPHeader sh = sm.getSOAPHeader();
+			SOAPHeader soapHeader = sm.getSOAPHeader();
 
-			// nieuwe QName voor documentInformatie
+			// QName for documentInformatie
 			QName QdocumentInformation = new QName("http://SOAP.SOR2.com/",
-					"documentInformatie");
-			SOAPElement documentInformation = sh
+					"documentInformation");
+
+			// create the following elements: documentInformation, destination,
+			// title
+			// in the soap header
+			SOAPElement XMLdocumentInformation = soapHeader
 					.addChildElement(QdocumentInformation);
-			SOAPElement destination = documentInformation
-					.addChildElement("destination");
-			SOAPElement title = documentInformation.addChildElement("title");
-			destination.addTextNode("someDestination");
-			title.addTextNode("someDestination");
+			// This needs to be there because SOAP expects the namespaces
+			// of the child elements to be empty, but still be there
+			XMLdocumentInformation.addAttribute(new QName("xmlns"), "");
+
+			SOAPElement XMLdestination = XMLdocumentInformation
+					.addChildElement(new QName("", "destination"));
+			SOAPElement XMLtitle = XMLdocumentInformation
+					.addChildElement(new QName("", "title"));
+
+			// add values from documentInformation to the XML elements
+			XMLdestination.addTextNode(documentInformation.getDestination());
+			XMLtitle.addTextNode(documentInformation.getTitle());
+			// soapHeader.detachNode(); to detach the HEADER if you want to
+
 			// SOAP body
 			SOAPBody sb = sm.getSOAPBody();
 
-			// sh.detachNode(); HEADER loskoppelen
+			// namespace QName of the body element
+			QName bodyName = new QName("http://SOAP.SOR2.com/", "sendDocument");
 
-			// namespace QName
-			QName bodyName = new QName(
-					"http://localhost:8080/testservices/DocumentReceiver",
-					"sendDocument", "d");
-			/*
-			 * !OLD QName bodyName = new
-			 * QName("http://localhost:8080/testservices/DocumentReceiver",
-			 * "sendDocument", "d");
-			 */
-
-			// add the bodyname (namespace) to the body
+			// add the body element to the body
 			SOAPBodyElement bodyElement = sb.addBodyElement(bodyName);
 
-			// create a new namespace
-			QName qn = new QName("aName");
-			// add the namespace
-			SOAPElement quotation = bodyElement.addChildElement(qn);
+			// This needs to be there because SOAP expects the namespaces
+			// of the child elements to be empty, but still be there
+			bodyElement.addAttribute(new QName("xmlns"), "");
 
-			// add TextMode
-			quotation.addTextNode("TextMode");
+			// create elements within the element we just created
+			SOAPElement XMLdocument = bodyElement.addChildElement(new QName("",
+					"document"));
 
-			//
+			SOAPElement XMLcontent = XMLdocument.addChildElement("content");
+
+			XMLcontent.addTextNode(document.getContent());
+
 			System.out.println("\n Soap Request:\n");
 			sm.writeTo(System.out);
 			System.out.println();
