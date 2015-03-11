@@ -21,17 +21,11 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					"| [Error]: No 'document' found in body");
 		}
 
-		DocumentValidator validator = new DocumentValidator(
-				documentInformation, document);
-
-		if (validator.isValid()) {
-			DestinationList list = DestinationList.getInstance();
-			PostHandler poster = new PostHandler(documentInformation, document,
-					list.getValue(documentInformation.getDestination()));
-			return new ResponseMessage(true);
-		}
-
-		return new ResponseMessage(false, validator.getErrors());
+		System.out.println("[Header] Destination ="
+				+ documentInformation.getDestination() + ", Information ="
+				+ documentInformation.getTitle());
+		System.out.println("[Document] Content =" + document.getContent());
+		return new ResponseMessage(true, "No Errors");
 
 	}
 }

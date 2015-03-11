@@ -71,7 +71,7 @@
 	</servlet-mapping> -->
 	
 	<!-- CXF SOAP servlet -->
- 	<servlet>
+	<servlet>
 		<display-name>SimpleCXFNonSpringServlet</display-name>
 		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
 		<servlet-class>com.SOR2.SOAP.SimpleCXFNonSpringServlet</servlet-class>
@@ -83,14 +83,14 @@
 	</servlet-mapping>  
 	
 	<!-- CXF SOAP servlet receiver -->
-<!-- 	 <servlet>
-		<display-name>SimpleCXFNonSpringServlet</display-name>
-		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
+	<servlet>
+		<display-name>SimpleCXFNonSpringServletReceiver</display-name>
+		<servlet-name>SimpleCXFNonSpringServletReceiver</servlet-name>
 		<servlet-class>com.SOR2.ontvanger.SimpleCXFNonSpringServlet</servlet-class>
 	</servlet>
 		
 	<servlet-mapping>
-		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
+		<servlet-name>SimpleCXFNonSpringServletReceiver</servlet-name>
 		<url-pattern>/testservices/*</url-pattern>
-	</servlet-mapping>  --> 
+	</servlet-mapping> 
 </web-app>

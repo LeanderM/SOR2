@@ -56,13 +56,26 @@ public class PostHandler {
 
 			// SOAP header
 			SOAPHeader sh = sm.getSOAPHeader();
+
+			// nieuwe QName voor documentInformatie
+			QName QdocumentInformation = new QName("http://SOAP.SOR2.com/",
+					"documentInformatie");
+			SOAPElement documentInformation = sh
+					.addChildElement(QdocumentInformation);
+			SOAPElement destination = documentInformation
+					.addChildElement("destination");
+			SOAPElement title = documentInformation.addChildElement("title");
+			destination.addTextNode("someDestination");
+			title.addTextNode("someDestination");
 			// SOAP body
 			SOAPBody sb = sm.getSOAPBody();
-			sh.detachNode();
+
+			// sh.detachNode(); HEADER loskoppelen
+
 			// namespace QName
 			QName bodyName = new QName(
 					"http://localhost:8080/testservices/DocumentReceiver",
-					"sendDocument");
+					"sendDocument", "d");
 			/*
 			 * !OLD QName bodyName = new
 			 * QName("http://localhost:8080/testservices/DocumentReceiver",
