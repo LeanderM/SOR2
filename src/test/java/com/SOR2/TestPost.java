@@ -29,7 +29,7 @@ public class TestPost {
 	@Before
 	public void init() {
 		send = new SendDocument();
-		document = "{'title':'sometitle','destination':'Belastingsdienst','content':'somecontent'}";
+		document = "{'title':'sometitle','destination':'Belastingsdiens','content':'somecontent'}";
 	}
 
 	/**

@@ -1,5 +1,8 @@
 package com.SOR2.SOAP;
 
+import com.SOR2.SOAP.XMLObjects.Document;
+import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+
 public class DocumentValidator {
 	DocumentInformation documentInformation;
 	Document document;

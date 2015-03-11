@@ -2,6 +2,10 @@ package com.SOR2.SOAP;
 
 import javax.jws.WebService;
 
+import com.SOR2.SOAP.XMLObjects.Document;
+import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.ResponseMessage;
+
 @WebService(endpointInterface = "com.SOR2.SOAP.DocumentReceiver", serviceName = "DocumentReceiver")
 public class DocumentReceiverImpl implements DocumentReceiver {
 

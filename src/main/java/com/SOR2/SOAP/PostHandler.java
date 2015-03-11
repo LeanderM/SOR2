@@ -1,5 +1,8 @@
 package com.SOR2.SOAP;
 
+import com.SOR2.SOAP.XMLObjects.Document;
+import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+
 /**
  * De PostHandler klasse kan op basis van een JSONObject en een URL een post
  * verzenden naar de meegegeven url

@@ -81,4 +81,16 @@
 		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>  
+	
+	<!-- CXF SOAP servlet receiver -->
+	 	<servlet>
+		<display-name>SimpleCXFNonSpringServlet</display-name>
+		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
+		<servlet-class>com.SOR2.ontvanger.SimpleCXFNonSpringServlet</servlet-class>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
+		<url-pattern>/testservices/*</url-pattern>
+	</servlet-mapping>  
 </web-app>

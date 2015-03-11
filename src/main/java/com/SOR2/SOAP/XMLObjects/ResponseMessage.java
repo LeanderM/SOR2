@@ -1,4 +1,4 @@
-package com.SOR2.SOAP;
+package com.SOR2.SOAP.XMLObjects;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;

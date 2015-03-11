@@ -1,4 +1,4 @@
-package com.SOR2.SOAP;
+package com.SOR2.SOAP.XMLObjects;
 
 import java.io.Serializable;
 
