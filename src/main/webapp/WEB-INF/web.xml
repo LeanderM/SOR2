@@ -51,7 +51,7 @@
 	</servlet-mapping>  -->
 	
 	<!-- CXF Restful servlet - receiver -->
- 	<servlet>
+<!--  	<servlet>
 		<display-name>CXFNonSpringJaxrsServletReceiver</display-name>
 		<servlet-name>CXFNonSpringJaxrsServletReceiver</servlet-name>
 		<servlet-class>org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet
@@ -68,7 +68,7 @@
 	<servlet-mapping>
 		<servlet-name>CXFNonSpringJaxrsServletReceiver</servlet-name>
 		<url-pattern>/testservices/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 	
 	<!-- CXF SOAP servlet -->
  	<servlet>
@@ -83,7 +83,7 @@
 	</servlet-mapping>  
 	
 	<!-- CXF SOAP servlet receiver -->
-	 	<servlet>
+<!-- 	 <servlet>
 		<display-name>SimpleCXFNonSpringServlet</display-name>
 		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
 		<servlet-class>com.SOR2.ontvanger.SimpleCXFNonSpringServlet</servlet-class>
@@ -92,5 +92,5 @@
 	<servlet-mapping>
 		<servlet-name>SimpleCXFNonSpringServlet</servlet-name>
 		<url-pattern>/testservices/*</url-pattern>
-	</servlet-mapping>  
+	</servlet-mapping>  --> 
 </web-app>
