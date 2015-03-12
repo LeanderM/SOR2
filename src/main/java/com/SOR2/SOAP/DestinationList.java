@@ -30,7 +30,7 @@ public class DestinationList {
 	protected DestinationList() {
 		lijst = new HashMap<String, String>();
 		lijst.put("Belastingsdienst",
-				"http://localhost:8080/testservices/external/ontvanger/receive");
+				"http://localhost:8080/testservices/DocumentReceiver");
 	}
 
 	/**

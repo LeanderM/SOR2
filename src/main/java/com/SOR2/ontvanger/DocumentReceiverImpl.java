@@ -20,11 +20,11 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(false,
 					"| [Error]: No 'document' found in body");
 		}
-
-		System.out.println("[Header] Destination ="
-				+ documentInformation.getDestination() + ", Information ="
+		System.out.println("New SOAP message received!..");
+		System.out.println("[Header] Destination = "
+				+ documentInformation.getDestination() + ", Information = "
 				+ documentInformation.getTitle());
-		System.out.println("[Document] Content =" + document.getContent());
+		System.out.println("[Document] Content = " + document.getContent());
 		return new ResponseMessage(true, "No Errors");
 
 	}
