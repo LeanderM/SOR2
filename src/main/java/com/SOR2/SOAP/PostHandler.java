@@ -25,8 +25,8 @@ import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 
 /**
- * De PostHandler klasse kan op basis van een JSONObject en een URL een post
- * verzenden naar de meegegeven url
+ * De PostHandler klasse kan op basis van een DocumentInformation, Document en
+ * een url variabele een SOAP bericht opstellen en verzenden
  * 
  * @author Mark
  * @version 0.1.0
@@ -35,10 +35,9 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 public class PostHandler {
 
 	/**
-	 * De contructor voert ook gelijk de post call uit Hij maakt hierbij gebruik
-	 * van de excutePost methode uit abstracte klasse defaultMethods de klasse
-	 * defaultMethods bevat een aantal statische methodes
-	 * 
+	 * De contructor instantieert alle belangrijke objecten Aan het einde van de
+	 * constructor wordt een methode aangeroepen Deze methode zet het bouwen en
+	 * verzenden van een SOAPcall in werking
 	 */
 	private SOAPConnectionFactory soapConnectionFactory;
 	private MessageFactory messageFactory;
@@ -62,17 +61,17 @@ public class PostHandler {
 			e.printStackTrace();
 		}
 
+		// Start the process of sending a SOAPcall
 		executeSOAPRequest(documentInformation, document, url);
-
 	}
 
+	/**
+	 * Deze methode roept de methodes aan die de SOAPmessage opbouwen en
+	 * verzenden, met de juiste parameters verder luisterd hij voor exceptions
+	 */
 	private void executeSOAPRequest(DocumentInformation documentInformation,
 			Document document, String url) {
 		try {
-			// TODO
-			// Het verzend deel werkt, het response opvangen gaat nog niet
-			// helemaal goed
-
 			// Build the body and header of the SOAPMessage
 			buildSOAPHeader(documentInformation);
 			buildSOAPBody(document);
@@ -89,6 +88,9 @@ public class PostHandler {
 		}
 	}
 
+	/**
+	 * Deze methode bouwt de Header van de SOAP message
+	 */
 	private void buildSOAPHeader(DocumentInformation documentInformation)
 			throws SOAPException {
 		// SOAP header
@@ -116,6 +118,9 @@ public class PostHandler {
 		XMLtitle.addTextNode(documentInformation.getTitle());
 	}
 
+	/**
+	 * Deze methode bouwt de Body voor de SOAP message
+	 */
 	private void buildSOAPBody(Document document) throws SOAPException {
 		// SOAP body
 		SOAPBody soapBody = soapMessage.getSOAPBody();
@@ -139,6 +144,9 @@ public class PostHandler {
 		XMLcontent.addTextNode(document.getContent());
 	}
 
+	/**
+	 * Deze methode verzend de SOAPmessage en controlleerd het resultaat
+	 */
 	private void sendSOAPMessage(String url) throws MalformedURLException,
 			SOAPException {
 		// create a new url with the url String
@@ -149,13 +157,13 @@ public class PostHandler {
 		soapResponse = connection.call(soapMessage, endpoint);
 
 		// turn the response into String for printing
-		final StringWriter sw = new StringWriter();
+		final StringWriter stringWriter = new StringWriter();
 		try {
 			TransformerFactory
 					.newInstance()
 					.newTransformer()
 					.transform(new DOMSource(soapResponse.getSOAPPart()),
-							new StreamResult(sw));
+							new StreamResult(stringWriter));
 		} catch (TransformerException e) {
 			throw new RuntimeException(e);
 		}
@@ -163,7 +171,7 @@ public class PostHandler {
 		// Now you have the XML as a String:
 		// We can easily print this
 		System.out.println("The SOAP reponse that was returned:");
-		System.out.println(sw.toString());
+		System.out.println(stringWriter.toString());
 
 		// We get the elements with the tagName success
 		NodeList elementList = soapResponse.getSOAPBody().getElementsByTagName(
@@ -172,6 +180,8 @@ public class PostHandler {
 		// We get te text value from success
 		boolean success = Boolean.parseBoolean(elementList.item(0)
 				.getTextContent());
+
+		// We check if the receiver deemed our message acceptable
 		if (success) {
 			System.out.println("Everything went successful!");
 
