@@ -16,7 +16,7 @@ public class Account_type {
 	private int id;
 
 	@Column(name = "name")
-	private String firstName;
+	private String name;
 
 	public Account_type() {
 
@@ -31,11 +31,11 @@ public class Account_type {
 	}
 
 	public String getName() {
-		return firstName;
+		return name;
 	}
 
 	public void setName(String first_name) {
-		this.firstName = first_name;
+		this.name = first_name;
 	}
 
 }

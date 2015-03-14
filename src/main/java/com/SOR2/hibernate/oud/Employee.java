@@ -1,4 +1,4 @@
-package com.SOR2.hibernate;
+package com.SOR2.hibernate.oud;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

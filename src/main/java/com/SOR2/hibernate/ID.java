@@ -1,22 +1,30 @@
 package com.SOR2.hibernate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "ID")
 public class ID {
 
-	// @Column(name = "messages")
+	@Id
+	@GeneratedValue
+	@Column(name = "id")
+	private int id;
+
+	@Column(name = "messages")
 	private String message;
 
-	// @Column(name = "account_type")
+	@Column(name = "account_type")
 	private String accountType;
 
-	// @Column(name = "users")
+	@Column(name = "users")
 	private String firstName;
 
-	// @Column(name = "message_recipients")
+	@Column(name = "message_recipients")
 	private String message_recipients;
 
 	public ID() {
