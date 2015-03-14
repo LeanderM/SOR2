@@ -6,6 +6,15 @@ import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
+/**
+ * Een classe die dient als implementatie voor een tweede SOAPontvanger Deze
+ * classe is een directie kopie van de main DocumentReceiverImpl uit de
+ * namespace: com.SOR2.SOAP
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
 @WebService(endpointInterface = "com.SOR2.ontvanger.DocumentReceiver", serviceName = "DocumentReceiver")
 public class DocumentReceiverImpl implements DocumentReceiver {
 

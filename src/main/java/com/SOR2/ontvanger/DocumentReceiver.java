@@ -11,7 +11,15 @@ import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
 @WebService
 public interface DocumentReceiver {
-
+	/**
+	 * Een classe die dient als implementatie voor een tweede SOAPontvanger Deze
+	 * classe is een directie kopie van de main DocumentReceiver uit de
+	 * namespace: com.SOR2.SOAP
+	 * 
+	 * @author Jesse
+	 * @version 0.1.0
+	 *
+	 */
 	// controlleren hoe je @WebParam kan afdwingen
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(

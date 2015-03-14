@@ -8,6 +8,14 @@ import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 
+/**
+ * Dit is de Servlet die er voor zorgt dat de SOAP service van de testOntvanger
+ * bereikbaar is
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
 public class SimpleCXFNonSpringServlet extends CXFNonSpringServlet {
 
 	private static final long serialVersionUID = 1L;
