@@ -1,11 +1,11 @@
 package com.SOR2;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import com.SOR2.REST.SendDocument;
+import com.SOR2.SOAP.PostHandler;
+import com.SOR2.SOAP.XMLObjects.Document;
+import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 
 /**
  * JUnit test voor user story voor 1a, 1b en 2
@@ -16,31 +16,32 @@ import com.SOR2.REST.SendDocument;
  */
 public class TestPost {
 
-	// bevat een instantie van de SendDocument klasse
-	private SendDocument send;
-	// bevat een instantie van een String dat een JSON object moet voorstellen.
-	// Er staat een voorbeeld in de init() methode
-	private String document;
+	private PostHandler handler;
+	private DocumentInformation documentInformation;
+	private Document document;
+	private String url;
 
-	/**
-	 * Initieerd de benodigde objecten om een test mee uit te kunnen voeren
-	 * 
-	 */
 	@Before
 	public void init() {
-		send = new SendDocument();
-		document = "{'title':'sometitle','destination':'Belastingsdiens','content':'somecontent'}";
+		url = "http://localhost:8080/services/DocumentReceiver";
+		documentInformation = new DocumentInformation();
+		documentInformation.setDestination("http://localhost:8080/testservices/DocumentReceiver");
+		documentInformation.setTitle("testTitle");
+		document = new Document();
+		document.setContent("testcontent");
+		
 	}
 
-	/**
-	 * De werkelijke test om te kijken of wij voldoen aan de eisen van user
-	 * story 1a b en 2 Het verwacht dat er true teruggegeven wordt. Terwijl de
-	 * test draait wordt het meegegeven JSON object uitgeprint in de consoles
-	 *
-	 */
+	// <soap:Envelope xmlns:soap='http://www.w3.org/2001/12/soap-envelope'
+	// soap:encodingStyle='http://www.w3.org/2001/12/soap-encoding'> <soap:Body>
+	// <m:GetPrice
+	// xmlns:m='http://www.w3schools.com/prices'> <m:Item>Apples</m:Item>
+	// </m:GetPrice> </soap:Body> </soap:Envelope>
+	// "<soap:Header><m:Trans xmlns:m='http://www.w3schools.com/transaction/' soap:mustUnderstand='1'>234 </m:Trans></soap:Header>"
+
 	@Test
 	public void test() {
-		assertTrue(send.send(document.toString()));
+		handler = new PostHandler(documentInformation, document, url);
 
 	}
 
