@@ -28,7 +28,7 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
  * De PostHandler klasse kan op basis van een DocumentInformation, Document en
  * een url variabele een SOAP bericht opstellen en verzenden
  * 
- * @author Mark
+ * @author Jesse
  * @version 0.1.0
  *
  */

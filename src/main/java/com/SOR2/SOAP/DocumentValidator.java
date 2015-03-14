@@ -3,6 +3,15 @@ package com.SOR2.SOAP;
 import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 
+/**
+ * De DocumentValidator kan controlleerd Document en DocumentInformation
+ * objecten op een aantal criteria Tijdens deze controle houd hij een errors
+ * String bij waar alle errors in komen te staan
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
 public class DocumentValidator {
 	DocumentInformation documentInformation;
 	Document document;

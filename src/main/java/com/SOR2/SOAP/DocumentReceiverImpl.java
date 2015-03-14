@@ -6,13 +6,27 @@ import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
+/**
+ * De DocumentReceiverImpl class is een implementatie van de SOAP interface
+ * DocumentReceiver Deze classe heeft een methode die d.m.v een SOAPcall kan
+ * worden aangeroepen Het hoofdzakelijke doel is het ontvangen van documenten
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
 @WebService(endpointInterface = "com.SOR2.SOAP.DocumentReceiver", serviceName = "DocumentReceiver")
 public class DocumentReceiverImpl implements DocumentReceiver {
-
+	/**
+	 * Deze methode neemt SOAPcalls aan met DocumentInformation en Document
+	 * Objecten De methode zorgt er voor dat ontvangen berichten gecontrolleerd
+	 * worden De methode stuurt een ResponseMessage terug waarin te lezen is of
+	 * het bericht aan de eisen voldoet, met mogelijk errors
+	 */
 	@Override
 	public ResponseMessage sendDocument(
 			DocumentInformation documentInformation, Document document) {
-
+		// We check if all the parameters are present
 		if (documentInformation == null) {
 			return new ResponseMessage(false,
 					"| [Error]: No 'documentInformation' was found in header");
@@ -21,6 +35,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					"| [Error]: No 'document' found in body");
 		}
 
+		// a more thorough validation
 		DocumentValidator validator = new DocumentValidator(
 				documentInformation, document);
 
@@ -31,6 +46,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(true);
 		}
 
+		// in case the message was not valid we return all the errors
 		return new ResponseMessage(false, validator.getErrors());
 
 	}

@@ -8,12 +8,23 @@ import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
+/**
+ * De DocumentReceiver interface, geeft aan hoe de SOAP service er uit ziet
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
 @WebService
 public interface DocumentReceiver {
 
-	// controlleren hoe je @WebParam kan afdwingen
+	/**
+	 * Een methode die DocumentInformation en Document als parameters heeft.
+	 * 
+	 */
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(
+			// DocumentInformation moet in de header
 			@WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
 			@WebParam(name = "document") Document document);
 }
