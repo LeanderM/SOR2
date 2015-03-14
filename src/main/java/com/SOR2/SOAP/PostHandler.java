@@ -1,5 +1,6 @@
 package com.SOR2.SOAP;
 
+import java.io.StringWriter;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -13,6 +14,12 @@ import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.NodeList;
 
 import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
@@ -38,6 +45,7 @@ public class PostHandler {
 
 	private SOAPConnection connection;
 	private SOAPMessage soapMessage;
+	private SOAPMessage soapResponse;
 
 	public PostHandler(DocumentInformation documentInformation,
 			Document document, String url) {
@@ -136,10 +144,41 @@ public class PostHandler {
 		// create a new url with the url String
 		URL endpoint = new URL(url);
 
-		// Send SOAP message to the endpoint
-		SOAPMessage response = connection.call(soapMessage, endpoint);
+		// Send SOAP message to the endpoint, the response will be returned in
+		// this variable
+		soapResponse = connection.call(soapMessage, endpoint);
 
-		// Print the response
-		System.out.println(response.getContentDescription());
+		// turn the response into String for printing
+		final StringWriter sw = new StringWriter();
+		try {
+			TransformerFactory
+					.newInstance()
+					.newTransformer()
+					.transform(new DOMSource(soapResponse.getSOAPPart()),
+							new StreamResult(sw));
+		} catch (TransformerException e) {
+			throw new RuntimeException(e);
+		}
+
+		// Now you have the XML as a String:
+		// We can easily print this
+		System.out.println("The SOAP reponse that was returned:");
+		System.out.println(sw.toString());
+
+		// We get the elements with the tagName success
+		NodeList elementList = soapResponse.getSOAPBody().getElementsByTagName(
+				"success");
+
+		// We get te text value from success
+		boolean success = Boolean.parseBoolean(elementList.item(0)
+				.getTextContent());
+		if (success) {
+			System.out.println("Everything went successful!");
+
+		} else {
+			System.out
+					.println("Sorry, the receiver did not accept our message.");
+		}
+
 	}
 }
