@@ -7,16 +7,21 @@ import org.junit.Test;
 
 public class JunitTestClass {
 
-	private JunitTestFile subject;
+	private JunitTestClass subject;
 
 	@Before
 	public void setUp() {
-		subject = new JunitTestFile();
+		subject = new JunitTestClass();
 	}
 
 	@Test
 	public void testCalculate() {
 		assertEquals(9, subject.calculate(4, 5));
+	}
+
+	private Object calculate(int i, int j) {
+		// TODO Auto-generated method stub
+		return i + j;
 	}
 
 }
