@@ -42,7 +42,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		if (validator.isValid()) {
 			DestinationList list = DestinationList.getInstance();
 			PostHandler poster = new PostHandler(documentInformation, document,
-					list.getValue(documentInformation.getDestination()));
+					list.getURL(documentInformation.getDestination()),
+					list.getNameSpace(documentInformation.getDestination()));
 			return new ResponseMessage(true);
 		}
 

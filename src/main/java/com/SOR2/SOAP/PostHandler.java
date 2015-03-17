@@ -45,9 +45,11 @@ public class PostHandler {
 	private SOAPConnection connection;
 	private SOAPMessage soapMessage;
 	private SOAPMessage soapResponse;
+	private String nameSpace;
+	private boolean success;
 
 	public PostHandler(DocumentInformation documentInformation,
-			Document document, String url) {
+			Document document, String url, String nameSpace) {
 
 		// We instantiate the needed objects
 		try {
@@ -55,6 +57,8 @@ public class PostHandler {
 			connection = soapConnectionFactory.createConnection();
 			messageFactory = MessageFactory.newInstance();
 			soapMessage = messageFactory.createMessage();
+			this.nameSpace = nameSpace;
+			success = false;
 		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
 		} catch (SOAPException e) {
@@ -97,8 +101,7 @@ public class PostHandler {
 		SOAPHeader soapHeader = soapMessage.getSOAPHeader();
 
 		// QName for documentInformatie
-		QName QdocumentInformation = new QName("http://ontvanger.SOR2.com/",
-				"documentInformation");
+		QName QdocumentInformation = new QName(nameSpace, "documentInformation");
 
 		// create the following elements: documentInformation, destination,
 		// title
@@ -126,7 +129,7 @@ public class PostHandler {
 		SOAPBody soapBody = soapMessage.getSOAPBody();
 
 		// namespace QName of the body element
-		QName bodyName = new QName("http://ontvanger.SOR2.com/", "sendDocument");
+		QName bodyName = new QName(nameSpace, "sendDocument");
 
 		// add the body element to the body
 		SOAPBodyElement bodyElement = soapBody.addBodyElement(bodyName);
@@ -178,8 +181,7 @@ public class PostHandler {
 				"success");
 
 		// We get te text value from success
-		boolean success = Boolean.parseBoolean(elementList.item(0)
-				.getTextContent());
+		success = Boolean.parseBoolean(elementList.item(0).getTextContent());
 
 		// We check if the receiver deemed our message acceptable
 		if (success) {
@@ -190,5 +192,9 @@ public class PostHandler {
 					.println("Sorry, the receiver did not accept our message.");
 		}
 
+	}
+
+	public boolean successfull() {
+		return success;
 	}
 }

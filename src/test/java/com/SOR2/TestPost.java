@@ -1,5 +1,7 @@
 package com.SOR2;
 
+import junit.framework.Assert;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,16 +22,18 @@ public class TestPost {
 	private DocumentInformation documentInformation;
 	private Document document;
 	private String url;
+	private String nameSpace;
 
 	@Before
 	public void init() {
 		url = "http://localhost:8080/services/DocumentReceiver";
 		documentInformation = new DocumentInformation();
-		documentInformation.setDestination("http://localhost:8080/testservices/DocumentReceiver");
+		documentInformation.setDestination("Belastingsdienst");
 		documentInformation.setTitle("testTitle");
 		document = new Document();
 		document.setContent("testcontent");
-		
+		nameSpace = "http://SOAP.SOR2.com/";
+
 	}
 
 	// <soap:Envelope xmlns:soap='http://www.w3.org/2001/12/soap-envelope'
@@ -41,9 +45,11 @@ public class TestPost {
 
 	@Test
 	public void test() {
-		handler = new PostHandler(documentInformation, document, url);
+		handler = new PostHandler(documentInformation, document, url, nameSpace);
+		Assert.assertEquals(true, handler.successfull());
+
+		// handler = new PostHandler(documentInformation, document, url);
 
 	}
-
 }
 // einde
