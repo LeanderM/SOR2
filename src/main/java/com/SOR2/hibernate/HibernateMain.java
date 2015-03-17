@@ -1,6 +1,11 @@
 package com.SOR2.hibernate;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -31,6 +36,9 @@ public abstract class HibernateMain {
 		}
 	}
 
+	// ////////////////////////////////////////////////////////////////////////////
+	// adding a single row //
+	// ////////////////////////////////////////////////////////////////////////////
 	public static Integer addAccountType(String name) {
 
 		checkFactoryExists();
@@ -150,6 +158,43 @@ public abstract class HibernateMain {
 			session.close();
 		}
 		return id;
+	}
+
+	// ////////////////////////////////////////////////////////////////////////////
+	// getting a single object //
+	// ////////////////////////////////////////////////////////////////////////////
+
+	public static List getSpecificSelection(ArrayList<String> colom,
+			String table, String wherePre, String whereAfter) {
+		checkFactoryExists();
+		Session session = factory.openSession();
+		Transaction tx = null;
+		List data = null;
+		String colomList = "";
+
+		for (String string : colom) {
+			colomList += string + ", ";
+
+		}
+		colomList = colomList.substring(0, colomList.length() - 2);
+		try {
+			tx = session.beginTransaction();
+			String sql = "SELECT " + colomList + " FROM " + table + " Where "
+					+ wherePre + " = " + whereAfter;
+			// System.out.println(sql);
+			SQLQuery query = session.createSQLQuery(sql);
+			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+			data = query.list();
+
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return data;
 	}
 
 }

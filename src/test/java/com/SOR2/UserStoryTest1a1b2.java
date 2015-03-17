@@ -16,7 +16,7 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
  * @version 0.1.0
  *
  */
-public class TestPost {
+public class UserStoryTest1a1b2 {
 
 	private PostHandler handler;
 	private DocumentInformation documentInformation;
