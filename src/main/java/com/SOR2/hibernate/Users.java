@@ -13,10 +13,10 @@ public class Users {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "password")
+	@Column(name = "UserPassword")
 	private String password;
 
-	@Column(name = "account-type")
+	@Column(name = "accountType")
 	private int accountType;
 
 	public Users() {

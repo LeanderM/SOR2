@@ -8,8 +8,10 @@ public class Testing {
 
 	public static void main(String[] args) {
 
-		// de tinyint moet verranderd worden in een int en de naam
-		// messages.message_id mag geen . hebben
+		/*
+		 * alle inputs zijn nu functioneel. als je wilt testen effe deze entry's
+		 * uit de tabel halen.
+		 */
 		// System.out.println(HibernateMain.addAccountType("testType"));
 		// System.out.println(HibernateMain.addID("admin", "mark",
 		// "hallo world",
@@ -25,6 +27,8 @@ public class Testing {
 		colom.add("id");
 		colom.add("message_recipients");
 
+		// de methodiek om een specifieke entry op te halen volgens hql
+		// standaarden
 		List data = HibernateMain.getSpecificSelection(colom, "ID", "users",
 				"'mark'");
 

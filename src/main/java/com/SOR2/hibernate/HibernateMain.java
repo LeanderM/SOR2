@@ -145,11 +145,13 @@ public abstract class HibernateMain {
 		try {
 			tx = session.beginTransaction();
 			Users type = new Users();
-			type.setAccountType(accountType);
-			type.setPassword(password);
+
 			type.setUsername(username);
+			type.setPassword(password);
+			type.setAccountType(accountType);
 
 			id = (String) session.save(type);
+
 			tx.commit();
 		} catch (HibernateException e) {
 			if (tx != null)
