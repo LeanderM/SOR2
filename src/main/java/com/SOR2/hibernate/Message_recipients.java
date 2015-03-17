@@ -13,7 +13,7 @@ public class Message_recipients {
 	private String recipient_id;
 
 	@Id
-	@Column(name = "messages.message_id")
+	@Column(name = "message_id")
 	private int message_id;
 
 	public String getRecipient_id() {

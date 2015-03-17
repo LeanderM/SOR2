@@ -14,7 +14,7 @@ public class Testing {
 		// System.out.println(HibernateMain.addID("admin", "mark",
 		// "hallo world",
 		// "niet mark"));
-		// System.out.println(HibernateMain.addUser(1,"passworde", "marker"));
+		// System.out.println(HibernateMain.addUser(29, "marker", "passworde"));
 		// System.out.println(HibernateMain.addMessage("hallo worldjes", "mark",
 		// "swagre"));
 		// System.out.println(HibernateMain.addMessageRecipient("admin", 11));
