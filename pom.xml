@@ -148,15 +148,16 @@
         <artifactId>cxf-rt-transports-http-jetty</artifactId>
         <version>${cxf.version}</version>
     </dependency>
-    <dependency>
-        <groupId>org.apache.cxf</groupId>
-        <artifactId>cxf-rt-frontend-jaxrs</artifactId>
-        <version>${cxf.version}</version>
-    </dependency>
+    <!--  Boostrap -->
     <dependency>
 	    <groupId>de.agilecoders.wicket</groupId>
 	    <artifactId>bootstrap</artifactId>
 	    <version>0.5.0</version>
+	</dependency>
+	<dependency>
+		<groupId>de.agilecoders.wicket</groupId>
+		<artifactId>wicket-bootstrap-themes</artifactId>
+		<version>0.10.0</version>
 	</dependency>
 
     </dependencies>

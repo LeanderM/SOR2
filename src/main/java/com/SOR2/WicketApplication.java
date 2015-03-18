@@ -5,6 +5,9 @@ import org.apache.wicket.protocol.http.WebApplication;
 
 import com.SOR2.AJAX_EXAMPLE.TestPage;
 
+import de.agilecoders.wicket.Bootstrap;
+import de.agilecoders.wicket.settings.BootstrapSettings;
+
 /**
  * Application object for your web application. If you want to run this
  * application without deploying, run the Start class.
@@ -25,11 +28,23 @@ public class WicketApplication extends WebApplication {
 	 */
 	@Override
 	public void init() {
+
+		super.init();
+
 		// hier ziet u de routing van de webpaginas
 		mountPage("homepage", HomePage.class);
 		mountPage("testpage", TestPage.class);
-		super.init();
 
 		// add your configuration here
+		BootstrapSettings settings = new BootstrapSettings();
+		settings.minify(true); // use minimized version of all bootstrap
+								// references
+
+		// Bootstrap.getSettings(this).getActiveThemeProvider().setActiveTheme();
+
+		System.out.println();
+
+		Bootstrap.install(this, settings);
 	}
+
 }
