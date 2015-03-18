@@ -12,7 +12,7 @@ public class Testing {
 		 * alle inputs zijn nu functioneel. als je wilt testen effe deze entry's
 		 * uit de tabel halen.
 		 */
-		// System.out.println(HibernateMain.addAccountType("testType"));
+		   System.out.println(HibernateMain.addAccountType("swag"));
 		// System.out.println(HibernateMain.addID("admin", "mark",
 		// "hallo world",
 		// "niet mark"));

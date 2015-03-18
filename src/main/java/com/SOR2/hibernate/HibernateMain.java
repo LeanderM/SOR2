@@ -14,9 +14,12 @@ import org.hibernate.cfg.AnnotationConfiguration;
 public abstract class HibernateMain {
 
 	private static SessionFactory factory;
+	private static Session openSession;
+	private static Transaction trans;
+	private static Integer id;
 
 	@SuppressWarnings("deprecation")
-	public static void init() {
+	public static void initFactory() {
 		try {
 			factory = new AnnotationConfiguration().configure()
 					.addAnnotatedClass(Account_type.class)
@@ -32,8 +35,18 @@ public abstract class HibernateMain {
 
 	public static void checkFactoryExists() {
 		if (factory == null) {
-			init();
+			initFactory();
 		}
+	}
+	
+	public static void initParams(){
+		// reset all data
+		id = null;
+		openSession = null;
+		trans = null;
+		//open sessie
+		openSession = factory.openSession();
+		
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -42,21 +55,19 @@ public abstract class HibernateMain {
 	public static Integer addAccountType(String name) {
 
 		checkFactoryExists();
-		Session session = factory.openSession();
-		Transaction tx = null;
-		Integer id = null;
+		initParams();
 		try {
-			tx = session.beginTransaction();
+			trans = openSession.beginTransaction();
 			Account_type type = new Account_type();
 			type.setName(name);
-			id = (Integer) session.save(type);
-			tx.commit();
+			id = (Integer) openSession.save(type);
+			trans.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (trans != null)
+				trans.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			openSession.close();
 		}
 		return id;
 	}
@@ -65,24 +76,22 @@ public abstract class HibernateMain {
 			String message, String message_recipients) {
 
 		checkFactoryExists();
-		Session session = factory.openSession();
-		Integer id = null;
-		Transaction tx = null;
+		initParams();
 		try {
-			tx = session.beginTransaction();
+			trans = openSession.beginTransaction();
 			ID type = new ID();
 			type.setAccountType(accountType);
 			type.setFirstName(firstName);
 			type.setMessage(message);
 			type.setMessage_recipients(message_recipients);
-			id = (Integer) session.save(type);
-			tx.commit();
+			id = (Integer) openSession.save(type);
+			trans.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (trans != null)
+				trans.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			openSession.close();
 		}
 		return id;
 	}
@@ -90,23 +99,21 @@ public abstract class HibernateMain {
 	public static int addMessage(String message, String sender, String subject) {
 
 		checkFactoryExists();
-		Session session = factory.openSession();
-		Integer id = null;
-		Transaction tx = null;
+		initParams();
 		try {
-			tx = session.beginTransaction();
+			trans = openSession.beginTransaction();
 			Messages type = new Messages();
 			type.setMessage(message);
 			type.setSender(sender);
 			type.setSubject(subject);
-			id = (Integer) session.save(type);
-			tx.commit();
+			id = (Integer) openSession.save(type);
+			trans.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (trans != null)
+				trans.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			openSession.close();
 		}
 		return id;
 	}
@@ -114,51 +121,46 @@ public abstract class HibernateMain {
 	public static int addMessageRecipient(String recId, int message_id) {
 
 		checkFactoryExists();
-		Session session = factory.openSession();
-		Integer id = null;
-		Transaction tx = null;
+		initParams();
 		try {
-			tx = session.beginTransaction();
+			trans = openSession.beginTransaction();
 			Message_recipients type = new Message_recipients();
 			type.setRecipient_id(recId);
 			type.setMessage_id(message_id);
-			id = (Integer) session.save(type);
-			tx.commit();
+			id = (Integer) openSession.save(type);
+			trans.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (trans != null)
+				trans.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			openSession.close();
 		}
 		return id;
 	}
 
-	public static String addUser(int accountType, String password,
+	public static int addUser(int accountType, String password,
 			String username) {
 
 		checkFactoryExists();
-
-		Session session = factory.openSession();
-		String id = null;
-		Transaction tx = null;
+		initParams();
 		try {
-			tx = session.beginTransaction();
+			trans = openSession.beginTransaction();
 			Users type = new Users();
 
 			type.setUsername(username);
 			type.setPassword(password);
 			type.setAccountType(accountType);
 
-			id = (String) session.save(type);
+			id = (Integer) openSession.save(type);
 
-			tx.commit();
+			trans.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (trans != null)
+				trans.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			openSession.close();
 		}
 		return id;
 	}
