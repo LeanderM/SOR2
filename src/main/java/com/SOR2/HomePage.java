@@ -5,21 +5,28 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.SOR2.SESSION.PageThatNeedsAuthentication;
+
 public class HomePage extends WebPage {
 	private static final long serialVersionUID = 1L;
 
 	public HomePage(final PageParameters parameters) {
 		super(parameters);
 
-		add(new Label("version", getApplication().getFrameworkSettings()
-				.getVersion()));
+		// defineer de elementen die in de pagina moeten.
+		Label version = new Label("version", getApplication()
+				.getFrameworkSettings().getVersion());
 
-		add(new Link("login") {
-			@Override
+		Link demoLink = new Link("login") {
 			public void onClick() {
-				setResponsePage(com.SOR2.LOGIN.LoginPage.class);
+				setResponsePage(PageThatNeedsAuthentication.class);
 			}
-		});
+		};
+
+		// add stuff
+		add(version);
+		add(demoLink);
+
 		// TODO Add your page's components here
 
 	}
