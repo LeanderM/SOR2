@@ -3,6 +3,7 @@ package com.SOR2;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 
+import com.SOR2.ADMIN_PAGE.beheerscherm;
 import com.SOR2.AJAX_EXAMPLE.TestPage;
 
 import de.agilecoders.wicket.Bootstrap;
@@ -34,6 +35,7 @@ public class WicketApplication extends WebApplication {
 		// hier ziet u de routing van de webpaginas
 		mountPage("homepage", HomePage.class);
 		mountPage("testpage", TestPage.class);
+		mountPage("beheerscherm", beheerscherm.class);
 
 		// add your configuration here
 		BootstrapSettings settings = new BootstrapSettings();
