@@ -1,6 +1,5 @@
 package com.SOR2.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -38,15 +37,15 @@ public abstract class HibernateMain {
 			initFactory();
 		}
 	}
-	
-	public static void initParams(){
+
+	public static void initParams() {
 		// reset all data
 		id = null;
 		openSession = null;
 		trans = null;
-		//open sessie
+		// open sessie
 		openSession = factory.openSession();
-		
+
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -139,8 +138,7 @@ public abstract class HibernateMain {
 		return id;
 	}
 
-	public static int addUser(int accountType, String password,
-			String username) {
+	public static int addUser(int accountType, String password, String username) {
 
 		checkFactoryExists();
 		initParams();
@@ -166,38 +164,31 @@ public abstract class HibernateMain {
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
-	// getting a single object //
+	// getting a single object // test test
 	// ////////////////////////////////////////////////////////////////////////////
 
-	public static List getSpecificSelection(ArrayList<String> colom,
-			String table, String wherePre, String whereAfter) {
+	public static List getSpecificSelection(String colom, String table,
+			String whereClause) {
 		checkFactoryExists();
-		Session session = factory.openSession();
-		Transaction tx = null;
+		initParams();
 		List data = null;
-		String colomList = "";
 
-		for (String string : colom) {
-			colomList += string + ", ";
-
-		}
-		colomList = colomList.substring(0, colomList.length() - 2);
 		try {
-			tx = session.beginTransaction();
-			String sql = "SELECT " + colomList + " FROM " + table + " Where "
-					+ wherePre + " = " + whereAfter;
+			trans = openSession.beginTransaction();
+			String sql = "SELECT " + colom + " FROM " + table + " WHERE "
+					+ whereClause;
 			// System.out.println(sql);
-			SQLQuery query = session.createSQLQuery(sql);
+			SQLQuery query = openSession.createSQLQuery(sql);
 			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
 			data = query.list();
 
-			tx.commit();
+			trans.commit();
 		} catch (HibernateException e) {
-			if (tx != null)
-				tx.rollback();
+			if (trans != null)
+				trans.rollback();
 			e.printStackTrace();
 		} finally {
-			session.close();
+			openSession.close();
 		}
 		return data;
 	}

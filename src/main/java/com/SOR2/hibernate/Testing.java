@@ -1,6 +1,5 @@
 package com.SOR2.hibernate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,9 +9,9 @@ public class Testing {
 
 		/*
 		 * alle inputs zijn nu functioneel. als je wilt testen effe deze entry's
-		 * uit de tabel halen.
+		 * uit de tabel halen. test test
 		 */
-		   System.out.println(HibernateMain.addAccountType("swag"));
+		// System.out.println(HibernateMain.addAccountType("swag"));
 		// System.out.println(HibernateMain.addID("admin", "mark",
 		// "hallo world",
 		// "niet mark"));
@@ -21,16 +20,12 @@ public class Testing {
 		// "swagre"));
 		// System.out.println(HibernateMain.addMessageRecipient("admin", 11));
 
-		ArrayList<String> colom = new ArrayList<String>();
-		colom.add("messages");
-		colom.add("users");
-		colom.add("id");
-		colom.add("message_recipients");
+		String colom = "users";
+		String where = "users = 'mark'";
 
 		// de methodiek om een specifieke entry op te halen volgens hql
 		// standaarden
-		List data = HibernateMain.getSpecificSelection(colom, "ID", "users",
-				"'mark'");
+		List data = HibernateMain.getSpecificSelection(colom, "ID", where);
 
 		System.out.println(data);
 
