@@ -6,8 +6,8 @@ import org.apache.wicket.protocol.http.WebApplication;
 import com.SOR2.ADMIN_PAGE.beheerscherm;
 import com.SOR2.AJAX_EXAMPLE.TestPage;
 
-import de.agilecoders.wicket.Bootstrap;
-import de.agilecoders.wicket.settings.BootstrapSettings;
+import de.agilecoders.wicket.core.Bootstrap;
+import de.agilecoders.wicket.core.settings.BootstrapSettings;
 
 /**
  * Application object for your web application. If you want to run this
@@ -39,12 +39,10 @@ public class WicketApplication extends WebApplication {
 
 		// add your configuration here
 		BootstrapSettings settings = new BootstrapSettings();
-		settings.minify(true); // use minimized version of all bootstrap
-								// references
+		// settings.minify(true); // use minimized version of all bootstrap
+		// references
 
 		// Bootstrap.getSettings(this).getActiveThemeProvider().setActiveTheme();
-
-		System.out.println();
 
 		Bootstrap.install(this, settings);
 	}
