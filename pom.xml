@@ -24,7 +24,6 @@
     <artifactId>SOR2-v3</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-        <!-- TODO project name  -->
     <name>quickstart</name>
     <description></description>
     <!--
@@ -154,6 +153,12 @@
         <artifactId>cxf-rt-frontend-jaxrs</artifactId>
         <version>${cxf.version}</version>
     </dependency>
+    <dependency>
+	    <groupId>de.agilecoders.wicket</groupId>
+	    <artifactId>bootstrap</artifactId>
+	    <version>0.5.0</version>
+	</dependency>
+
     </dependencies>
     
     <build>
