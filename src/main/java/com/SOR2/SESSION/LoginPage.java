@@ -12,7 +12,7 @@ import org.apache.wicket.util.value.ValueMap;
  * Log in pagina
  * 
  * @author Leander
- * @version 0.1
+ * @version 0.2.0
  *
  */
 public class LoginPage extends WebPage {
@@ -32,7 +32,7 @@ public class LoginPage extends WebPage {
 	 * Interne klasse die het inlog formulier defineerd
 	 * 
 	 * @author Leander
-	 * @version 0.1
+	 * @version 1.0.0
 	 *
 	 */
 	public final class SignInForm extends Form<Void> {
@@ -76,7 +76,10 @@ public class LoginPage extends WebPage {
 
 			// als het inloggen lukt...
 			if (session.signIn(getUsername(), getPassword())) {
-				// do stuff..
+
+				// ga dan door naar de locatie waar de gebruiker heen probeerde
+				// te gaan
+				continueToOriginalDestination();
 
 			} else {
 				// inloggen mislukt. Zet error in de feedback panel

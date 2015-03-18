@@ -25,6 +25,7 @@ import de.agilecoders.wicket.core.settings.BootstrapSettings;
  * application without deploying, run the Start class.
  * 
  * @see com.SOR2.Start#main(String[])
+ * @version 1.2.0
  */
 public final class WicketApplication extends WebApplication {
 	/**
