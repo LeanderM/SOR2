@@ -1,22 +1,43 @@
 package com.SOR2.hibernate;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+// ervoor gekozen om een annotatationmethode te gebruiken om op een visueel begrijpbare manier de klassen aan de factory 
+// toe te kunnen voegen
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Restrictions;
 
+/**
+ * Met behulp van deze facade klasse is het mogelijk om methoden aan te spreken
+ * om te interacteren met de database. In deze klassen bevinden zich ook
+ * standaarmethoden die dit proces asisteren.
+ *
+ * @author Mark Dingemanse
+ * @version 0.1.0
+ *
+ */
 public abstract class HibernateMain {
 
+	// bevat de factory zelf
 	private static SessionFactory factory;
+	// bevat de huidige sessie met de database. Bij de start van een nieuwe
+	// methode word deze gereset
 	private static Session openSession;
+	// bevat informatie om hetgene over te zetten naar de db of om gegevens
+	// eruit te halen
 	private static Transaction trans;
+	// bevat de response message voor feedback voor de puts
 	private static Integer id;
 
+	/*
+	 * instantieerd de hibernate factory en vult de variable van een factory
+	 */
 	@SuppressWarnings("deprecation")
 	public static void initFactory() {
 		try {
@@ -32,12 +53,27 @@ public abstract class HibernateMain {
 		}
 	}
 
+	/**
+	 * checkt of de factory al geinstantieerd is als dit niet het geval is wordt
+	 * dat alsnog gedaan
+	 */
 	public static void checkFactoryExists() {
 		if (factory == null) {
 			initFactory();
 		}
 	}
 
+	/**
+	 * schoont en initieerd de parameters die over de verschillende methoden
+	 * gebruikt worden.
+	 *
+	 * @param value1
+	 *            Eerste waarde voor de berekening
+	 *
+	 * @throws FileNotFoundException
+	 *
+	 * @returns Resultaat van de berekening.
+	 */
 	public static void initParams() {
 		// reset all data
 		id = null;
@@ -50,7 +86,19 @@ public abstract class HibernateMain {
 
 	// ////////////////////////////////////////////////////////////////////////////
 	// adding a single row //
-	// ////////////////////////////////////////////////////////////////////////////
+	//
+	/*
+	 * @param Strings and ints afhankelijk van de kolommen van de Database
+	 * 
+	 * @catch HibernateException
+	 * 
+	 * @returns Een id waarmee kan gekeken worden of de methode succesvol is
+	 * uitgevoerd //
+	 * ////////////////////////////////////////////////////////////
+	 * ////////////////
+	 * 
+	 * /** voegt een accountype toe aan de databse
+	 */
 	public static Integer addAccountType(String name) {
 
 		checkFactoryExists();
@@ -71,6 +119,10 @@ public abstract class HibernateMain {
 		return id;
 	}
 
+	/**
+	 * voegt een ID toe aan de databse
+	 *
+	 */
 	public static int addID(String accountType, String firstName,
 			String message, String message_recipients) {
 
@@ -95,6 +147,10 @@ public abstract class HibernateMain {
 		return id;
 	}
 
+	/**
+	 * voegt een message toe aan de databse
+	 *
+	 */
 	public static int addMessage(String message, String sender, String subject) {
 
 		checkFactoryExists();
@@ -117,6 +173,10 @@ public abstract class HibernateMain {
 		return id;
 	}
 
+	/**
+	 * voegt een message receipient toe aan de databse
+	 *
+	 */
 	public static int addMessageRecipient(String recId, int message_id) {
 
 		checkFactoryExists();
@@ -138,6 +198,10 @@ public abstract class HibernateMain {
 		return id;
 	}
 
+	/**
+	 * voegt een user toe aan de databse
+	 *
+	 */
 	public static int addUser(int accountType, String password, String username) {
 
 		checkFactoryExists();
@@ -164,23 +228,36 @@ public abstract class HibernateMain {
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
-	// getting a single object // test test
+	// getting a single object wanneer je geen where clause wilt meegeven aan de
+	// query dan moet je 1=1 gebruiken
+	/*
+	 * @param Strings die voor
+	 * 
+	 * @throws HibernateException
+	 * 
+	 * @returns Resultaat van de berekening.
+	 */
 	// ////////////////////////////////////////////////////////////////////////////
 
-	public static List getSpecificSelection(String colom, String table,
-			String whereClause) {
+	public static List getSpecificSelection(String usr, String pass) {
 		checkFactoryExists();
 		initParams();
 		List data = null;
 
 		try {
 			trans = openSession.beginTransaction();
-			String sql = "SELECT " + colom + " FROM " + table + " WHERE "
-					+ whereClause;
-			// System.out.println(sql);
-			SQLQuery query = openSession.createSQLQuery(sql);
-			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
-			data = query.list();
+			/*
+			 * String sql = "SELECT " + colom + " FROM " + table + " WHERE " +
+			 * otherSQL; // System.out.println(sql); //SQLQuery query =
+			 * openSession.createSQLQuery(sql);
+			 * query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP); data =
+			 * query.list();
+			 */
+
+			Criteria crit = openSession.createCriteria(Users.class);
+			crit.add(Restrictions.eq("username", usr));
+			crit.add(Restrictions.eq("password", pass));
+			data = crit.list();
 
 			trans.commit();
 		} catch (HibernateException e) {
@@ -190,6 +267,7 @@ public abstract class HibernateMain {
 		} finally {
 			openSession.close();
 		}
+
 		return data;
 	}
 

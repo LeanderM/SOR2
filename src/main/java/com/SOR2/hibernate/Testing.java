@@ -1,7 +1,6 @@
 package com.SOR2.hibernate;
 
 import java.util.List;
-import java.util.Map;
 
 public class Testing {
 
@@ -19,19 +18,17 @@ public class Testing {
 		// System.out.println(HibernateMain.addMessage("hallo worldjes", "mark",
 		// "swagre"));
 		// System.out.println(HibernateMain.addMessageRecipient("admin", 11));
-
-		String colom = "users";
-		String where = "users = 'mark'";
+		// users = 'mark'
+		String colom = "users, id";
+		String where = "'users' = 'jesse'";
 
 		// de methodiek om een specifieke entry op te halen volgens hql
 		// standaarden
-		List data = HibernateMain.getSpecificSelection(colom, "ID", where);
-
-		System.out.println(data);
+		List data = HibernateMain.getSpecificSelection("mark", "password");
 
 		for (Object object : data) {
-			Map row = (Map) object;
-			System.out.print("my name: " + row.get("users"));
+			Users looped = (Users) object;
+			System.out.println(looped.getUsername());
 		}
 	}
 }
