@@ -14,6 +14,8 @@ import com.SOR2.SOAP.XMLObjects.ResponseMessage;
  * @author Jesse
  * @version 0.1.0
  *
+ *          WSDL te vinden op
+ *          http://localhost:8080/services/DocumentReceiver?wsdl
  */
 @WebService(endpointInterface = "com.SOR2.SOAP.DocumentReceiver", serviceName = "DocumentReceiver")
 public class DocumentReceiverImpl implements DocumentReceiver {
@@ -22,6 +24,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * Objecten De methode zorgt er voor dat ontvangen berichten gecontrolleerd
 	 * worden De methode stuurt een ResponseMessage terug waarin te lezen is of
 	 * het bericht aan de eisen voldoet, met mogelijk errors
+	 * 
+	 * Verwacht de volgende objecten: documentInformation, document
 	 */
 	@Override
 	public ResponseMessage sendDocument(

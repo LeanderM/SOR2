@@ -48,6 +48,9 @@ public class PostHandler {
 	private String nameSpace;
 	private boolean success;
 
+	// Verwacht: documentInformation, document, url voor de bestemming van de
+	// SOAP call,
+	// nameSpace van de SOAP ontvanger bv. http://ontvanger.SOR2.com/
 	public PostHandler(DocumentInformation documentInformation,
 			Document document, String url, String nameSpace) {
 
