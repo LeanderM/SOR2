@@ -22,15 +22,21 @@ public class DestinationList {
 	 * destination namen met de destination urls in te staan
 	 */
 	HashMap<String, String> lijst;
+	HashMap<String, String> nameSpaceLijst;
 
 	/**
 	 * de constructor is protected omdat hij niet van buiten af mag worden
 	 * aangeroepen
 	 */
 	protected DestinationList() {
+		// De url van een destination
 		lijst = new HashMap<String, String>();
 		lijst.put("Belastingsdienst",
-				"http://localhost:8080/testservices/external/ontvanger/receive");
+				"http://localhost:8080/testservices/DocumentReceiver");
+		// De namespace van een destination
+		nameSpaceLijst = new HashMap<String, String>();
+		nameSpaceLijst.put("Belastingsdienst", "http://ontvanger.SOR2.com/");
+
 	}
 
 	/**
@@ -61,7 +67,7 @@ public class DestinationList {
 	/**
 	 * Haald een url value op, op basis van de destination naam (key)
 	 */
-	public String getValue(String key) {
+	public String getURL(String key) {
 		return lijst.get(key);
 	}
 
@@ -72,4 +78,17 @@ public class DestinationList {
 	public boolean hasKey(String key) {
 		return lijst.containsKey(key);
 	}
+
+	public HashMap<String, String> getNameSpaceLijst() {
+		return nameSpaceLijst;
+	}
+
+	public void setNameSpaceLijst(HashMap<String, String> nameSpaceLijst) {
+		this.nameSpaceLijst = nameSpaceLijst;
+	}
+
+	public String getNameSpace(String key) {
+		return nameSpaceLijst.get(key);
+	}
+
 }

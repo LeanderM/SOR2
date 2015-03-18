@@ -1,4 +1,4 @@
-package com.SOR2.SOAP;
+package com.SOR2.ontvanger;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,7 +9,8 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 
 /**
- * Dit is de Servlet die er voor zorgt dat de SOAP service bereikbaar is
+ * Dit is de Servlet die er voor zorgt dat de SOAP service van de testOntvanger
+ * bereikbaar is
  * 
  * @author Jesse
  * @version 0.1.0

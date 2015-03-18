@@ -5,6 +5,12 @@ import java.io.Serializable;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Een classe voor document-informatie Objecten die met de SOAPcalls binnenkomen
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ */
 @XmlRootElement(name = "DocumentInformation")
 public class DocumentInformation implements Serializable {
 
