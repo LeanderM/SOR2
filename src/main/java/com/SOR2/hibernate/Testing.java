@@ -19,16 +19,14 @@ public class Testing {
 		// "swagre"));
 		// System.out.println(HibernateMain.addMessageRecipient("admin", 11));
 		// users = 'mark'
-		String colom = "users, id";
-		String where = "'users' = 'jesse'";
 
-		// de methodiek om een specifieke entry op te halen volgens hql
+		// de methodiek om een specifieke entry op te halen volgens criteria
 		// standaarden
-		List data = HibernateMain.getSpecificSelection("mark", "password");
+		List data = HibernateMain.getMailForAdmin("admin");
 
 		for (Object object : data) {
-			Users looped = (Users) object;
-			System.out.println(looped.getUsername());
+			Messages looped = (Messages) object;
+			System.out.println(looped.getMessage());
 		}
 	}
 }

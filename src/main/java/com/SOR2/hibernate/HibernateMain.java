@@ -151,7 +151,8 @@ public abstract class HibernateMain {
 	 * voegt een message toe aan de databse
 	 *
 	 */
-	public static int addMessage(String message, String sender, String subject) {
+	public static int addMessage(String message, String sender, String subject,
+			String receiver) {
 
 		checkFactoryExists();
 		initParams();
@@ -161,6 +162,7 @@ public abstract class HibernateMain {
 			type.setMessage(message);
 			type.setSender(sender);
 			type.setSubject(subject);
+			type.setReceiver(receiver);
 			id = (Integer) openSession.save(type);
 			trans.commit();
 		} catch (HibernateException e) {
@@ -260,6 +262,32 @@ public abstract class HibernateMain {
 			data = crit.list();
 
 			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
+	public static List getMailForAdmin(String usr) {
+		checkFactoryExists();
+		initParams();
+		List data = null;
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Messages.class);
+			crit.add(Restrictions.eq("receiver", usr));
+			List results = crit.list();
+
+			data = crit.list();
+			trans.commit();
+
 		} catch (HibernateException e) {
 			if (trans != null)
 				trans.rollback();

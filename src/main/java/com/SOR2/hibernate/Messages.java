@@ -39,6 +39,9 @@ public class Messages {
 	@Column(name = "date")
 	private String date;
 
+	@Column(name = "receiver")
+	private String receiver;
+
 	/**
 	 * Constructor moet leeg zijn
 	 */
@@ -116,6 +119,14 @@ public class Messages {
 	 */
 	public void setSender(String sender) {
 		this.sender = sender;
+	}
+
+	public String getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 
 }
