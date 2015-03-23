@@ -1,6 +1,7 @@
 package com.SOR2.ADMIN_PAGE;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +9,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataT
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -29,7 +31,25 @@ public class beheerscherm extends WebPage {
 	public beheerscherm(final PageParameters parameters) {
 		super(parameters);
 
-		currentData = retrieveInformation();
+		// currentData = retrieveInformation();
+
+		// genereren van testdata
+		currentData = new ArrayList<Object>();
+		HashMap testObject = new HashMap<String, String>();
+		testObject.put("message_ID", "someId");
+		testObject.put("sender", "someSender");
+		testObject.put("subject", "someSubject");
+		testObject.put("message", "someMessage");
+		currentData.add(testObject);
+
+		HashMap testObject1 = new HashMap<String, String>();
+		testObject1.put("message_ID", "someId1");
+		testObject1.put("sender", "someSender1");
+		testObject1.put("subject", "someSubject1");
+		testObject1.put("message", "someMessage1");
+		currentData.add(testObject1);
+
+		// voer het setten van de gegevens uit
 		setInformation(currentData);
 
 	}
@@ -83,7 +103,7 @@ public class beheerscherm extends WebPage {
 		dataView.setItemsPerPage(15);
 
 		add(dataView);
-		// add(new PagingNavigator("pagingNavigator", dataView));
+		add(new PagingNavigator("pagingNavigator", dataView));
 	}
 
 	// Vraagt de gegevens uit de database of via de facade
