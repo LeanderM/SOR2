@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 // ervoor gekozen om een annotatationmethode te gebruiken om op een visueel begrijpbare manier de klassen aan de factory 
 // toe te kunnen voegen
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -32,6 +34,10 @@ public abstract class HibernateMain {
 	// bevat informatie om hetgene over te zetten naar de db of om gegevens
 	// eruit te halen
 	private static Transaction trans;
+
+	// bevat de lijst met return data
+	private static List data;
+
 	// bevat de response message voor feedback voor de puts
 	private static Integer id;
 
@@ -79,6 +85,7 @@ public abstract class HibernateMain {
 		id = null;
 		openSession = null;
 		trans = null;
+		data = null;
 		// open sessie
 		openSession = factory.openSession();
 
@@ -241,25 +248,19 @@ public abstract class HibernateMain {
 	 */
 	// ////////////////////////////////////////////////////////////////////////////
 
-	public static List getSpecificSelection(String usr, String pass) {
+	public static List getSpecificSelectionRawSQL(String colom, String table,
+			String otherSQL) {
 		checkFactoryExists();
 		initParams();
-		List data = null;
 
 		try {
 			trans = openSession.beginTransaction();
-			/*
-			 * String sql = "SELECT " + colom + " FROM " + table + " WHERE " +
-			 * otherSQL; // System.out.println(sql); //SQLQuery query =
-			 * openSession.createSQLQuery(sql);
-			 * query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP); data =
-			 * query.list();
-			 */
 
-			Criteria crit = openSession.createCriteria(Users.class);
-			crit.add(Restrictions.eq("username", usr));
-			crit.add(Restrictions.eq("password", pass));
-			data = crit.list();
+			String sql = "SELECT " + colom + " FROM " + table + " WHERE "
+					+ otherSQL;
+			SQLQuery query = openSession.createSQLQuery(sql);
+			query.setResultTransformer(Criteria.ALIAS_TO_ENTITY_MAP);
+			data = query.list();
 
 			trans.commit();
 		} catch (HibernateException e) {
@@ -276,13 +277,38 @@ public abstract class HibernateMain {
 	public static List getMailForAdmin(String usr) {
 		checkFactoryExists();
 		initParams();
-		List data = null;
 
 		try {
 
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(Messages.class);
-			crit.add(Restrictions.eq("receiver", usr));
+			crit.add(Restrictions.eq("receiver", usr)).addOrder(
+					Order.desc("date"));
+			List results = crit.list();
+
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
+	public static List getAllMail() {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Messages.class)
+					.addOrder(Order.desc("date"));
 			List results = crit.list();
 
 			data = crit.list();
