@@ -1,9 +1,7 @@
 package com.SOR2.ADMIN_PAGE;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
@@ -17,6 +15,7 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.SOR2.hibernate.HibernateMain;
+import com.SOR2.hibernate.Messages;
 
 public class beheerscherm extends WebPage {
 
@@ -31,23 +30,22 @@ public class beheerscherm extends WebPage {
 	public beheerscherm(final PageParameters parameters) {
 		super(parameters);
 
-		// currentData = retrieveInformation();
+		currentData = retrieveInformation();
 
 		// genereren van testdata
-		currentData = new ArrayList<Object>();
-		HashMap testObject = new HashMap<String, String>();
-		testObject.put("message_ID", "someId");
-		testObject.put("sender", "someSender");
-		testObject.put("subject", "someSubject");
-		testObject.put("message", "someMessage");
-		currentData.add(testObject);
-
-		HashMap testObject1 = new HashMap<String, String>();
-		testObject1.put("message_ID", "someId1");
-		testObject1.put("sender", "someSender1");
-		testObject1.put("subject", "someSubject1");
-		testObject1.put("message", "someMessage1");
-		currentData.add(testObject1);
+		/*
+		 * currentData = new ArrayList<Object>(); HashMap testObject = new
+		 * HashMap<String, String>(); testObject.put("message_ID", "someId");
+		 * testObject.put("sender", "someSender"); testObject.put("subject",
+		 * "someSubject"); testObject.put("message", "someMessage");
+		 * currentData.add(testObject);
+		 * 
+		 * HashMap testObject1 = new HashMap<String, String>();
+		 * testObject1.put("message_ID", "someId1"); testObject1.put("sender",
+		 * "someSender1"); testObject1.put("subject", "someSubject1");
+		 * testObject1.put("message", "someMessage1");
+		 * currentData.add(testObject1);
+		 */
 
 		// voer het setten van de gegevens uit
 		setInformation(currentData);
@@ -63,15 +61,17 @@ public class beheerscherm extends WebPage {
 		// We vormen de bestaande List in een List met String arrays
 		// Deze zijn gemakkelijker aan een tabel toe te voegen
 		for (int i = 0; i < data.size(); i++) {
-			// object in een Map stoppen
-			Map row = (Map) data.get(i);
+			// Messages object ophalen
+			Messages row = (Messages) data.get(i);
 			// Nieuwe String array maken
-			String[] textRow = new String[4];
+			String[] textRow = new String[5];
 			// Alle data uit de map in de String array stoppen
-			textRow[0] = row.get("message_ID").toString();
-			textRow[1] = row.get("sender").toString();
-			textRow[2] = row.get("subject").toString();
-			textRow[3] = row.get("message").toString();
+			Object message_Id = (Object) row.getMessage_ID();
+			textRow[0] = message_Id.toString();
+			textRow[1] = row.getSender();
+			textRow[2] = row.getSubject();
+			textRow[3] = row.getMessage();
+			textRow[4] = row.getReceiver();
 			// Voeg de String array toe aan de dataList
 			dataList.add(textRow);
 		}
@@ -111,8 +111,8 @@ public class beheerscherm extends WebPage {
 		String colom = "date, message_ID, sender, subject, message";
 		String table = "messages";
 		String whereClause = "1=1 ORDER BY date DESC";
-		List result = HibernateMain.getSpecificSelection(colom, table,
-				whereClause);
+		List result = HibernateMain.getMailForAdmin("admin");
+		// getSpecificSelection(colom, table, whereClause);
 		return result;
 	}
 }
