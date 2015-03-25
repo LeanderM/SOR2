@@ -1,7 +1,7 @@
 package com.SOR2.SOAP;
 
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 
 /**
  * De DocumentValidator kan controlleerd Document en DocumentInformation
@@ -14,15 +14,15 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
  */
 public class DocumentValidator {
 	DocumentInformation documentInformation;
-	Document document;
+	Message message;
 	Boolean valid;
 	String errors;
 	DestinationList destinationList;
 
 	public DocumentValidator(DocumentInformation documentInformation,
-			Document document) {
+			Message document) {
 		this.documentInformation = documentInformation;
-		this.document = document;
+		this.message = document;
 		valid = true;
 		destinationList = DestinationList.getInstance();
 
@@ -35,25 +35,24 @@ public class DocumentValidator {
 	}
 
 	private void validateDocumentInformation() {
-		if (!documentInformation.hasDestionation()) {
+		if (!documentInformation.hasReceiver()) {
 			invalid();
-			addError("'documentInformation' Does not contain a 'destination'");
-		} else if (!destinationList
-				.hasKey(documentInformation.getDestination())) {
+			addError("'documentInformation' Does not contain a 'receiver'");
+		} else if (!destinationList.hasKey(documentInformation.getReceiver())) {
 			invalid();
-			addError("the given 'destination' does not match any existing destination");
+			addError("the given 'destination' does not match any existing receiver");
 		}
-		if (!documentInformation.hasTitle()) {
+		if (!documentInformation.hasSubject()) {
 			invalid();
-			addError("'documentInformation' does not contain a 'title'");
+			addError("'documentInformation' does not contain a 'subject'");
 		}
 
 	}
 
 	private void validateDocument() {
-		if (!document.hasContent()) {
+		if (!message.hasContent()) {
 			invalid();
-			addError("'document' does not contain any 'content'");
+			addError("'message' does not contain any 'content'");
 		}
 	}
 

@@ -21,8 +21,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.NodeList;
 
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 
 /**
  * De PostHandler klasse kan op basis van een DocumentInformation, Document en
@@ -52,7 +52,7 @@ public class PostHandler {
 	// SOAP call,
 	// nameSpace van de SOAP ontvanger bv. http://ontvanger.SOR2.com/
 	public PostHandler(DocumentInformation documentInformation,
-			Document document, String url, String nameSpace) {
+			Message document, String url, String nameSpace) {
 
 		// We instantiate the needed objects
 		try {
@@ -77,7 +77,7 @@ public class PostHandler {
 	 * verzenden, met de juiste parameters verder luisterd hij voor exceptions
 	 */
 	private void executeSOAPRequest(DocumentInformation documentInformation,
-			Document document, String url) {
+			Message document, String url) {
 		try {
 			// Build the body and header of the SOAPMessage
 			buildSOAPHeader(documentInformation);
@@ -115,19 +115,23 @@ public class PostHandler {
 		// This needs to be there because SOAP expects the namespaces
 		// of the child elements to be empty, but still be there
 		XMLdocumentInformation.addAttribute(new QName("xmlns"), "");
+		SOAPElement XMLsender = XMLdocumentInformation
+				.addChildElement("sender");
 		SOAPElement XMLdestination = XMLdocumentInformation
-				.addChildElement("destination");
-		SOAPElement XMLtitle = XMLdocumentInformation.addChildElement("title");
+				.addChildElement("receiver");
+		SOAPElement XMLsubject = XMLdocumentInformation
+				.addChildElement("subject");
 
 		// add values from documentInformation to the XML elements
-		XMLdestination.addTextNode(documentInformation.getDestination());
-		XMLtitle.addTextNode(documentInformation.getTitle());
+		XMLdestination.addTextNode(documentInformation.getReceiver());
+		XMLsubject.addTextNode(documentInformation.getSubject());
+		XMLsender.addTextNode(documentInformation.getSender());
 	}
 
 	/**
 	 * Deze methode bouwt de Body voor de SOAP message
 	 */
-	private void buildSOAPBody(Document document) throws SOAPException {
+	private void buildSOAPBody(Message document) throws SOAPException {
 		// SOAP body
 		SOAPBody soapBody = soapMessage.getSOAPBody();
 
@@ -143,7 +147,7 @@ public class PostHandler {
 
 		// create elements within the element we just created
 		SOAPElement XMLdocument = bodyElement.addChildElement(new QName("",
-				"document"));
+				"message"));
 
 		// and another element inside the document element
 		SOAPElement XMLcontent = XMLdocument.addChildElement("content");

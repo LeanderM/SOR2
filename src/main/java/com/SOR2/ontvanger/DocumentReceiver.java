@@ -5,8 +5,8 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlElement;
 
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
 @WebService
@@ -24,5 +24,5 @@ public interface DocumentReceiver {
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(
 			@WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
-			@WebParam(name = "document") @XmlElement(required = false, nillable = false) Document document);
+			@WebParam(name = "message") @XmlElement(required = false, nillable = false) Message message);
 }

@@ -14,38 +14,57 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "DocumentInformation")
 public class DocumentInformation implements Serializable {
 
-	private String destination;
-	private String title;
+	private String sender;
+	private String receiver;
+	private String subject;
 
-	@XmlElement(name = "destination", required = true, nillable = false)
-	public String getDestination() {
-		return destination;
+	@XmlElement(name = "receiver", required = true, nillable = false)
+	public String getReceiver() {
+		return receiver;
 	}
 
-	public void setDestination(String destination) {
-		this.destination = destination;
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
 	}
 
-	@XmlElement(name = "title", required = true, nillable = false)
-	public String getTitle() {
-		return title;
+	@XmlElement(name = "subject", required = true, nillable = false)
+	public String getSubject() {
+		return subject;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setSubject(String title) {
+		this.subject = title;
 	}
 
-	public boolean hasDestionation() {
-		if (destination == null || destination.length() == 0) {
+	@XmlElement(name = "sender", required = true, nillable = false)
+	public String getSender() {
+		return sender;
+	}
+
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+
+	public boolean hasReceiver() {
+		System.out.println(receiver);
+		if (receiver == null || receiver.length() == 0) {
 			return false;
 		}
 		return true;
 	}
 
-	public boolean hasTitle() {
-		if (title == null || title.length() == 0) {
+	public boolean hasSubject() {
+		if (subject == null || subject.length() == 0) {
 			return false;
 		}
 		return true;
 	}
+
+	public boolean hasSender() {
+		if (sender == null || sender.length() == 0) {
+			return false;
+		}
+		return true;
+	}
+
 }

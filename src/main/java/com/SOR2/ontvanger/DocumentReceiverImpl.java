@@ -2,8 +2,8 @@ package com.SOR2.ontvanger;
 
 import javax.jws.WebService;
 
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
 /**
@@ -22,20 +22,20 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 
 	@Override
 	public ResponseMessage sendDocument(
-			DocumentInformation documentInformation, Document document) {
+			DocumentInformation documentInformation, Message message) {
 
 		if (documentInformation == null) {
 			return new ResponseMessage(false,
 					"| [Error]: No 'documentInformation' was found in header");
-		} else if (document == null) {
+		} else if (message == null) {
 			return new ResponseMessage(false,
-					"| [Error]: No 'document' found in body");
+					"| [Error]: No 'message' found in body");
 		}
 		System.out.println("New SOAP message received!..");
-		System.out.println("[Header] Destination = "
-				+ documentInformation.getDestination() + ", Information = "
-				+ documentInformation.getTitle());
-		System.out.println("[Document] Content = " + document.getContent());
+		System.out.println("[Header] Receiver = "
+				+ documentInformation.getReceiver() + ", Subject = "
+				+ documentInformation.getSubject());
+		System.out.println("[Document] Content = " + message.getContent());
 		return new ResponseMessage(true, "No Errors");
 
 	}

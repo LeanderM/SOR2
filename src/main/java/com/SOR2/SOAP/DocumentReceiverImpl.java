@@ -2,9 +2,10 @@ package com.SOR2.SOAP;
 
 import javax.jws.WebService;
 
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
+import com.SOR2.hibernate.HibernateMain;
 
 /**
  * De DocumentReceiverImpl class is een implementatie van de SOAP interface
@@ -29,25 +30,27 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 */
 	@Override
 	public ResponseMessage sendDocument(
-			DocumentInformation documentInformation, Document document) {
+			DocumentInformation documentInformation, Message message) {
 		// We check if all the parameters are present
 		if (documentInformation == null) {
 			return new ResponseMessage(false,
 					"| [Error]: No 'documentInformation' was found in header");
-		} else if (document == null) {
+		} else if (message == null) {
 			return new ResponseMessage(false,
-					"| [Error]: No 'document' found in body");
+					"| [Error]: No 'message' found in body");
 		}
 
 		// a more thorough validation
 		DocumentValidator validator = new DocumentValidator(
-				documentInformation, document);
+				documentInformation, message);
 
 		if (validator.isValid()) {
+			
+			HibernateMain.addMessage(message.getContent(), documentInformation.getSender(), documentInformation.getSender(), documentInformation.getReceiver());
 			DestinationList list = DestinationList.getInstance();
-			PostHandler poster = new PostHandler(documentInformation, document,
-					list.getURL(documentInformation.getDestination()),
-					list.getNameSpace(documentInformation.getDestination()));
+			PostHandler poster = new PostHandler(documentInformation, message,
+					list.getURL(documentInformation.getReceiver()),
+					list.getNameSpace(documentInformation.getReceiver()));
 			return new ResponseMessage(true);
 		}
 

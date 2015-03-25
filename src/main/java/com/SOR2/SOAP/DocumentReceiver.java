@@ -4,8 +4,8 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
 /**
@@ -26,5 +26,5 @@ public interface DocumentReceiver {
 	ResponseMessage sendDocument(
 			// DocumentInformation moet in de header
 			@WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
-			@WebParam(name = "document") Document document);
+			@WebParam(name = "message") Message message);
 }

@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.SOR2.SOAP.PostHandler;
-import com.SOR2.SOAP.XMLObjects.Document;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
+import com.SOR2.SOAP.XMLObjects.Message;
 
 /**
  * JUnit test voor user story voor 1a, 1b en 2
@@ -20,7 +20,7 @@ public class UserStoryTest1a1b2 {
 
 	private PostHandler handler;
 	private DocumentInformation documentInformation;
-	private Document document;
+	private Message document;
 	private String url;
 	private String nameSpace;
 
@@ -29,8 +29,8 @@ public class UserStoryTest1a1b2 {
 		url = "http://localhost:8080/services/DocumentReceiver";
 		documentInformation = new DocumentInformation();
 		documentInformation.setDestination("Belastingsdienst");
-		documentInformation.setTitle("testTitle");
-		document = new Document();
+		documentInformation.setSubject("testTitle");
+		document = new Message();
 		document.setContent("testcontent");
 		nameSpace = "http://SOAP.SOR2.com/";
 
