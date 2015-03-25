@@ -16,7 +16,7 @@ public class Testing {
 		// "niet mark"));
 		// HibernateMain.addUser(30, "jesse", "niet een echte pass");
 		// HibernateMain.addUser(31, "pieter", "niet een echte passwwwwwww");
-		// HibernateMain.addMessage("hallo lorum ipsum3555555555", "mark",
+		// HibernateMain.addMessage("hallo lorum ipsum355555555577777", "mark",
 		// "swagre", "admin");
 		// HibernateMain.addMessage("hallo worldjess", "jesse", "swagre",
 		// "mark");
@@ -31,7 +31,8 @@ public class Testing {
 		// standaarden
 		List data = HibernateMain.checkLogin("mark", "password");
 
-		System.out.println(HibernateMain.checkUsrExists("mark"));
+		System.out.println(HibernateMain
+				.checkUsrExists("markmjyfrkuyrkuyrfkuyf"));
 
 		for (Object object : data) {
 			Users looped = (Users) object;

@@ -236,6 +236,11 @@ public abstract class HibernateMain {
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
+	// Met de volgende methoden
+	//
+	//
+	//
+	//
 	// getting a single object wanneer je geen where clause wilt meegeven aan de
 	// query dan moet je 1=1 gebruiken
 	/*
