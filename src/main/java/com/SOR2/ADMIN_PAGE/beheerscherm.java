@@ -3,8 +3,7 @@ package com.SOR2.ADMIN_PAGE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
-import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -23,16 +22,13 @@ public class beheerscherm extends WebPage {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private List currentData;
-	private DefaultDataTable table;
-	private SortableDataProvider userProvider;
 
 	public beheerscherm(final PageParameters parameters) {
 		super(parameters);
 
-		currentData = retrieveInformation();
+		List currentData = retrieveInformation();
 
-		// genereren van testdata
+		// genereren van testdata:
 
 		/*
 		  currentData = new ArrayList<Object>(); HashMap testObject = new
@@ -67,7 +63,7 @@ public class beheerscherm extends WebPage {
 			// Nieuwe String array maken
 			String[] textRow = new String[5];
 			// Alle data uit de map in de String array stoppen
-			Object message_Id = (Object) row.getMessage_ID();
+			Object message_Id = row.getMessage_ID();
 			textRow[0] = message_Id.toString();
 			textRow[1] = row.getSender();
 			textRow[2] = row.getSubject();
@@ -109,9 +105,6 @@ public class beheerscherm extends WebPage {
 
 	// Vraagt de gegevens uit de database of via de facade
 	public List retrieveInformation() {
-		String colom = "date, message_ID, sender, subject, message";
-		String table = "messages";
-		String whereClause = "1=1 ORDER BY date DESC";
 		List result = HibernateMain.getMailForAdmin("admin");
 		// getSpecificSelection(colom, table, whereClause);
 		return result;
