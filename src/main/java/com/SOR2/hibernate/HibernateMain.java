@@ -211,7 +211,7 @@ public abstract class HibernateMain {
 	 * voegt een user toe aan de databse
 	 *
 	 */
-	public static int addUser(int accountType, String password, String username) {
+	public static void addUser(int accountType, String password, String username) {
 
 		checkFactoryExists();
 		initParams();
@@ -223,7 +223,7 @@ public abstract class HibernateMain {
 			type.setPassword(password);
 			type.setAccountType(accountType);
 
-			id = (Integer) openSession.save(type);
+			openSession.save(type);
 
 			trans.commit();
 		} catch (HibernateException e) {
@@ -233,7 +233,6 @@ public abstract class HibernateMain {
 		} finally {
 			openSession.close();
 		}
-		return id;
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -349,6 +348,39 @@ public abstract class HibernateMain {
 		}
 
 		return data;
+	}
+
+	public static boolean checkUsrExists(String usr) {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Users.class);
+			crit.add(Restrictions.eq("username", usr));
+			List results = crit.list();
+
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		for (Object object : data) {
+			Users looped = (Users) object;
+			if (looped.getUsername().equals(usr)) {
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
 }
