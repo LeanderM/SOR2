@@ -325,4 +325,30 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	public static List checkLogin(String usr, String pass) {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Users.class);
+			crit.add(Restrictions.eq("username", usr));
+			crit.add(Restrictions.eq("password", pass));
+			List results = crit.list();
+
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
 }

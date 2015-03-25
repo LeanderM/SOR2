@@ -22,11 +22,12 @@ public class Testing {
 
 		// de methodiek om een specifieke entry op te halen volgens criteria
 		// standaarden
-		List data = HibernateMain.getAllMail();
+		List data = HibernateMain.checkLogin("mark", "password");
 
 		for (Object object : data) {
-			Messages looped = (Messages) object;
-			System.out.println(looped.getMessage());
+			Users looped = (Users) object;
+			System.out.println(looped.getPassword());
+			System.out.println(looped.getUsername());
 		}
 	}
 }
