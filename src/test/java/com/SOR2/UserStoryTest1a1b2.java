@@ -28,7 +28,7 @@ public class UserStoryTest1a1b2 {
 	public void init() {
 		url = "http://localhost:8080/services/DocumentReceiver";
 		documentInformation = new DocumentInformation();
-		documentInformation.setDestination("Belastingsdienst");
+		documentInformation.setReceiver("Belastingsdienst");
 		documentInformation.setSubject("testTitle");
 		document = new Message();
 		document.setContent("testcontent");
