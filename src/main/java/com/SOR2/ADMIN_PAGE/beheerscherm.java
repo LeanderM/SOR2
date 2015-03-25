@@ -3,7 +3,6 @@ package com.SOR2.ADMIN_PAGE;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -42,7 +41,7 @@ public class beheerscherm extends WebPage {
 			// Messages object ophalen
 			Messages row = (Messages) data.get(i);
 			// Nieuwe String array maken
-			String[] textRow = new String[5];
+			String[] textRow = new String[6];
 			// Alle data uit de map in de String array stoppen
 			Object message_Id = row.getMessage_ID();
 			textRow[0] = message_Id.toString();
@@ -50,6 +49,7 @@ public class beheerscherm extends WebPage {
 			textRow[2] = row.getSubject();
 			textRow[3] = row.getMessage();
 			textRow[4] = row.getReceiver();
+			textRow[5] = row.getDate();
 			// Voeg de String array toe aan de dataList
 			dataList.add(textRow);
 		}
