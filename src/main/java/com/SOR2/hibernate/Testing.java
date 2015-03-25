@@ -22,7 +22,7 @@ public class Testing {
 
 		// de methodiek om een specifieke entry op te halen volgens criteria
 		// standaarden
-		List data = HibernateMain.getMailForAdmin("admin");
+		List data = HibernateMain.getAllMail();
 
 		for (Object object : data) {
 			Messages looped = (Messages) object;
