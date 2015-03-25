@@ -14,15 +14,25 @@ public class Testing {
 		// System.out.println(HibernateMain.addID("admin", "mark",
 		// "hallo world",
 		// "niet mark"));
-		// System.out.println(HibernateMain.addUser(29, "marker", "passworde"));
-		// System.out.println(HibernateMain.addMessage("hallo worldjes", "mark",
-		// "swagre"));
+		// HibernateMain.addUser(30, "jesse", "niet een echte pass");
+		// HibernateMain.addUser(31, "pieter", "niet een echte passwwwwwww");
+		// HibernateMain.addMessage("hallo lorum ipsum355555555577777", "mark",
+		// "swagre", "admin");
+		// HibernateMain.addMessage("hallo worldjess", "jesse", "swagre",
+		// "mark");
+		// HibernateMain
+		// .addMessage("hallo worldjesss", "admin", "swagre", "jesse");
+		// HibernateMain.addMessage("hallo worldjessss", "pieter", "swagre",
+		// "jesse");
 		// System.out.println(HibernateMain.addMessageRecipient("admin", 11));
 		// users = 'mark'
 
 		// de methodiek om een specifieke entry op te halen volgens criteria
 		// standaarden
 		List data = HibernateMain.checkLogin("mark", "password");
+
+		System.out.println(HibernateMain
+				.checkUsrExists("markmjyfrkuyrkuyrfkuyf"));
 
 		for (Object object : data) {
 			Users looped = (Users) object;
