@@ -30,6 +30,7 @@ public class UserStoryTest1a1b2 {
 		documentInformation = new DocumentInformation();
 		documentInformation.setReceiver("Belastingsdienst");
 		documentInformation.setSubject("testTitle");
+		documentInformation.setSender("mark");
 		document = new Message();
 		document.setContent("testcontent");
 		nameSpace = "http://SOAP.SOR2.com/";

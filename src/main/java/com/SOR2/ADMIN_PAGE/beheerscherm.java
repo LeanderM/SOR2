@@ -12,10 +12,11 @@ import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.Messages;
 
-public class beheerscherm extends WebPage {
+public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 	private static final long serialVersionUID = 1L;
 
