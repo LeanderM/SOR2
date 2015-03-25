@@ -1,0 +1,16 @@
+.messages{
+    text-align: center;
+}
+
+li{
+    list-style: none;
+}
+
+li:nth-child(even){
+    background-color: rgba(11, 99, 149, 0.4);
+    ;
+}
+
+li:nth-child(odd){
+    background-color: rgba(190, 190, 190, 0.4);
+}

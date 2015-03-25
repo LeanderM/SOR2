@@ -33,18 +33,19 @@ public class beheerscherm extends WebPage {
 		currentData = retrieveInformation();
 
 		// genereren van testdata
+
 		/*
-		 * currentData = new ArrayList<Object>(); HashMap testObject = new
-		 * HashMap<String, String>(); testObject.put("message_ID", "someId");
-		 * testObject.put("sender", "someSender"); testObject.put("subject",
-		 * "someSubject"); testObject.put("message", "someMessage");
-		 * currentData.add(testObject);
-		 * 
-		 * HashMap testObject1 = new HashMap<String, String>();
-		 * testObject1.put("message_ID", "someId1"); testObject1.put("sender",
-		 * "someSender1"); testObject1.put("subject", "someSubject1");
-		 * testObject1.put("message", "someMessage1");
-		 * currentData.add(testObject1);
+		  currentData = new ArrayList<Object>(); HashMap testObject = new
+		  HashMap<String, String>(); testObject.put("message_ID", "someId");
+		  testObject.put("sender", "someSender"); testObject.put("subject",
+		  "someSubject"); testObject.put("message", "someMessage");
+		  currentData.add(testObject);
+
+		  HashMap testObject1 = new HashMap<String, String>();
+		  testObject1.put("message_ID", "someId1"); testObject1.put("sender",
+		  "someSender1"); testObject1.put("subject", "someSubject1");
+		  testObject1.put("message", "someMessage1");
+		  currentData.add(testObject1);
 		 */
 
 		// voer het setten van de gegevens uit
