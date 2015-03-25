@@ -1,16 +1,25 @@
-.messages{
-    text-align: center;
+table{
+    width: 100%;
 }
 
-li{
-    list-style: none;
+td{
+    overflow: hidden;
 }
 
-li:nth-child(even){
+th{
+    background-color: #0C6395;
+    color: #fff;
+}
+
+tr:nth-child(even){
     background-color: rgba(11, 99, 149, 0.4);
     ;
 }
 
-li:nth-child(odd){
+tr:nth-child(odd){
     background-color: rgba(190, 190, 190, 0.4);
+}
+
+.pagingNavigator{
+    padding-left: 800px;
 }

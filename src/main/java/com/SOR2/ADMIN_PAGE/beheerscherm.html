@@ -7,14 +7,18 @@
     </wicket:link>
 </head>
 <body>
-	<span wicket:id="pagingNavigator"></span>
-    <table>
-        <tr>
-            <th>message id</th><th>sender</th><th>subject</th><th>message</th><th>receiver</th><th>date</th>
-        </tr>
-            <tr wicket:id="rows">
-                <td wicket:id="dataRow"></td>
+    <div class="container-fluid">
+        <div class="col-md-12">
+        <table>
+            <tr>
+                <th>message id</th><th>sender</th><th>subject</th><th>message</th><th>receiver</th><th>date</th>
             </tr>
-    </table>
+                <tr wicket:id="rows">
+                    <td wicket:id="dataRow"></td>
+                </tr>
+        </table>
+        <span wicket:id="pagingNavigator"></span>
+        </div>
+    </div>
 </body>
 </html>
