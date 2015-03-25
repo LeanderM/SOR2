@@ -47,8 +47,7 @@ public final class BackendSession extends AuthenticatedWebSession {
 		 * password.equalsIgnoreCase("root")) { user = username; }
 		 */
 
-		List usersFromDb = HibernateMain.getSpecificSelection(username,
-				password);
+		List usersFromDb = HibernateMain.checkLogin(username, password);
 
 		// als de gebruiker gevonden is...
 		if (usersFromDb.size() != 0) {
