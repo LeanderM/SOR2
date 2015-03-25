@@ -2,6 +2,7 @@ package com.SOR2.SOAP;
 
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
+import com.SOR2.hibernate.HibernateMain;
 
 /**
  * De DocumentValidator kan controlleerd Document en DocumentInformation
@@ -40,13 +41,20 @@ public class DocumentValidator {
 			addError("'documentInformation' Does not contain a 'receiver'");
 		} else if (!destinationList.hasKey(documentInformation.getReceiver())) {
 			invalid();
-			addError("the given 'destination' does not match any existing receiver");
+			addError("the given 'receiver' does not match any existing receiver");
+		}
+		if (!documentInformation.hasSender()) {
+			invalid();
+			addError("'documentInformation' Does not contain a 'sender'");
+		} else if (!HibernateMain.checkUsrExists(documentInformation
+				.getSender())) {
+			invalid();
+			addError("the given 'sender' does not match any existing sender");
 		}
 		if (!documentInformation.hasSubject()) {
 			invalid();
 			addError("'documentInformation' does not contain a 'subject'");
 		}
-
 	}
 
 	private void validateDocument() {
