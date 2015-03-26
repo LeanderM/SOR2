@@ -26,7 +26,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * worden De methode stuurt een ResponseMessage terug waarin te lezen is of
 	 * het bericht aan de eisen voldoet, met mogelijk errors
 	 * 
-	 * Verwacht de volgende objecten: documentInformation, document
+	 * Verwacht de volgende objecten: documentInformation, message
 	 */
 	@Override
 	public ResponseMessage sendDocument(

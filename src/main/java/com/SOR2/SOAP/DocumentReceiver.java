@@ -19,8 +19,7 @@ import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 public interface DocumentReceiver {
 
 	/**
-	 * Een methode die DocumentInformation en Document als parameters heeft.
-	 * 
+	 * Een SOAP methode die DocumentInformation en message als parameters heeft.
 	 */
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(

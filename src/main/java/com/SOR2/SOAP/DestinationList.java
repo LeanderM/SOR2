@@ -78,15 +78,24 @@ public class DestinationList {
 	public boolean hasKey(String key) {
 		return lijst.containsKey(key);
 	}
-
+	
+	/**
+	 * getter van nameSpacelijst
+	 */
 	public HashMap<String, String> getNameSpaceLijst() {
 		return nameSpaceLijst;
 	}
-
+	
+	/**
+	 * setter van nameSpacelijst
+	 */
 	public void setNameSpaceLijst(HashMap<String, String> nameSpaceLijst) {
 		this.nameSpaceLijst = nameSpaceLijst;
 	}
-
+	
+	/**
+	 * methode die een value uit de nameSpacelijst ophaald op basis van een key
+	 */
 	public String getNameSpace(String key) {
 		return nameSpaceLijst.get(key);
 	}

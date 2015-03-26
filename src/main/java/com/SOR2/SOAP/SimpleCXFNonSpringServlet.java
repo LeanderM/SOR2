@@ -24,8 +24,7 @@ public class SimpleCXFNonSpringServlet extends CXFNonSpringServlet {
 		try {
 			super.loadBus(servletConfig);
 		} catch (ServletException e) {
-			System.out
-					.println("Something went wrong while loading servlet bus");
+			System.out.println("Something went wrong while loading servlet bus");
 			e.printStackTrace();
 		}
 		Bus bus = getBus();

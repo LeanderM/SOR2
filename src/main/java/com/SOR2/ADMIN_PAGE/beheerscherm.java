@@ -40,7 +40,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 	}
 	
 	/**
-	 * Een methode die een list met messages omzet in een gevuld html tabel element
+	 * Een methode die een list met messages wegschrijft naar een html table element
 	 */
 	public void setInformation(List data) {
 
@@ -94,11 +94,12 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		add(dataView);
 		add(new PagingNavigator("pagingNavigator", dataView));
 	}
-
-	// Vraagt de gegevens uit de database of via de facade
+	
+	/**
+	 * Een methode die gegevens uit de database ophaald via de HibernateMain facade
+	 */
 	public List retrieveInformation() {
 		List result = HibernateMain.getAllMail();
-		// getSpecificSelection(colom, table, whereClause);
 		return result;
 	}
 }
