@@ -16,6 +16,14 @@ import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.Messages;
 
+/**
+ * Dit is een wicket WebPage klasse die als serverside controller voor het
+ * beheerscherm dient
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
 public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 	private static final long serialVersionUID = 1L;
@@ -23,15 +31,17 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 	public beheerscherm(final PageParameters parameters) {
 		super(parameters);
 
+		// haal gegevens op om de tabel mee te vullen
 		List currentData = retrieveInformation();
 
-		// voer het setten van de gegevens uit
+		// voer de methode uit die de tabel bouwt
 		setInformation(currentData);
 
 	}
-
-	// voor tables: http://wicket.apache.org/guide/guide/repeaters.html
-	// deze link beschrijft hoe je html tables kunt vullen met wicket
+	
+	/**
+	 * Een methode die een list met messages omzet in een gevuld html tabel element
+	 */
 	public void setInformation(List data) {
 
 		// Een nieuwe ArrayList
