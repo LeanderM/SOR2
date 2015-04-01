@@ -62,7 +62,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 				// voeg de ajax call toe aan de component tag om uit te voeren bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ refreshClickMethod.getCallbackUrl() +"&x='+event.pageX+' &y='+event.pageY+''});");
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ refreshClickMethod.getCallbackUrl() +"'});");
 				super.onComponentTag(tag);
 			}
 		};
@@ -87,7 +87,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 				// voeg de ajax call toe aan de component tag om uit te voeren bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ logoutClickMethod.getCallbackUrl() +"&x='+event.pageX+' &y='+event.pageY+''});");
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ logoutClickMethod.getCallbackUrl() +"'});");
 				super.onComponentTag(tag);
 			}
 		};
