@@ -3,8 +3,13 @@ package com.SOR2.ADMIN_PAGE;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.RestartResponseException;
+import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
@@ -36,11 +41,63 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 		// voer de methode uit die de tabel bouwt
 		setInformation(currentData);
+		
+		/*
+		 * 
+		 * Refresh button
+		 * 
+		 */
+		// Ajax call voor de refresh button
+		final AbstractDefaultAjaxBehavior refreshClickMethod = new AbstractDefaultAjaxBehavior() {
+			@Override
+			protected void respond(AjaxRequestTarget target) {
+				// de pagina opnieuw renderen bij een refresh
+				renderPage();
+			}
+		};
+		add(refreshClickMethod);
 
+		// De refresh button
+		Button refresh = new Button("refresh") {
+			@Override
+			protected void onComponentTag(ComponentTag tag) {
+				// voeg de ajax call toe aan de component tag om uit te voeren bij onMouseDown
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ refreshClickMethod.getCallbackUrl() +"&x='+event.pageX+' &y='+event.pageY+''});");
+				super.onComponentTag(tag);
+			}
+		};
+		refresh.setOutputMarkupId(true);
+		add(refresh);
+		
+		/*
+		 * 
+		 * Logout button
+		 * 
+		 */
+		final AbstractDefaultAjaxBehavior logoutClickMethod = new AbstractDefaultAjaxBehavior() {
+			@Override
+			protected void respond(AjaxRequestTarget target) {
+				getSession().invalidate();
+		        throw new RestartResponseException(beheerscherm.class);
+			}
+		};
+		add(logoutClickMethod);
+		
+		Button logout = new Button("logout") {
+			@Override
+			protected void onComponentTag(ComponentTag tag) {
+				// voeg de ajax call toe aan de component tag om uit te voeren bij onMouseDown
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ logoutClickMethod.getCallbackUrl() +"&x='+event.pageX+' &y='+event.pageY+''});");
+				super.onComponentTag(tag);
+			}
+		};
+		logout.setOutputMarkupId(true);
+		add(logout);
 	}
-	
+
 	/**
-	 * Een methode die een list met messages wegschrijft naar een html table element
+	 * Een methode die een list met messages wegschrijft naar een html table
+	 * element
 	 */
 	public void setInformation(List data) {
 
@@ -94,12 +151,27 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		add(dataView);
 		add(new PagingNavigator("pagingNavigator", dataView));
 	}
-	
+
 	/**
-	 * Een methode die gegevens uit de database ophaald via de HibernateMain facade
+	 * Een methode die gegevens uit de database ophaald via de HibernateMain
+	 * facade
 	 */
 	public List retrieveInformation() {
 		List result = HibernateMain.getAllMail();
 		return result;
+	}
+
+	/*
+	 * Als de page al eens is gerendered zal de pagina helemaal opnieuw worden
+	 * opgebouwt.
+	 */
+	@Override
+	public void renderPage() {
+		// TODO Auto-generated method stub
+		if (hasBeenRendered()) {
+			setResponsePage(getPageClass(), getPageParameters());
+		} else {
+			super.renderPage();
+		}
 	}
 }
