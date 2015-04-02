@@ -38,11 +38,12 @@ public abstract class HibernateMain {
 	// bevat de lijst met return data
 	private static List data;
 
-	// bevat de response message voor feedback voor de puts
+	// bevat de response message voor feedback voor de inputs
 	private static Integer id;
 
 	/*
-	 * instantieerd de hibernate factory en vult de variable van een factory
+	 * instantieerd de hibernate factory en vult de variable van een factory met
+	 * alle models gedefineert in de hibernate map
 	 */
 	@SuppressWarnings("deprecation")
 	public static void initFactory() {
@@ -184,6 +185,9 @@ public abstract class HibernateMain {
 		return id;
 	}
 
+	/*
+	 * voegt een invalid message toe aan de database
+	 */
 	public static int addInvallidMessage(String message, String sender,
 			String subject, String receiver) {
 
@@ -270,15 +274,17 @@ public abstract class HibernateMain {
 	//
 	// getting a single object wanneer je geen where clause wilt meegeven aan de
 	// query dan moet je 1=1 gebruiken
+	// Met deze methode is het mogelijk om binnen de hibernate omgeving te
+	// werken
+	// met specifieke sql code die de HibernateMain klasse nog niet ondervangt.
 	/*
-	 * @param Strings die voor
+	 * @param Strings die voor voor where clauses nodig zijn
 	 * 
 	 * @throws HibernateException
 	 * 
 	 * @returns Resultaat van de berekening.
 	 */
 	// ////////////////////////////////////////////////////////////////////////////
-
 	public static List getSpecificSelectionRawSQL(String colom, String table,
 			String otherSQL) {
 		checkFactoryExists();
@@ -305,6 +311,12 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param usr
+	 *            de usr vaarvoor de messages opgehaald voor moeten worden
+	 * @return een lijst met messegas specifiek aan de megegeven user
+	 */
 	public static List getMailForAdmin(String usr) {
 		checkFactoryExists();
 		initParams();
@@ -331,6 +343,15 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param sender
+	 *            stelt een sender voor die moet bestaan in de db
+	 * @param receiver
+	 *            stelt een receiver voor die moet bestaan in de db
+	 * @return een lijst met invallid messages afhankelijk van de uitkomst van
+	 *         de where
+	 */
 	public static List getInvallidMessagesForSpecificSenderOrReciever(
 			String sender, String receiver) {
 		checkFactoryExists();
@@ -357,6 +378,10 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @return alle invalide berichten die op het moment in de database staan
+	 */
 	public static List getAllInvallidMessages() {
 		checkFactoryExists();
 		initParams();
@@ -380,6 +405,10 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @return alle valide berichten die op het moment in de database staan.
+	 */
 	public static List getAllMail() {
 		checkFactoryExists();
 		initParams();
@@ -403,6 +432,19 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	/**
+	 * 
+	 * Deze methode geeft het hele User object terug in een lijst waar ook nog
+	 * extra controle op uitgevoerd kan worden. Bijv is deze user een admin of
+	 * niet (accounttype)
+	 * 
+	 * @param usr
+	 *            de gebruikersnaam die ingevoerd is
+	 * @param pass
+	 *            de password die ingevoerd is
+	 * @return een lijst met de gespecificeerde usr als hij zou bestaan anders
+	 *         een lege lijst
+	 */
 	public static List checkLogin(String usr, String pass) {
 		checkFactoryExists();
 		initParams();
@@ -429,6 +471,15 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	/**
+	 * 
+	 * Deze methode dient ervoor om te kijken of een gebruiker wel bestaat of
+	 * niet
+	 * 
+	 * @param usr
+	 *            de gebruiker die gecontroleerd dient te worden
+	 * @return een boolean of de user bestaat of niet
+	 */
 	public static boolean checkUsrExists(String usr) {
 		checkFactoryExists();
 		initParams();
