@@ -52,6 +52,7 @@ public abstract class HibernateMain {
 					.addAnnotatedClass(ID.class)
 					.addAnnotatedClass(Message_recipients.class)
 					.addAnnotatedClass(Messages.class)
+					.addAnnotatedClass(InvallidMessage.class)
 					.addAnnotatedClass(Users.class).buildSessionFactory();
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
@@ -170,6 +171,32 @@ public abstract class HibernateMain {
 			type.setSender(sender);
 			type.setSubject(subject);
 			type.setReceiver(receiver);
+
+			id = (Integer) openSession.save(type);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return id;
+	}
+
+	public static int addInvallidMessage(String message, String sender,
+			String subject, String receiver) {
+
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			InvallidMessage type = new InvallidMessage();
+			type.setMessage(message);
+			type.setSender(sender);
+			type.setSubject(subject);
+			type.setReceiver(receiver);
+
 			id = (Integer) openSession.save(type);
 			trans.commit();
 		} catch (HibernateException e) {
@@ -304,6 +331,55 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	public static List getInvallidMessagesForSpecificSenderOrReciever(
+			String sender, String receiver) {
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			if (sender != null) {
+				data = openSession.createCriteria(InvallidMessage.class)
+						.add(Restrictions.eq("sender", sender))
+						.addOrder(Order.desc("date")).list();
+			} else {
+				data = openSession.createCriteria(InvallidMessage.class)
+						.add(Restrictions.eq("receiver", receiver))
+						.addOrder(Order.desc("date")).list();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return data;
+	}
+
+	public static List getAllInvallidMessages() {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(InvallidMessage.class)
+					.addOrder(Order.desc("date"));
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
 	public static List getAllMail() {
 		checkFactoryExists();
 		initParams();
@@ -313,8 +389,6 @@ public abstract class HibernateMain {
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(Messages.class)
 					.addOrder(Order.desc("date"));
-			List results = crit.list();
-
 			data = crit.list();
 			trans.commit();
 

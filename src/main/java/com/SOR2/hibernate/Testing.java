@@ -14,7 +14,7 @@ public class Testing {
 		// System.out.println(HibernateMain.addID("admin", "mark",
 		// "hallo world",
 		// "niet mark"));
-		// HibernateMain.addUser(30, "jesse", "niet een echte pass");
+		// HibernateMain.addUser(1, "pass", "jesse2");
 		// HibernateMain.addUser(31, "pieter", "niet een echte passwwwwwww");
 		// HibernateMain.addMessage("hallo lorum ipsum355555555577777", "mark",
 		// "swagre", "admin");
@@ -29,15 +29,30 @@ public class Testing {
 
 		// de methodiek om een specifieke entry op te halen volgens criteria
 		// standaarden
-		List data = HibernateMain.checkLogin("mark", "password");
+		// List data = HibernateMain.checkLogin("mark", "password");
 
-		System.out.println(HibernateMain
-				.checkUsrExists("markmjyfrkuyrkuyrfkuyf"));
+		List var = HibernateMain.getAllInvallidMessages();
+		List varSender = HibernateMain
+				.getInvallidMessagesForSpecificSenderOrReciever("admin", null);
 
-		for (Object object : data) {
-			Users looped = (Users) object;
-			System.out.println(looped.getPassword());
-			System.out.println(looped.getUsername());
+		for (Object obj : var) {
+			InvallidMessage msg = (InvallidMessage) obj;
+			System.out.println(msg.getMessage());
 		}
+
+		for (Object obj : varSender) {
+			InvallidMessage msg = (InvallidMessage) obj;
+			System.out.println(msg.getSender());
+		}
+
+		/*
+		 * System.out.println(HibernateMain
+		 * .checkUsrExists("markmjyfrkuyrkuyrfkuyf"));
+		 * 
+		 * for (Object object : data) { Users looped = (Users) object;
+		 * System.out.println(looped.getPassword());
+		 * System.out.println(looped.getUsername()); }
+		 */
+
 	}
 }

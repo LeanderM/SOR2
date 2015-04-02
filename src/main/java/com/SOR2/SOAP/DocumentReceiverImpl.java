@@ -43,11 +43,14 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		// a more thorough validation
 		DocumentValidator validator = new DocumentValidator(
 				documentInformation, message);
-		
+
 		// check if valid
 		if (validator.isValid()) {
-			// we add the message to the dataBase
-			HibernateMain.addMessage(message.getContent(), documentInformation.getSender(), documentInformation.getSender(), documentInformation.getReceiver());
+			// we add the message to the dataBase.
+			HibernateMain.addMessage(message.getContent(),
+					documentInformation.getSender(),
+					documentInformation.getSender(),
+					documentInformation.getReceiver());
 			// get the list of destinations
 			DestinationList list = DestinationList.getInstance();
 			// Post the document
