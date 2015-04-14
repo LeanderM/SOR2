@@ -24,7 +24,7 @@ import org.hibernate.criterion.Restrictions;
  * @version 0.1.0
  *
  */
-public abstract class HibernateMain {
+public abstract class HibernateMain implements HibernateMainInterface {
 
 	// bevat de factory zelf
 	private static SessionFactory factory;
@@ -45,7 +45,7 @@ public abstract class HibernateMain {
 	 * instantieerd de hibernate factory en vult de variable van een factory
 	 */
 	@SuppressWarnings("deprecation")
-	public static void initFactory() {
+	public void initFactory() {
 		try {
 			factory = new AnnotationConfiguration().configure()
 					.addAnnotatedClass(Account_type.class)
@@ -63,7 +63,7 @@ public abstract class HibernateMain {
 	 * checkt of de factory al geinstantieerd is als dit niet het geval is wordt
 	 * dat alsnog gedaan
 	 */
-	public static void checkFactoryExists() {
+	public void checkFactoryExists() {
 		if (factory == null) {
 			initFactory();
 		}
@@ -80,7 +80,7 @@ public abstract class HibernateMain {
 	 *
 	 * @returns Resultaat van de berekening.
 	 */
-	public static void initParams() {
+	public void initParams() {
 		// reset all data
 		id = null;
 		openSession = null;
@@ -106,7 +106,7 @@ public abstract class HibernateMain {
 	 * 
 	 * /** voegt een accountype toe aan de databse
 	 */
-	public static Integer addAccountType(String name) {
+	public Integer addAccountType(String name) {
 
 		checkFactoryExists();
 		initParams();
@@ -130,8 +130,8 @@ public abstract class HibernateMain {
 	 * voegt een ID toe aan de databse
 	 *
 	 */
-	public static int addID(String accountType, String firstName,
-			String message, String message_recipients) {
+	public int addID(String accountType, String firstName, String message,
+			String message_recipients) {
 
 		checkFactoryExists();
 		initParams();
@@ -158,7 +158,7 @@ public abstract class HibernateMain {
 	 * voegt een message toe aan de databse
 	 *
 	 */
-	public static int addMessage(String message, String sender, String subject,
+	public int addMessage(String message, String sender, String subject,
 			String receiver) {
 
 		checkFactoryExists();
@@ -186,7 +186,7 @@ public abstract class HibernateMain {
 	 * voegt een message receipient toe aan de databse
 	 *
 	 */
-	public static int addMessageRecipient(String recId, int message_id) {
+	public int addMessageRecipient(String recId, int message_id) {
 
 		checkFactoryExists();
 		initParams();
@@ -211,7 +211,7 @@ public abstract class HibernateMain {
 	 * voegt een user toe aan de databse
 	 *
 	 */
-	public static void addUser(int accountType, String password, String username) {
+	public void addUser(int accountType, String password, String username) {
 
 		checkFactoryExists();
 		initParams();
@@ -252,7 +252,7 @@ public abstract class HibernateMain {
 	 */
 	// ////////////////////////////////////////////////////////////////////////////
 
-	public static List getSpecificSelectionRawSQL(String colom, String table,
+	public List getSpecificSelectionRawSQL(String colom, String table,
 			String otherSQL) {
 		checkFactoryExists();
 		initParams();
@@ -278,7 +278,7 @@ public abstract class HibernateMain {
 		return data;
 	}
 
-	public static List getMailForAdmin(String usr) {
+	public List getMailForAdmin(String usr) {
 		checkFactoryExists();
 		initParams();
 
@@ -304,7 +304,7 @@ public abstract class HibernateMain {
 		return data;
 	}
 
-	public static List getAllMail() {
+	public List getAllMail() {
 		checkFactoryExists();
 		initParams();
 
@@ -329,7 +329,7 @@ public abstract class HibernateMain {
 		return data;
 	}
 
-	public static List checkLogin(String usr, String pass) {
+	public List checkLogin(String usr, String pass) {
 		checkFactoryExists();
 		initParams();
 
@@ -355,7 +355,7 @@ public abstract class HibernateMain {
 		return data;
 	}
 
-	public static boolean checkUsrExists(String usr) {
+	public boolean checkUsrExists(String usr) {
 		checkFactoryExists();
 		initParams();
 
