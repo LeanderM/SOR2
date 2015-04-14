@@ -513,4 +513,82 @@ public abstract class HibernateMain {
 
 	}
 
+	public static String getUserTypeForAccount(String usr) {
+		Account_type singleType = null;
+		Integer specified = null;
+		checkFactoryExists();
+		initParams();
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Users.class);
+			crit.add(Restrictions.eq("username", usr));
+
+			data = crit.list();
+			trans.commit();
+
+			for (Object object : data) {
+				Users looped = (Users) object;
+				specified = looped.getAccountType();
+			}
+
+			initParams();
+			factory = null;
+			checkFactoryExists();
+
+			trans = openSession.beginTransaction();
+			Criteria critTwee = openSession.createCriteria(Account_type.class);
+			critTwee.add(Restrictions.eq("id", specified));
+			List resultset = critTwee.list();
+			trans.commit();
+
+			for (Object objectType : resultset) {
+				Account_type typeLooped = (Account_type) objectType;
+
+				singleType = typeLooped;
+			}
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		if (singleType == null) {
+			return "dit account bestaat niet";
+		}
+		return singleType.getName();
+	}
+
+	/*
+	 * private static Account_type checkUserTypeForAccountSecondORM(List list) {
+	 * 
+	 * checkFactoryExists(); initParams(); Integer accType = null; List
+	 * resultset = null;
+	 * 
+	 * for (Object object : list) { Users looped = (Users) object; accType =
+	 * looped.getAccountType(); }
+	 * 
+	 * try {
+	 * 
+	 * trans = openSession.beginTransaction(); Criteria crit =
+	 * openSession.createCriteria(Account_type.class);
+	 * crit.add(Restrictions.eq("name", accType.toString())); resultset =
+	 * crit.list();
+	 * 
+	 * data = crit.list(); trans.commit();
+	 * 
+	 * } catch (HibernateException e) { if (trans != null) trans.rollback();
+	 * e.printStackTrace(); } finally { openSession.close(); }
+	 * 
+	 * Account_type singleType = null; for (Object object : resultset) {
+	 * Account_type looped = (Account_type) object; singleType = looped; }
+	 * 
+	 * return singleType;
+	 * 
+	 * 
+	 * }
+	 */
 }

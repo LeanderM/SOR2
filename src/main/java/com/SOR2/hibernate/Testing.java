@@ -1,7 +1,5 @@
 package com.SOR2.hibernate;
 
-import java.util.List;
-
 public class Testing {
 
 	public static void main(String[] args) {
@@ -31,19 +29,19 @@ public class Testing {
 		// standaarden
 		// List data = HibernateMain.checkLogin("mark", "password");
 
-		List var = HibernateMain.getAllInvallidMessages();
-		List varSender = HibernateMain
-				.getInvallidMessagesForSpecificSenderOrReciever("admin", null);
+		/*
+		 * List var = HibernateMain.getAllInvallidMessages(); List varSender =
+		 * HibernateMain
+		 * .getInvallidMessagesForSpecificSenderOrReciever("admin", null);
+		 * 
+		 * for (Object obj : var) { InvallidMessage msg = (InvallidMessage) obj;
+		 * System.out.println(msg.getMessage()); }
+		 * 
+		 * for (Object obj : varSender) { InvallidMessage msg =
+		 * (InvallidMessage) obj; System.out.println(msg.getSender()); }
+		 */
 
-		for (Object obj : var) {
-			InvallidMessage msg = (InvallidMessage) obj;
-			System.out.println(msg.getMessage());
-		}
-
-		for (Object obj : varSender) {
-			InvallidMessage msg = (InvallidMessage) obj;
-			System.out.println(msg.getSender());
-		}
+		System.out.println(HibernateMain.getUserTypeForAccount("dfsfadmin"));
 
 		/*
 		 * System.out.println(HibernateMain
