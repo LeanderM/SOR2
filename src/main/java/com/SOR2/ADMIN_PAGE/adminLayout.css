@@ -1,3 +1,5 @@
+/* CSS file die het beheerscherm van opmaak voorziet */
+
 table{
     width: 100%;
 }
@@ -22,4 +24,26 @@ tr:nth-child(odd){
 
 .pagingNavigator{
     padding-left: 800px;
+}
+
+
+.messageTable{
+	padding-top: 50px;
+}
+
+@media (min-width: 768px){
+    .navbar-nav{
+        margin: 0 auto;
+        display: table;
+        table-layout: fixed;
+        float:none;
+    }
+}
+
+.container.menu{
+	float:left;
+}
+
+.navbar-nav li{
+	padding-left: 5px;
 }

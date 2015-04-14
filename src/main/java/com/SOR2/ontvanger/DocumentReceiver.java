@@ -20,7 +20,7 @@ public interface DocumentReceiver {
 	 * @version 0.1.0
 	 *
 	 */
-	// controlleren hoe je @WebParam kan afdwingen
+
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(
 			@WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,

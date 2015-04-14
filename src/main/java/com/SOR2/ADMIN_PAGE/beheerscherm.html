@@ -1,3 +1,4 @@
+<!-- HTML pagina van het beheerscherm -->
 <html lang="nl" xmlns:wicket="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
@@ -7,18 +8,59 @@
     </wicket:link>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="col-md-12">
-        <table>
-            <tr>
-                <th>message id</th><th>sender</th><th>subject</th><th>message</th><th>receiver</th><th>date</th>
-            </tr>
-                <tr wicket:id="rows">
-                    <td wicket:id="dataRow"></td>
-                </tr>
-        </table>
-        <span wicket:id="pagingNavigator"></span>
-        </div>
+	<div class="container-fluid">
+	  <div class="col-md-12">
+	    <div class="navbar  navbar-default navbar-fixed-top">
+		  <div class="container menu">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">Message Overview</a>
+		    </div>
+		    
+		    <div class="collapse navbar-collapse">
+		      <ul class="nav navbar-nav">
+				<!--Normale nav items	        
+				<li class="active"><a href="#">Home</a></li>
+		        <li><a href="#about">About</a></li>
+		        <li><a href="#contact">Contact</a></li> 
+		        -->
+		        <li>
+		        	<button type="button" class="btn btn-default navbar-btn" wicket:id="refresh">Refresh</button>
+		        </li>
+		        <li>
+		        	<button type="button" class="btn btn-default navbar-btn" wicket:id="logout">Logout</button>
+		        </li>		
+		      </ul>
+		    </div><!--/.nav-collapse -->
+		  </div>
+		</div>
+	   </div> 
+	    
+    
+
+    
+<!--     	<div class="col-md-12">
+    		navbar-fixed-top
+	    	<div class="navbar navbar-default">
+			    <div class="navbar-inner">
+				    <a class="brand" href="#">Overview</a>
+				    <ul class="nav navbar-nav">
+					    <li><a href="#">Refresh</a></li>
+					    <li><a href="#">Logout</a></li>
+				    </ul>
+		    	</div>
+		    </div>
+		</div>	 -->    
+	 	<div class="col-md-12 messageTable">
+	        <table>
+	            <tr>
+	                <th>message id</th><th>sender</th><th>subject</th><th>message</th><th>receiver</th><th>date</th>
+	            </tr>
+	                <tr wicket:id="rows">
+	                    <td wicket:id="dataRow"></td>
+	                </tr>
+	        </table>
+	        <span wicket:id="pagingNavigator"></span>
+	 	</div>
     </div>
 </body>
 </html>

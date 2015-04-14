@@ -25,7 +25,7 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 
 /**
- * De PostHandler klasse kan op basis van een DocumentInformation, Document en
+ * De PostHandler klasse kan op basis van een DocumentInformation, Message en
  * een url variabele een SOAP bericht opstellen en verzenden
  * 
  * @author Jesse
@@ -48,11 +48,11 @@ public class PostHandler {
 	private String nameSpace;
 	private boolean success;
 
-	// Verwacht: documentInformation, document, url voor de bestemming van de
+	// Verwacht: documentInformation, message, url voor de bestemming van de
 	// SOAP call,
 	// nameSpace van de SOAP ontvanger bv. http://ontvanger.SOR2.com/
 	public PostHandler(DocumentInformation documentInformation,
-			Message document, String url, String nameSpace) {
+			Message message, String url, String nameSpace) {
 
 		// We instantiate the needed objects
 		try {
@@ -69,7 +69,7 @@ public class PostHandler {
 		}
 
 		// Start the process of sending a SOAPcall
-		executeSOAPRequest(documentInformation, document, url);
+		executeSOAPRequest(documentInformation, message, url);
 	}
 
 	/**
@@ -77,11 +77,11 @@ public class PostHandler {
 	 * verzenden, met de juiste parameters verder luisterd hij voor exceptions
 	 */
 	private void executeSOAPRequest(DocumentInformation documentInformation,
-			Message document, String url) {
+			Message message, String url) {
 		try {
 			// Build the body and header of the SOAPMessage
 			buildSOAPHeader(documentInformation);
-			buildSOAPBody(document);
+			buildSOAPBody(message);
 
 			// Print the soap message to see what it looks like
 			System.out.println("\n Soap Request:\n");
@@ -131,7 +131,7 @@ public class PostHandler {
 	/**
 	 * Deze methode bouwt de Body voor de SOAP message
 	 */
-	private void buildSOAPBody(Message document) throws SOAPException {
+	private void buildSOAPBody(Message message) throws SOAPException {
 		// SOAP body
 		SOAPBody soapBody = soapMessage.getSOAPBody();
 
@@ -146,12 +146,12 @@ public class PostHandler {
 		bodyElement.addAttribute(new QName("xmlns"), "");
 
 		// create elements within the element we just created
-		SOAPElement XMLdocument = bodyElement.addChildElement(new QName("",
+		SOAPElement XMLmessage = bodyElement.addChildElement(new QName("",
 				"message"));
 
 		// and another element inside the document element
-		SOAPElement XMLcontent = XMLdocument.addChildElement("content");
-		XMLcontent.addTextNode(document.getContent());
+		SOAPElement XMLcontent = XMLmessage.addChildElement("content");
+		XMLcontent.addTextNode(message.getContent());
 	}
 
 	/**

@@ -26,7 +26,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * worden De methode stuurt een ResponseMessage terug waarin te lezen is of
 	 * het bericht aan de eisen voldoet, met mogelijk errors
 	 * 
-	 * Verwacht de volgende objecten: documentInformation, document
+	 * Verwacht de volgende objecten: documentInformation, message
 	 */
 	@Override
 	public ResponseMessage sendDocument(
@@ -44,10 +44,16 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		DocumentValidator validator = new DocumentValidator(
 				documentInformation, message);
 
+		// check if valid
 		if (validator.isValid()) {
-			
-			HibernateMain.addMessage(message.getContent(), documentInformation.getSender(), documentInformation.getSender(), documentInformation.getReceiver());
+			// we add the message to the dataBase.
+			HibernateMain.addMessage(message.getContent(),
+					documentInformation.getSender(),
+					documentInformation.getSender(),
+					documentInformation.getReceiver());
+			// get the list of destinations
 			DestinationList list = DestinationList.getInstance();
+			// Post the document
 			PostHandler poster = new PostHandler(documentInformation, message,
 					list.getURL(documentInformation.getReceiver()),
 					list.getNameSpace(documentInformation.getReceiver()));
