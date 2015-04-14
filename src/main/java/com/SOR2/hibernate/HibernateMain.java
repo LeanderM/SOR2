@@ -24,7 +24,7 @@ import org.hibernate.criterion.Restrictions;
  * @version 0.1.0
  *
  */
-public abstract class HibernateMain implements HibernateMainInterface {
+public abstract class HibernateMain {
 
 	// bevat de factory zelf
 	private static SessionFactory factory;
@@ -46,7 +46,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * alle models gedefineert in de hibernate map
 	 */
 	@SuppressWarnings("deprecation")
-	public void initFactory() {
+	public static void initFactory() {
 		try {
 			factory = new AnnotationConfiguration().configure()
 					.addAnnotatedClass(Account_type.class)
@@ -65,7 +65,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * checkt of de factory al geinstantieerd is als dit niet het geval is wordt
 	 * dat alsnog gedaan
 	 */
-	public void checkFactoryExists() {
+	public static void checkFactoryExists() {
 		if (factory == null) {
 			initFactory();
 		}
@@ -82,7 +82,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 *
 	 * @returns Resultaat van de berekening.
 	 */
-	public void initParams() {
+	public static void initParams() {
 		// reset all data
 		id = null;
 		openSession = null;
@@ -108,7 +108,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * 
 	 * /** voegt een accountype toe aan de databse
 	 */
-	public Integer addAccountType(String name) {
+	public static Integer addAccountType(String name) {
 
 		checkFactoryExists();
 		initParams();
@@ -132,8 +132,8 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * voegt een ID toe aan de databse
 	 *
 	 */
-	public int addID(String accountType, String firstName, String message,
-			String message_recipients) {
+	public static int addID(String accountType, String firstName,
+			String message, String message_recipients) {
 
 		checkFactoryExists();
 		initParams();
@@ -160,7 +160,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * voegt een message toe aan de databse
 	 *
 	 */
-	public int addMessage(String message, String sender, String subject,
+	public static int addMessage(String message, String sender, String subject,
 			String receiver) {
 
 		checkFactoryExists();
@@ -217,7 +217,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * voegt een message receipient toe aan de databse
 	 *
 	 */
-	public int addMessageRecipient(String recId, int message_id) {
+	public static int addMessageRecipient(String recId, int message_id) {
 
 		checkFactoryExists();
 		initParams();
@@ -242,7 +242,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * voegt een user toe aan de databse
 	 *
 	 */
-	public void addUser(int accountType, String password, String username) {
+	public static void addUser(int accountType, String password, String username) {
 
 		checkFactoryExists();
 		initParams();
@@ -285,12 +285,7 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * @returns Resultaat van de berekening.
 	 */
 	// ////////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-
-	public List getSpecificSelectionRawSQL(String colom, String table,
-=======
 	public static List getSpecificSelectionRawSQL(String colom, String table,
->>>>>>> 72fb63929821b120301e744d7c199d7f088f0cea
 			String otherSQL) {
 		checkFactoryExists();
 		initParams();
@@ -316,9 +311,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 		return data;
 	}
 
-<<<<<<< HEAD
-	public List getMailForAdmin(String usr) {
-=======
 	/**
 	 * 
 	 * @param usr
@@ -326,7 +318,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * @return een lijst met messegas specifiek aan de megegeven user
 	 */
 	public static List getMailForAdmin(String usr) {
->>>>>>> 72fb63929821b120301e744d7c199d7f088f0cea
 		checkFactoryExists();
 		initParams();
 
@@ -352,9 +343,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 		return data;
 	}
 
-<<<<<<< HEAD
-	public List getAllMail() {
-=======
 	/**
 	 * 
 	 * @param sender
@@ -422,7 +410,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * @return alle valide berichten die op het moment in de database staan.
 	 */
 	public static List getAllMail() {
->>>>>>> 72fb63929821b120301e744d7c199d7f088f0cea
 		checkFactoryExists();
 		initParams();
 
@@ -445,9 +432,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 		return data;
 	}
 
-<<<<<<< HEAD
-	public List checkLogin(String usr, String pass) {
-=======
 	/**
 	 * 
 	 * Deze methode geeft het hele User object terug in een lijst waar ook nog
@@ -462,7 +446,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 *         een lege lijst
 	 */
 	public static List checkLogin(String usr, String pass) {
->>>>>>> 72fb63929821b120301e744d7c199d7f088f0cea
 		checkFactoryExists();
 		initParams();
 
@@ -488,9 +471,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 		return data;
 	}
 
-<<<<<<< HEAD
-	public boolean checkUsrExists(String usr) {
-=======
 	/**
 	 * 
 	 * Deze methode dient ervoor om te kijken of een gebruiker wel bestaat of
@@ -501,7 +481,6 @@ public abstract class HibernateMain implements HibernateMainInterface {
 	 * @return een boolean of de user bestaat of niet
 	 */
 	public static boolean checkUsrExists(String usr) {
->>>>>>> 72fb63929821b120301e744d7c199d7f088f0cea
 		checkFactoryExists();
 		initParams();
 
