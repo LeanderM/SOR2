@@ -513,6 +513,7 @@ public abstract class HibernateMain {
 
 	}
 
+	// commentaar komt later nog
 	public static String getUserTypeForAccount(String usr) {
 		Account_type singleType = null;
 		Integer specified = null;
