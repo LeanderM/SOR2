@@ -82,21 +82,26 @@
 		<div class="row">
 				<div class="col-lg-12 messageTable">
 					<div class="row">
-						<table>
-							<th>message id</th><th>sender</th><th>subject</th><th>message status</th><th>receiver</th><th>date</th>
-							<tr wicket:id="rows" class="messageRow">
-								<td wicket:id="dataRow" class="messages"></td>
-							<tr class="subRow">
-								<td colspan="6">
-									<p>test status give some input here</p>
-								</td>
-							</tr>
-							</tr>
-						</table>
+						<div wicket:id=dataViewContainer>
+							<table>
+								<th>message id</th><th>sender</th><th>subject</th><th>message status</th><th>receiver</th><th>date</th>
+								<tr wicket:id="rows" class="messageRow">
+									<td wicket:id="dataRow" class="messages"></td>
+								<tr class="subRow">
+									<td colspan="6">
+										<p>test status give some input here</p>
+									</td>
+								</tr>
+								</tr>
+							</table>
+						</div>	
 						<span wicket:id="pagingNavigator"></span>
+						
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<p wicket:id="testLabel"></p>
 </body>
 </html>

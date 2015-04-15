@@ -7,6 +7,7 @@ import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
@@ -33,9 +34,18 @@ import com.SOR2.hibernate.Messages;
 public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 	private static final long serialVersionUID = 1L;
+	private Label testLabel;
+	private DataView<String[]> dataView;
+	private PagingNavigator navigation;
+	private WebMarkupContainer dataViewContainer;
 
 	public beheerscherm(final PageParameters parameters) {
 		super(parameters);
+
+		// TODO testcode
+		testLabel = new Label("testLabel", "Dit is een test label");
+		testLabel.setOutputMarkupId(true);
+		add(testLabel);
 
 		// haal gegevens op om de tabel mee te vullen
 		List currentData = retrieveInformation();
@@ -101,8 +111,12 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 			@Override
 			protected void respond(AjaxRequestTarget target) {
+				// Methode die de elementen gaat aanpassen
 				processInvallidMessageCall();
-
+				// Voeg de dataViewContainer toe aan via de handler
+				target.add(dataViewContainer);
+				// Voeg de navigatie toe via de handler
+				target.add(navigation);
 			}
 
 		};
@@ -158,8 +172,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 				dataList);
 
 		// De table met de wicketid van de table rows
-		DataView<String[]> dataView = new DataView<String[]>("rows",
-				listDataProvider) {
+		dataView = new DataView<String[]>("rows", listDataProvider) {
 
 			// Geeft aan hoe iedere rij moet worden gepopuleerd
 			@Override
@@ -176,11 +189,20 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			}
 		};
 
+		// Div die de tabel omringt
+		dataViewContainer = new WebMarkupContainer("dataViewContainer");
+		dataViewContainer.setOutputMarkupId(true);
+
 		// Geeft aan hoeveel items er per page moeten worden weergegeven
 		dataView.setItemsPerPage(15);
 
-		add(dataView);
-		add(new PagingNavigator("pagingNavigator", dataView));
+		// Voeg de dataView aan de container toe
+		dataViewContainer.add(dataView);
+		add(dataViewContainer);
+
+		navigation = new PagingNavigator("pagingNavigator", dataView);
+		navigation.setOutputMarkupId(true);
+		add(navigation);
 	}
 
 	/**
@@ -248,8 +270,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 				dataList);
 
 		// De table met de wicketid van de table rows
-		DataView<String[]> dataView = new DataView<String[]>("rows",
-				listDataProvider) {
+		dataView = new DataView<String[]>("rows", listDataProvider) {
 
 			// Geeft aan hoe iedere rij moet worden gepopuleerd
 			@Override
@@ -268,9 +289,11 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 		// Geeft aan hoeveel items er per page moeten worden weergegeven
 		dataView.setItemsPerPage(15);
+		dataViewContainer.replace(dataView);
 
-		add(dataView);
-		add(new PagingNavigator("pagingNavigator", dataView));
+		navigation = new PagingNavigator("pagingNavigator", dataView);
+		navigation.setOutputMarkupId(true);
+		replace(navigation);
 
 	}
 
