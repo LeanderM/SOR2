@@ -4,26 +4,31 @@ table{
     width: 100%;
 }
 
-td{
+.messages{
     overflow: hidden;
     text-align: center;
-    padding: 13px !important;
+    padding: 13px !important; /* overschrijven van de algemene wicket/bootstrap css**/
 }
 
 th{
     background-color: #0C6395;
     color: #fff;
-    text-align: center !important; /* not nice, but easier than going through wicket/bootstrap css**/
+    text-align: center !important; /* overschrijven van de algemene wicket/bootstrap css**/
     font-size: 20px;
-    padding: 17px !important; /* sorry, not sorry**/
+    padding: 17px !important; /* overschrijven van de algemene wicket/bootstrap css**/
 }
 
-tr:nth-child(even){
+tr:nth-child(4n), tr:nth-child(4n-1){
     background-color: rgba(11, 99, 149, 0.4);
 }
 
-tr:nth-child(odd){
+tr:nth-child(4n-2), tr:nth-child(4n-3){
     background-color: rgba(190, 190, 190, 0.4);
+}
+
+.subRow{
+    background-color: #feffa2 !important;
+    text-align: center;
 }
 
 .pagingNavigator{
