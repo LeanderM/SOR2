@@ -19,6 +19,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.hibernate.HibernateMain;
+import com.SOR2.hibernate.InvallidMessage;
 import com.SOR2.hibernate.Messages;
 
 /**
@@ -78,7 +79,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			@Override
 			protected void respond(AjaxRequestTarget target) {
 				getSession().invalidate();
-				throw new RestartResponseException(beheerschermRedirect.class);
+				throw new RestartResponseException(beheerscherm.class);
 			}
 		};
 		add(logoutClickMethod);
@@ -95,6 +96,32 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		};
 		logout.setOutputMarkupId(true);
 		add(logout);
+
+		final AbstractDefaultAjaxBehavior InvallidMessageClickMethod = new AbstractDefaultAjaxBehavior() {
+
+			@Override
+			protected void respond(AjaxRequestTarget target) {
+				processInvallidMessageCall();
+
+			}
+
+		};
+		add(InvallidMessageClickMethod);
+
+		Button invallidMessage = new Button("Invalid Messages") {
+
+			@Override
+			protected void onComponentTag(ComponentTag tag) {
+				// voeg de ajax call toe aan de component tag om uit te voeren
+				// bij onMouseDown
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
+						+ InvallidMessageClickMethod.getCallbackUrl() + "'});");
+				super.onComponentTag(tag);
+			}
+		};
+		invallidMessage.setOutputMarkupId(true);
+		add(invallidMessage);
+
 	}
 
 	/**
@@ -105,6 +132,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 		// Een nieuwe ArrayList
 		List<String[]> dataList = new ArrayList<String[]>();
+
 		// We vormen de bestaande List in een List met String arrays
 		// Deze zijn gemakkelijker aan een tabel toe te voegen
 		for (int i = 0; i < data.size(); i++) {
@@ -114,6 +142,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			String[] textRow = new String[6];
 			// Alle data uit de map in de String array stoppen
 			Object message_Id = row.getMessage_ID();
+
 			textRow[0] = message_Id.toString();
 			textRow[1] = row.getSender();
 			textRow[2] = row.getSubject();
@@ -161,6 +190,88 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 	public List retrieveInformation() {
 		List result = HibernateMain.getAllMail();
 		return result;
+	}
+
+	private void processInvallidMessageCall() {
+		setInformationInvallid(HibernateMain.getAllInvallidMessages());
+
+	}
+
+	private void setInformationInvallid(List data) {
+		// Een nieuwe ArrayList
+		List<String[]> dataList = new ArrayList<String[]>();
+
+		String sender = null;
+		String subject = null;
+		String message = null;
+		String receiver = null;
+		String date = null;
+
+		// We vormen de bestaande List in een List met String arrays
+		// Deze zijn gemakkelijker aan een tabel toe te voegen
+		for (int i = 0; i < data.size(); i++) {
+			// Messages object ophalen
+			InvallidMessage row = (InvallidMessage) data.get(i);
+			// Nieuwe String array maken
+			String[] textRow = new String[6];
+			// Alle data uit de map in de String array stoppen
+			Object message_Id = row.getInvallidMessage_ID();
+
+			if (row.getSender() == null) {
+				sender = "empty";
+			}
+			if (row.getSubject() == null) {
+				subject = "empty";
+			}
+			if (row.getMessage() == null) {
+				message = "empty";
+			}
+			if (row.getReceiver() == null) {
+				receiver = "empty";
+			}
+			if (row.getDate() == null) {
+				date = "empty";
+			}
+
+			textRow[0] = message_Id.toString();
+			textRow[1] = sender;
+			textRow[2] = subject;
+			textRow[3] = message;
+			textRow[4] = receiver;
+			textRow[5] = date;
+			// Voeg de String array toe aan de dataList
+			dataList.add(textRow);
+		}
+
+		// DatalistProvider object met de dataList
+		ListDataProvider<String[]> listDataProvider = new ListDataProvider<String[]>(
+				dataList);
+
+		// De table met de wicketid van de table rows
+		DataView<String[]> dataView = new DataView<String[]>("rows",
+				listDataProvider) {
+
+			// Geeft aan hoe iedere rij moet worden gepopuleerd
+			@Override
+			protected void populateItem(Item<String[]> item) {
+				String[] messagesArray = item.getModelObject();
+				// Een rij
+				RepeatingView repeatingView = new RepeatingView("dataRow");
+				// Een loop om cellen aan de rij toe te voegen
+				for (int i = 0; i < messagesArray.length; i++) {
+					repeatingView.add(new Label(repeatingView.newChildId(),
+							messagesArray[i]));
+				}
+				item.add(repeatingView);
+			}
+		};
+
+		// Geeft aan hoeveel items er per page moeten worden weergegeven
+		dataView.setItemsPerPage(15);
+
+		add(dataView);
+		add(new PagingNavigator("pagingNavigator", dataView));
+
 	}
 
 	/*
