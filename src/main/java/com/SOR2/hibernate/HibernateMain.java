@@ -520,7 +520,7 @@ public abstract class HibernateMain {
 	 * 
 	 * @param usr
 	 *            de gebruiker die gecontroleerd dient te worden
-	 * @return een boolean of de user bestaat of niet
+	 * @return de naam van de desbetreffende accounttype
 	 */
 	public static String getUserTypeForAccount(String usr) {
 		Account_type singleType = null;
