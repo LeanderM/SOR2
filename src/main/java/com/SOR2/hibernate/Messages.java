@@ -129,8 +129,12 @@ public class Messages {
 		this.receiver = receiver;
 	}
 
-	public String getDate() {
+	public String getDatePrecise() {
 		return date;
+	}
+
+	public String getDate() {
+		return date.substring(0, date.length() - 7);
 	}
 
 	public void setDate(String date) {

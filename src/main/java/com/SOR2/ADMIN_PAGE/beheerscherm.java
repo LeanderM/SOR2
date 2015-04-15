@@ -41,11 +41,10 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 		// voer de methode uit die de tabel bouwt
 		setInformation(currentData);
-		
+
 		/*
 		 * 
 		 * Refresh button
-		 * 
 		 */
 		// Ajax call voor de refresh button
 		final AbstractDefaultAjaxBehavior refreshClickMethod = new AbstractDefaultAjaxBehavior() {
@@ -61,33 +60,36 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		Button refresh = new Button("refresh") {
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
-				// voeg de ajax call toe aan de component tag om uit te voeren bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ refreshClickMethod.getCallbackUrl() +"'});");
+				// voeg de ajax call toe aan de component tag om uit te voeren
+				// bij onMouseDown
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
+						+ refreshClickMethod.getCallbackUrl() + "'});");
 				super.onComponentTag(tag);
 			}
 		};
 		refresh.setOutputMarkupId(true);
 		add(refresh);
-		
+
 		/*
 		 * 
 		 * Logout button
-		 * 
 		 */
 		final AbstractDefaultAjaxBehavior logoutClickMethod = new AbstractDefaultAjaxBehavior() {
 			@Override
 			protected void respond(AjaxRequestTarget target) {
 				getSession().invalidate();
-		        throw new RestartResponseException(beheerscherm.class);
+				throw new RestartResponseException(beheerscherm.class);
 			}
 		};
 		add(logoutClickMethod);
-		
+
 		Button logout = new Button("logout") {
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
-				// voeg de ajax call toe aan de component tag om uit te voeren bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"+ logoutClickMethod.getCallbackUrl() +"'});");
+				// voeg de ajax call toe aan de component tag om uit te voeren
+				// bij onMouseDown
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
+						+ logoutClickMethod.getCallbackUrl() + "'});");
 				super.onComponentTag(tag);
 			}
 		};
