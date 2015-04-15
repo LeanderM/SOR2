@@ -21,11 +21,20 @@ public class DocumentValidator {
 	private DestinationList destinationList;
 	private int statusCode;
 
+	public int getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(int statusCode) {
+		this.statusCode = statusCode;
+	}
+
 	public DocumentValidator(DocumentInformation documentInformation,
 			Message document) {
 		this.documentInformation = documentInformation;
 		this.message = document;
 		valid = true;
+		statusCode = 0;
 		destinationList = DestinationList.getInstance();
 
 		validate();
@@ -67,6 +76,7 @@ public class DocumentValidator {
 		if (!message.hasContent()) {
 			invalid();
 			addError("'message' does not contain any 'content'");
+			initiateStatusCode(31);
 		}
 	}
 

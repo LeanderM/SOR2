@@ -47,7 +47,6 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		// check if valid
 		if (validator.isValid()) {
 			// we add the message to the dataBase.
-
 			HibernateMain.addMessage(message.getContent(),
 					documentInformation.getSender(),
 					documentInformation.getSubject(),
@@ -61,11 +60,14 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(true);
 
 		} else {
-
+			// if the message is invalid we will still keep it in the dataBase
+			// TODO send statuscode
+			HibernateMain.addInvallidMessage(message.getContent(),
+					documentInformation.getSender(),
+					documentInformation.getSubject(),
+					documentInformation.getReceiver());
+			// in case the message was not valid we return all the errors
+			return new ResponseMessage(false, validator.getErrors());
 		}
-
-		// in case the message was not valid we return all the errors
-		return new ResponseMessage(false, validator.getErrors());
-
 	}
 }
