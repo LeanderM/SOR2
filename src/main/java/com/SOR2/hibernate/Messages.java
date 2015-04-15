@@ -42,6 +42,9 @@ public class Messages {
 	@Column(name = "receiver")
 	private String receiver;
 
+	@Column(name = "status")
+	private int status;
+
 	/**
 	 * Constructor moet leeg zijn
 	 */
@@ -135,6 +138,14 @@ public class Messages {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }
