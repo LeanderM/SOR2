@@ -41,7 +41,8 @@ public class Testing {
 		 * (InvallidMessage) obj; System.out.println(msg.getSender()); }
 		 */
 
-		System.out.println(HibernateMain.getUserTypeForAccount("dfsfadmin"));
+		System.out.println(HibernateMain
+				.getUserTypeForAccount("Belastingsdienst"));
 
 		/*
 		 * System.out.println(HibernateMain

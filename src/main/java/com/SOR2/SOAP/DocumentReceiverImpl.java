@@ -49,7 +49,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			// we add the message to the dataBase.
 			HibernateMain.addMessage(message.getContent(),
 					documentInformation.getSender(),
-					documentInformation.getSender(),
+					documentInformation.getSubject(),
 					documentInformation.getReceiver());
 			// get the list of destinations
 			DestinationList list = DestinationList.getInstance();
@@ -58,10 +58,16 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					list.getURL(documentInformation.getReceiver()),
 					list.getNameSpace(documentInformation.getReceiver()));
 			return new ResponseMessage(true);
+
+		} else {
+			// if the message is invalid we will still keep it in the dataBase
+			// TODO send statuscode
+			HibernateMain.addInvallidMessage(message.getContent(),
+					documentInformation.getSender(),
+					documentInformation.getSubject(),
+					documentInformation.getReceiver());
+			// in case the message was not valid we return all the errors
+			return new ResponseMessage(false, validator.getErrors());
 		}
-
-		// in case the message was not valid we return all the errors
-		return new ResponseMessage(false, validator.getErrors());
-
 	}
 }
