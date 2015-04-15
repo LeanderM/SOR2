@@ -23,6 +23,7 @@ public class beheerschermRedirect extends WebPage implements
 		String userRole;
 
 		// Check de role van de user via de facade
+		userRole = "ADMIN";
 		// userRole = HibernateMain.getRole(userName);
 
 		if (userRole.equals("ADMIN")) {
