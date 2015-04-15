@@ -3,9 +3,10 @@ package com.SOR2.ADMIN_PAGE;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.WebPage;
 
-import com.SOR2.AccessDenied;
+import com.SOR2.HomePage;
 import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.SESSION.BackendSession;
+import com.SOR2.hibernate.HibernateMain;
 
 /**
  * Check user Role en redirect naar juiste beheerpage
@@ -23,15 +24,16 @@ public class beheerschermRedirect extends WebPage implements
 		String userRole;
 
 		// Check de role van de user via de facade
-		userRole = "ADMIN";
-		// userRole = HibernateMain.getRole(userName);
+		// userRole = "ADMIN";
+		userRole = HibernateMain.getUserTypeForAccount(userName);
 
-		if (userRole.equals("ADMIN")) {
+		System.out.println(userRole);
+
+		if (userRole.equals("Admin")) {
 			throw new RestartResponseAtInterceptPageException(
 					beheerscherm.class);
 		} else {
-			throw new RestartResponseAtInterceptPageException(
-					AccessDenied.class);
+			throw new RestartResponseAtInterceptPageException(HomePage.class);
 		}
 	}
 }

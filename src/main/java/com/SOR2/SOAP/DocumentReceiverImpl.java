@@ -47,9 +47,10 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		// check if valid
 		if (validator.isValid()) {
 			// we add the message to the dataBase.
+
 			HibernateMain.addMessage(message.getContent(),
 					documentInformation.getSender(),
-					documentInformation.getSender(),
+					documentInformation.getSubject(),
 					documentInformation.getReceiver());
 			// get the list of destinations
 			DestinationList list = DestinationList.getInstance();
@@ -58,6 +59,9 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					list.getURL(documentInformation.getReceiver()),
 					list.getNameSpace(documentInformation.getReceiver()));
 			return new ResponseMessage(true);
+
+		} else {
+
 		}
 
 		// in case the message was not valid we return all the errors

@@ -14,11 +14,12 @@ import com.SOR2.hibernate.HibernateMain;
  *
  */
 public class DocumentValidator {
-	DocumentInformation documentInformation;
-	Message message;
-	Boolean valid;
-	String errors;
-	DestinationList destinationList;
+	private DocumentInformation documentInformation;
+	private Message message;
+	private Boolean valid;
+	private String errors;
+	private DestinationList destinationList;
+	private int statusCode;
 
 	public DocumentValidator(DocumentInformation documentInformation,
 			Message document) {
@@ -39,21 +40,26 @@ public class DocumentValidator {
 		if (!documentInformation.hasReceiver()) {
 			invalid();
 			addError("'documentInformation' Does not contain a 'receiver'");
+			initiateStatusCode(11);
 		} else if (!destinationList.hasKey(documentInformation.getReceiver())) {
 			invalid();
 			addError("the given 'receiver' does not match any existing receiver");
+			initiateStatusCode(12);
 		}
 		if (!documentInformation.hasSender()) {
 			invalid();
 			addError("'documentInformation' Does not contain a 'sender'");
+			initiateStatusCode(21);
 		} else if (!HibernateMain.checkUsrExists(documentInformation
 				.getSender())) {
 			invalid();
 			addError("the given 'sender' does not match any existing sender");
+			initiateStatusCode(22);
 		}
 		if (!documentInformation.hasSubject()) {
 			invalid();
 			addError("'documentInformation' does not contain a 'subject'");
+			initiateStatusCode(23);
 		}
 	}
 
@@ -81,5 +87,12 @@ public class DocumentValidator {
 
 	public String getErrors() {
 		return errors;
+	}
+
+	public void initiateStatusCode(int statusCode) {
+		// If there is no statusCode add statusCode
+		if (this.statusCode != 0) {
+			this.statusCode = statusCode;
+		}
 	}
 }
