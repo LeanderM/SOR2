@@ -513,7 +513,15 @@ public abstract class HibernateMain {
 
 	}
 
-	// commentaar komt later nog
+	/**
+	 * 
+	 * Deze methode dient ervoor om te kijken welk accountype de megegeven
+	 * gebruiker heeft
+	 * 
+	 * @param usr
+	 *            de gebruiker die gecontroleerd dient te worden
+	 * @return een boolean of de user bestaat of niet
+	 */
 	public static String getUserTypeForAccount(String usr) {
 		Account_type singleType = null;
 		Integer specified = null;
@@ -563,33 +571,4 @@ public abstract class HibernateMain {
 		return singleType.getName();
 	}
 
-	/*
-	 * private static Account_type checkUserTypeForAccountSecondORM(List list) {
-	 * 
-	 * checkFactoryExists(); initParams(); Integer accType = null; List
-	 * resultset = null;
-	 * 
-	 * for (Object object : list) { Users looped = (Users) object; accType =
-	 * looped.getAccountType(); }
-	 * 
-	 * try {
-	 * 
-	 * trans = openSession.beginTransaction(); Criteria crit =
-	 * openSession.createCriteria(Account_type.class);
-	 * crit.add(Restrictions.eq("name", accType.toString())); resultset =
-	 * crit.list();
-	 * 
-	 * data = crit.list(); trans.commit();
-	 * 
-	 * } catch (HibernateException e) { if (trans != null) trans.rollback();
-	 * e.printStackTrace(); } finally { openSession.close(); }
-	 * 
-	 * Account_type singleType = null; for (Object object : resultset) {
-	 * Account_type looped = (Account_type) object; singleType = looped; }
-	 * 
-	 * return singleType;
-	 * 
-	 * 
-	 * }
-	 */
 }
