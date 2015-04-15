@@ -161,7 +161,7 @@ public abstract class HibernateMain {
 	 *
 	 */
 	public static int addMessage(String message, String sender, String subject,
-			String receiver) {
+			String receiver, int verstuurd) {
 
 		checkFactoryExists();
 		initParams();
@@ -172,6 +172,9 @@ public abstract class HibernateMain {
 			type.setSender(sender);
 			type.setSubject(subject);
 			type.setReceiver(receiver);
+
+			berichtStatus status = new berichtStatus();
+			status.setVerstuurd(1);
 
 			id = (Integer) openSession.save(type);
 			trans.commit();
@@ -189,7 +192,7 @@ public abstract class HibernateMain {
 	 * voegt een invalid message toe aan de database
 	 */
 	public static int addInvallidMessage(String message, String sender,
-			String subject, String receiver) {
+			String subject, String receiver, int niet_verstuurd) {
 
 		checkFactoryExists();
 		initParams();
@@ -200,6 +203,9 @@ public abstract class HibernateMain {
 			type.setSender(sender);
 			type.setSubject(subject);
 			type.setReceiver(receiver);
+
+			berichtStatus status = new berichtStatus();
+			status.setNiet_Verstuurd(2);
 
 			id = (Integer) openSession.save(type);
 			trans.commit();
@@ -258,6 +264,37 @@ public abstract class HibernateMain {
 
 			trans.commit();
 		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+	}
+
+	/**
+	 * voegt de status van het bericht toe aan de database.
+	 * 
+	 * @param verstuurd
+	 * @param niet_verstuurd
+	 */
+	public static void addBericht_Status(int verstuurd, int niet_verstuurd) {
+
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			berichtStatus status = new berichtStatus();
+
+			status.setNiet_Verstuurd(niet_verstuurd);
+			status.setVerstuurd(verstuurd);
+
+			openSession.save(status);
+
+			trans.commit();
+		}
+
+		catch (HibernateException e) {
 			if (trans != null)
 				trans.rollback();
 			e.printStackTrace();
@@ -390,6 +427,33 @@ public abstract class HibernateMain {
 
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(InvallidMessage.class)
+					.addOrder(Order.desc("date"));
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
+	/**
+	 * 
+	 * @return alle statussen die in de database staan.
+	 */
+	public static List getAllStatussen() {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(berichtStatus.class)
 					.addOrder(Order.desc("date"));
 			data = crit.list();
 			trans.commit();
