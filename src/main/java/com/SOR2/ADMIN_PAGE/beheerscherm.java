@@ -6,12 +6,12 @@ import java.util.List;
 import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -36,16 +36,12 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 	private static final long serialVersionUID = 1L;
 	private Label testLabel;
 	private DataView<String[]> dataView;
-	private PagingNavigator navigation;
+	// private PagingNavigator navigation;
+	private AjaxPagingNavigator navigation;
 	private WebMarkupContainer dataViewContainer;
 
 	public beheerscherm(final PageParameters parameters) {
 		super(parameters);
-
-		// TODO testcode
-		testLabel = new Label("testLabel", "Dit is een test label");
-		testLabel.setOutputMarkupId(true);
-		add(testLabel);
 
 		// haal gegevens op om de tabel mee te vullen
 		List currentData = retrieveInformation();
@@ -107,16 +103,19 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		logout.setOutputMarkupId(true);
 		add(logout);
 
+		/*
+		 * 
+		 * invalidMessages button
+		 */
 		final AbstractDefaultAjaxBehavior InvallidMessageClickMethod = new AbstractDefaultAjaxBehavior() {
 
 			@Override
 			protected void respond(AjaxRequestTarget target) {
 				// Methode die de elementen gaat aanpassen
 				processInvallidMessageCall();
+
 				// Voeg de dataViewContainer toe aan via de handler
 				target.add(dataViewContainer);
-				// Voeg de navigatie toe via de handler
-				target.add(navigation);
 			}
 
 		};
@@ -198,11 +197,22 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 		// Voeg de dataView aan de container toe
 		dataViewContainer.add(dataView);
+
+		// PagingNavigator die gebruik maakt van ajax
+		navigation = new AjaxPagingNavigator("pagingNavigator", dataView) {
+			@Override
+			protected void onAjaxEvent(AjaxRequestTarget target) {
+				// Geeft opnieuw de dataViewContainer mee aan de target
+				target.add(dataViewContainer);
+			}
+		};
+
+		// Voeg de navigatie toe aan de dataViewContainer
+		dataViewContainer.add(navigation);
+
+		// Voeg de dataViewContainer toe aan de pagina
 		add(dataViewContainer);
 
-		navigation = new PagingNavigator("pagingNavigator", dataView);
-		navigation.setOutputMarkupId(true);
-		add(navigation);
 	}
 
 	/**
@@ -291,9 +301,17 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		dataView.setItemsPerPage(15);
 		dataViewContainer.replace(dataView);
 
-		navigation = new PagingNavigator("pagingNavigator", dataView);
-		navigation.setOutputMarkupId(true);
-		replace(navigation);
+		// Opnieuw navigatie aanmaken voor de nieuw dataView
+		navigation = new AjaxPagingNavigator("pagingNavigator", dataView) {
+			@Override
+			protected void onAjaxEvent(AjaxRequestTarget target) {
+				// Geeft opnieuw de dataViewContainer mee aan de target
+				target.add(dataViewContainer);
+			}
+		};
+
+		// navigation = new PagingNavigator("pagingNavigator", dataView);
+		dataViewContainer.replace(navigation);
 
 	}
 
