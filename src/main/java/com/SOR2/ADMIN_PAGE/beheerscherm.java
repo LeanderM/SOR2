@@ -233,12 +233,6 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 		// Een nieuwe ArrayList
 		List<String[]> dataList = new ArrayList<String[]>();
 
-		String sender = null;
-		String subject = null;
-		String message = null;
-		String receiver = null;
-		String date = null;
-
 		// We vormen de bestaande List in een List met String arrays
 		// Deze zijn gemakkelijker aan een tabel toe te voegen
 		for (int i = 0; i < data.size(); i++) {
@@ -249,28 +243,12 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			// Alle data uit de map in de String array stoppen
 			Object message_Id = row.getInvallidMessage_ID();
 
-			if (row.getSender() == null) {
-				sender = "empty";
-			}
-			if (row.getSubject() == null) {
-				subject = "empty";
-			}
-			if (row.getMessage() == null) {
-				message = "empty";
-			}
-			if (row.getReceiver() == null) {
-				receiver = "empty";
-			}
-			if (row.getDate() == null) {
-				date = "empty";
-			}
-
 			textRow[0] = message_Id.toString();
-			textRow[1] = sender;
-			textRow[2] = subject;
-			textRow[3] = message;
-			textRow[4] = receiver;
-			textRow[5] = date;
+			textRow[1] = row.getSender();
+			textRow[2] = row.getSubject();
+			textRow[3] = row.getMessage();
+			textRow[4] = row.getReceiver();
+			textRow[5] = row.getDate();
 			// Voeg de String array toe aan de dataList
 			dataList.add(textRow);
 		}
