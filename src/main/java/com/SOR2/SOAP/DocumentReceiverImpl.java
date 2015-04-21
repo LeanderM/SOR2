@@ -11,7 +11,7 @@ import com.SOR2.hibernate.HibernateMain;
  * De DocumentReceiverImpl class is een implementatie van de SOAP interface
  * DocumentReceiver Deze classe heeft een methode die d.m.v een SOAPcall kan
  * worden aangeroepen Het hoofdzakelijke doel is het ontvangen van documenten
- * 
+ *
  * @author Jesse
  * @version 0.1.0
  *
@@ -25,7 +25,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * Objecten De methode zorgt er voor dat ontvangen berichten gecontrolleerd
 	 * worden De methode stuurt een ResponseMessage terug waarin te lezen is of
 	 * het bericht aan de eisen voldoet, met mogelijk errors
-	 * 
+	 *
 	 * Verwacht de volgende objecten: documentInformation, message
 	 */
 	@Override
@@ -47,10 +47,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		// check if valid
 		if (validator.isValid()) {
 			// we add the message to the dataBase.
-			HibernateMain.addMessage(message.getContent(),
-					documentInformation.getSender(),
-					documentInformation.getSubject(),
-					documentInformation.getReceiver());
+
 			// get the list of destinations
 			DestinationList list = DestinationList.getInstance();
 			// Post the document
@@ -62,10 +59,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		} else {
 			// if the message is invalid we will still keep it in the dataBase
 			// TODO send statuscode
-			HibernateMain.addInvallidMessage(message.getContent(),
-					documentInformation.getSender(),
-					documentInformation.getSubject(),
-					documentInformation.getReceiver());
+
 			// in case the message was not valid we return all the errors
 			return new ResponseMessage(false, validator.getErrors());
 		}

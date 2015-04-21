@@ -407,6 +407,33 @@ public abstract class HibernateMain {
 
 	/**
 	 * 
+	 * @return alle statussen die in de database staan.
+	 */
+	public static List getAllStatussen() {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(BerichtStatus.class)
+					.addOrder(Order.desc("date"));
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
+	/**
+	 * 
 	 * @return alle valide berichten die op het moment in de database staan.
 	 */
 	public static List getAllMail() {
@@ -569,6 +596,57 @@ public abstract class HibernateMain {
 			return "dit account bestaat niet";
 		}
 		return singleType.getName();
+	}
+
+	/**
+	 * Join om status te koppelen aan de Message.
+	 * 
+	 * @param message_ID
+	 * @return de status
+	 */
+	public static String getStatusByMessage_ID(int message_ID) {
+		String status = null;
+		Integer status_ID = null;
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Messages.class);
+			crit.add(Restrictions.eq("message_ID", message_ID));
+
+			data = crit.list();
+			trans.commit();
+
+			for (Object obj : data) {
+				Messages loop = (Messages) obj;
+				status_ID = loop.getStatus();
+			}
+
+			initParams();
+			factory = null;
+			checkFactoryExists();
+
+			trans = openSession.beginTransaction();
+			Criteria critTwee = openSession.createCriteria(BerichtStatus.class);
+			critTwee.add(Restrictions.eq("status_ID", status_ID));
+			List resultset = critTwee.list();
+			trans.commit();
+
+			for (Object obj1 : resultset) {
+				BerichtStatus loop1 = (BerichtStatus) obj1;
+				status = loop1.getStatus();
+			}
+		}
+
+		catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return status;
 	}
 
 }
