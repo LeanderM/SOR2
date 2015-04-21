@@ -3,13 +3,10 @@ package com.SOR2.ADMIN_PAGE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
-import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.RepeatingView;
 import org.apache.wicket.markup.repeater.data.DataView;
@@ -46,39 +43,16 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 
 		// voer de methode uit die de tabel bouwt
 		setInformation(currentData);
+	}
 
-		/*
-		 * 
-		 * invalidMessages button
-		 */
-		final AbstractDefaultAjaxBehavior InvalidMessageClickMethod = new AbstractDefaultAjaxBehavior() {
+	// Override the onclick voor de invalidmessagesButton
+	@Override
+	public void onClickInvalid(AjaxRequestTarget target) {
+		// Methode die de elementen gaat aanpassen
+		processInvallidMessageCall();
 
-			@Override
-			protected void respond(AjaxRequestTarget target) {
-				// Methode die de elementen gaat aanpassen
-				processInvallidMessageCall();
-
-				// Voeg de dataViewContainer toe aan via de handler
-				target.add(dataViewContainer);
-			}
-
-		};
-		add(InvalidMessageClickMethod);
-
-		Button invalidMessage = new Button("Invalid Messages") {
-
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				// voeg de ajax call toe aan de component tag om uit te voeren
-				// bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
-						+ InvalidMessageClickMethod.getCallbackUrl() + "'});");
-				super.onComponentTag(tag);
-			}
-		};
-		invalidMessage.setOutputMarkupId(true);
-		// Vervang de invalid Messages
-		replace(invalidMessage);
+		// Voeg de dataViewContainer toe aan via de handler
+		target.add(dataViewContainer);
 	}
 
 	/**

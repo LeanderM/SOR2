@@ -17,7 +17,7 @@ import com.SOR2.SESSION.AuthenticatedWebPage;
  * @version 0.1.0
  *
  */
-public class BeheerschermSjabloon extends WebPage implements
+public abstract class BeheerschermSjabloon extends WebPage implements
 		AuthenticatedWebPage {
 
 	public BeheerschermSjabloon(final PageParameters parameters) {
@@ -28,7 +28,7 @@ public class BeheerschermSjabloon extends WebPage implements
 			@Override
 			protected void respond(AjaxRequestTarget target) {
 				// de pagina opnieuw renderen bij een refresh
-				renderPage();
+				onClickRefresh(target);
 			}
 		};
 		add(refreshClickMethod);
@@ -54,8 +54,7 @@ public class BeheerschermSjabloon extends WebPage implements
 		final AbstractDefaultAjaxBehavior logoutClickMethod = new AbstractDefaultAjaxBehavior() {
 			@Override
 			protected void respond(AjaxRequestTarget target) {
-				getSession().invalidate();
-				throw new RestartResponseException(BeheerschermRedirect.class);
+				onClickLogout(target);
 			}
 		};
 		add(logoutClickMethod);
@@ -81,7 +80,7 @@ public class BeheerschermSjabloon extends WebPage implements
 
 			@Override
 			protected void respond(AjaxRequestTarget target) {
-				// EMPTY
+				onClickInvalid(target);
 			}
 
 		};
@@ -101,6 +100,20 @@ public class BeheerschermSjabloon extends WebPage implements
 		invalidMessage.setOutputMarkupId(true);
 		add(invalidMessage);
 	}
+
+	// Onclick voor de refreshButton
+	public void onClickRefresh(AjaxRequestTarget target) {
+		renderPage();
+	}
+
+	// Onclick voor de logoutButton
+	public void onClickLogout(AjaxRequestTarget target) {
+		getSession().invalidate();
+		throw new RestartResponseException(BeheerschermRedirect.class);
+	}
+
+	// Onclick voor de invalidmessagesButton
+	public abstract void onClickInvalid(AjaxRequestTarget target);
 
 	/*
 	 * Als de page al eens is gerendered zal de pagina helemaal opnieuw worden
