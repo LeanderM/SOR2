@@ -9,29 +9,28 @@ import com.SOR2.SESSION.BackendSession;
 import com.SOR2.hibernate.HibernateMain;
 
 /**
- * Check user Role en redirect naar juiste beheerpage
+ * Check user Role en redirect naar juiste beheerpage op basis van account type
  * 
  * @author Jesse
  * @version 0.1.0
  *
  */
-public class beheerschermRedirect extends WebPage implements
+public class BeheerschermRedirect extends WebPage implements
 		AuthenticatedWebPage {
 
-	public beheerschermRedirect() {
+	public BeheerschermRedirect() {
 		BackendSession session = (BackendSession) getSession();
 		String userName = session.getUser();
-		String userRole;
 
 		// Check de role van de user via de facade
-		// userRole = "ADMIN";
-		userRole = HibernateMain.getUserTypeForAccount(userName);
-
-		System.out.println(userRole);
+		String userRole = HibernateMain.getUserTypeForAccount(userName);
 
 		if (userRole.equals("Admin")) {
 			throw new RestartResponseAtInterceptPageException(
-					beheerscherm.class);
+					BeheerschermAdmin.class);
+		} else if (userRole.equals("User")) {
+			throw new RestartResponseAtInterceptPageException(
+					BeheerschermUser.class);
 		} else {
 			throw new RestartResponseAtInterceptPageException(HomePage.class);
 		}

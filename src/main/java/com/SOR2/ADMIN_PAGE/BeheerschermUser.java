@@ -3,13 +3,11 @@ package com.SOR2.ADMIN_PAGE;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.ajax.AbstractDefaultAjaxBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.repeater.Item;
@@ -19,6 +17,7 @@ import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import com.SOR2.SESSION.AuthenticatedWebPage;
+import com.SOR2.SESSION.BackendSession;
 import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.InvallidMessage;
 import com.SOR2.hibernate.Messages;
@@ -31,19 +30,23 @@ import com.SOR2.hibernate.Messages;
  * @version 0.1.0
  *
  */
-public class beheerscherm extends WebPage implements AuthenticatedWebPage {
+public class BeheerschermUser extends BeheerschermSjabloon implements
+		AuthenticatedWebPage {
 
 	private static final long serialVersionUID = 1L;
 	private Label testLabel;
 	private DataView<String[]> dataView;
-	// private PagingNavigator navigation;
 	private AjaxPagingNavigator navigation;
 	private WebMarkupContainer dataViewContainer;
+	private String userName;
 
-	public beheerscherm(final PageParameters parameters) {
+	public BeheerschermUser(final PageParameters parameters) {
 		super(parameters);
 
-		// haal gegevens op om de tabel mee te vullen
+		BackendSession session = (BackendSession) getSession();
+		userName = session.getUser();
+
+		// haal gegevens op om de tabel mee te vullen TODO
 		List currentData = retrieveInformation();
 
 		// voer de methode uit die de tabel bouwt
@@ -51,63 +54,9 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 
 		/*
 		 * 
-		 * Refresh button
-		 */
-		// Ajax call voor de refresh button
-		final AbstractDefaultAjaxBehavior refreshClickMethod = new AbstractDefaultAjaxBehavior() {
-			@Override
-			protected void respond(AjaxRequestTarget target) {
-				// de pagina opnieuw renderen bij een refresh
-				renderPage();
-			}
-		};
-		add(refreshClickMethod);
-
-		// De refresh button
-		Button refresh = new Button("refresh") {
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				// voeg de ajax call toe aan de component tag om uit te voeren
-				// bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
-						+ refreshClickMethod.getCallbackUrl() + "'});");
-				super.onComponentTag(tag);
-			}
-		};
-		refresh.setOutputMarkupId(true);
-		add(refresh);
-
-		/*
-		 * 
-		 * Logout button
-		 */
-		final AbstractDefaultAjaxBehavior logoutClickMethod = new AbstractDefaultAjaxBehavior() {
-			@Override
-			protected void respond(AjaxRequestTarget target) {
-				getSession().invalidate();
-				throw new RestartResponseException(beheerscherm.class);
-			}
-		};
-		add(logoutClickMethod);
-
-		Button logout = new Button("logout") {
-			@Override
-			protected void onComponentTag(ComponentTag tag) {
-				// voeg de ajax call toe aan de component tag om uit te voeren
-				// bij onMouseDown
-				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
-						+ logoutClickMethod.getCallbackUrl() + "'});");
-				super.onComponentTag(tag);
-			}
-		};
-		logout.setOutputMarkupId(true);
-		add(logout);
-
-		/*
-		 * 
 		 * invalidMessages button
 		 */
-		final AbstractDefaultAjaxBehavior InvallidMessageClickMethod = new AbstractDefaultAjaxBehavior() {
+		final AbstractDefaultAjaxBehavior InvalidMessageClickMethod = new AbstractDefaultAjaxBehavior() {
 
 			@Override
 			protected void respond(AjaxRequestTarget target) {
@@ -119,22 +68,22 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			}
 
 		};
-		add(InvallidMessageClickMethod);
+		add(InvalidMessageClickMethod);
 
-		Button invallidMessage = new Button("Invalid Messages") {
+		Button invalidMessage = new Button("Invalid Messages") {
 
 			@Override
 			protected void onComponentTag(ComponentTag tag) {
 				// voeg de ajax call toe aan de component tag om uit te voeren
 				// bij onMouseDown
 				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
-						+ InvallidMessageClickMethod.getCallbackUrl() + "'});");
+						+ InvalidMessageClickMethod.getCallbackUrl() + "'});");
 				super.onComponentTag(tag);
 			}
 		};
-		invallidMessage.setOutputMarkupId(true);
-		add(invallidMessage);
-
+		invalidMessage.setOutputMarkupId(true);
+		// Vervang de invalid Messages
+		replace(invalidMessage);
 	}
 
 	/**
@@ -220,13 +169,14 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 	 * facade
 	 */
 	public List retrieveInformation() {
-		List result = HibernateMain.getAllMail();
+		List result = HibernateMain.getMailForAdmin(userName);
 		return result;
 	}
 
 	private void processInvallidMessageCall() {
-		setInformationInvallid(HibernateMain.getAllInvallidMessages());
-
+		// setInformationInvallid(HibernateMain.getAllInvallidMessages());
+		setInformationInvallid(HibernateMain
+				.getInvallidMessagesForSpecificSenderOrReciever(null, userName));
 	}
 
 	private void setInformationInvallid(List data) {
@@ -288,22 +238,7 @@ public class beheerscherm extends WebPage implements AuthenticatedWebPage {
 			}
 		};
 
-		// navigation = new PagingNavigator("pagingNavigator", dataView);
 		dataViewContainer.replace(navigation);
-
 	}
 
-	/*
-	 * Als de page al eens is gerendered zal de pagina helemaal opnieuw worden
-	 * opgebouwt.
-	 */
-	@Override
-	public void renderPage() {
-		// TODO Auto-generated method stub
-		if (hasBeenRendered()) {
-			setResponsePage(getPageClass(), getPageParameters());
-		} else {
-			super.renderPage();
-		}
-	}
 }

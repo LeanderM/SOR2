@@ -11,7 +11,7 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.request.component.IRequestableComponent;
 
-import com.SOR2.ADMIN_PAGE.beheerschermRedirect;
+import com.SOR2.ADMIN_PAGE.BeheerschermRedirect;
 import com.SOR2.AJAX_EXAMPLE.TestPage;
 import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.SESSION.BackendSession;
@@ -56,7 +56,7 @@ public final class WicketApplication extends WebApplication {
 		// hier ziet u de routing van de webpaginas
 		mountPage("homepage", HomePage.class);
 		mountPage("testpage", TestPage.class);
-		mountPage("beheerscherm", beheerschermRedirect.class);
+		mountPage("beheerscherm", BeheerschermRedirect.class);
 
 		// Bootstrap settings
 		BootstrapSettings settings = new BootstrapSettings();
