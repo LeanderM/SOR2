@@ -57,6 +57,7 @@ public abstract class HibernateMain {
 					.addAnnotatedClass(Messages.class)
 					.addAnnotatedClass(InvallidMessage.class)
 					.addAnnotatedClass(BerichtStatus.class)
+					.addAnnotatedClass(UserConnectData.class)
 					.addAnnotatedClass(Users.class).buildSessionFactory();
 
 		} catch (Throwable ex) {
@@ -793,12 +794,19 @@ public abstract class HibernateMain {
 		return data;
 	}
 
-	// test
+	/**
+	 * 
+	 * Deze methode dient ervoor om te kijken welke url en namespace deze user
+	 * heeft.
+	 * 
+	 * @param usr
+	 *            de naam die gechekt moet gaan worden
+	 * 
+	 * @return de response van de database
+	 */
 	public static List getUserNamespaceAndUrl(String usr) {
 		checkFactoryExists();
 		initParams();
-		counter = 0;
-
 		try {
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(UserConnectData.class);

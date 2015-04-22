@@ -31,14 +31,15 @@ public class UserStoryTesting {
 
 	@Before
 	public void init() {
-		BeBelastingsdienstBelastingsdienstBelastingsdienstlastingsdienst nameToCheck = "test";
+		// BeBelastingsdienstBelastingsdienstBelastingsdienstlastingsdienst
+		// nameToCheck = "test";
 		url = "http://localhost:8080/services/DocumentReceiver";
 		documentInformation = new DocumentInformation();
 		documentInformation.setReceiver("jesse");
 		documentInformation.setSubject("testTitle");
 		documentInformation.setSender(nameToCheck);
 		document = new Message();
-		document.setContent("testcontent");
+		document.setMessage("testcontent");
 		nameSpace = "http://SOAP.SOR2.com/";
 
 	}

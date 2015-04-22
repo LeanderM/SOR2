@@ -10,12 +10,41 @@ import javax.persistence.Table;
 @Table(name = "userConnectData")
 public class UserConnectData {
 
-	public UserConnectData() {
-
-	}
-
 	@Id
 	@Column(name = "Username")
 	public String Username;
 
+	@Column(name = "url")
+	public String url;
+
+	@Column(name = "namespace")
+	public String namespace;
+
+	public UserConnectData() {
+
+	}
+
+	public String getUsername() {
+		return Username;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public void setUsername(String usr) {
+		this.Username = usr;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setNamespace(String space) {
+		this.namespace = space;
+	}
 }

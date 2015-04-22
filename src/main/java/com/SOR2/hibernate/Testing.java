@@ -1,5 +1,7 @@
 package com.SOR2.hibernate;
 
+import java.util.List;
+
 public class Testing {
 
 	public static void main(String[] args) {
@@ -41,8 +43,15 @@ public class Testing {
 		 * (InvallidMessage) obj; System.out.println(msg.getSender()); }
 		 */
 
-		System.out.println(HibernateMain
-				.getUserTypeForAccount("Belastingsdienst"));
+		// System.out.println(HibernateMain.checkUsrExists("test"));
+
+		List data = HibernateMain.getUserNamespaceAndUrl("jesse");
+
+		System.out.println(data.size());
+		for (Object obj : data) {
+			UserConnectData loop = (UserConnectData) obj;
+			System.out.println(loop.getUsername());
+		}
 
 		/*
 		 * System.out.println(HibernateMain
