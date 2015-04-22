@@ -729,7 +729,7 @@ public abstract class HibernateMain {
 
 	/**
 	 * 
-	 * Deze methode dient ervoor om te kijken welke status bij de int hoort
+	 * Deze methode dient ervoor om te kijken welke status bij de int hoort.
 	 * 
 	 * @param id
 	 *            het id van de status die opgehaalt moet gaan worden
