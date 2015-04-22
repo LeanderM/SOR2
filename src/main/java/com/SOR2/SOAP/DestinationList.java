@@ -32,7 +32,7 @@ public class DestinationList {
 		// De url van een destination
 		lijst = new HashMap<String, String>();
 		lijst.put("Belastingsdienst",
-				"http://localhost:8080/testservices/DocumentReceiver");
+				"http://localhost:8080/services/testreceiver");
 		// De namespace van een destination
 		nameSpaceLijst = new HashMap<String, String>();
 		nameSpaceLijst.put("Belastingsdienst", "http://ontvanger.SOR2.com/");
@@ -78,21 +78,21 @@ public class DestinationList {
 	public boolean hasKey(String key) {
 		return lijst.containsKey(key);
 	}
-	
+
 	/**
 	 * getter van nameSpacelijst
 	 */
 	public HashMap<String, String> getNameSpaceLijst() {
 		return nameSpaceLijst;
 	}
-	
+
 	/**
 	 * setter van nameSpacelijst
 	 */
 	public void setNameSpaceLijst(HashMap<String, String> nameSpaceLijst) {
 		this.nameSpaceLijst = nameSpaceLijst;
 	}
-	
+
 	/**
 	 * methode die een value uit de nameSpacelijst ophaald op basis van een key
 	 */
