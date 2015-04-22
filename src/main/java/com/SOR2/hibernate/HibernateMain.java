@@ -163,7 +163,7 @@ public abstract class HibernateMain {
 	 *
 	 */
 	public static int addMessage(String message, String sender, String subject,
-			String receiver) {
+			String receiver, int status) {
 
 		checkFactoryExists();
 		initParams();
@@ -174,6 +174,7 @@ public abstract class HibernateMain {
 			type.setSender(sender);
 			type.setSubject(subject);
 			type.setReceiver(receiver);
+			type.setStatus(status);
 
 			id = (Integer) openSession.save(type);
 			trans.commit();
@@ -191,7 +192,7 @@ public abstract class HibernateMain {
 	 * voegt een invalid message toe aan de database
 	 */
 	public static int addInvallidMessage(String message, String sender,
-			String subject, String receiver) {
+			String subject, String receiver, int status) {
 
 		checkFactoryExists();
 		initParams();
@@ -202,6 +203,7 @@ public abstract class HibernateMain {
 			type.setSender(sender);
 			type.setSubject(subject);
 			type.setReceiver(receiver);
+			type.setStatus(status);
 
 			id = (Integer) openSession.save(type);
 			trans.commit();
@@ -644,6 +646,57 @@ public abstract class HibernateMain {
 
 			for (Object obj : data) {
 				Messages loop = (Messages) obj;
+				status_ID = loop.getStatus();
+			}
+
+			initParams();
+			factory = null;
+			checkFactoryExists();
+
+			trans = openSession.beginTransaction();
+			Criteria critTwee = openSession.createCriteria(BerichtStatus.class);
+			critTwee.add(Restrictions.eq("status_ID", status_ID));
+			List resultset = critTwee.list();
+			trans.commit();
+
+			for (Object obj1 : resultset) {
+				BerichtStatus loop1 = (BerichtStatus) obj1;
+				status = loop1.getStatus();
+			}
+		}
+
+		catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return status;
+	}
+
+	/**
+	 * Join om status te koppelen aan de InvallidMessage.
+	 * 
+	 * @param invallidMessage_ID
+	 * @return de status
+	 */
+	public static String getStatusByInvallidMessage_ID(int invallidMessage_ID) {
+		String status = null;
+		Integer status_ID = null;
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(InvallidMessage.class);
+			crit.add(Restrictions.eq("invallidMessage_ID", invallidMessage_ID));
+
+			data = crit.list();
+			trans.commit();
+
+			for (Object obj : data) {
+				InvallidMessage loop = (InvallidMessage) obj;
 				status_ID = loop.getStatus();
 			}
 
