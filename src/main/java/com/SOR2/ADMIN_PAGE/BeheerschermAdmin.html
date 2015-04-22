@@ -20,8 +20,10 @@
 	<script type="text/javascript">
 		$(function(){
 			$("td[colspan=6]").find("p").hide();
-			$("table").click(function(event){
-				event.stopPropagation();
+			$(document).ajaxComplete(function(){
+				$("td[colspan=6]").find("p").hide();
+			});
+			$(".messageTable").on("click", "td", function(event){
 				var $target = $(event.target);
 				if($target.closest("td").attr("colspan")> 1 && $target.hasClass(".subRow")){
 					$target.slideUp();
