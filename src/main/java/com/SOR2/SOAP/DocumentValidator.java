@@ -10,7 +10,7 @@ import com.SOR2.hibernate.HibernateMain;
  * String bij waar alle errors in komen te staan
  * 
  * @author Jesse
- * @version 0.1.0
+ * @version 1.0.0
  *
  */
 public class DocumentValidator {
@@ -52,50 +52,36 @@ public class DocumentValidator {
 
 	private void validateDocumentInformation() {
 		if (!documentInformation.hasReceiver()) {
-			invalid();
-			addError("'documentInformation' Does not contain a 'receiver'");
-			initiateStatusCode(11);
+			invalidate(2);
 		} else if (!getReceiverexists(documentInformation.getReceiver())) {
-			invalid();
-			addError("the given 'receiver' does not match any existing receiver");
-			initiateStatusCode(12);
+			invalidate(3);
 		}
 		if (!documentInformation.hasSender()) {
-			invalid();
-			addError("'documentInformation' Does not contain a 'sender'");
-			initiateStatusCode(21);
+			invalidate(4);
 		} else if (!HibernateMain.checkUsrExists(documentInformation
 				.getSender())) {
-			invalid();
-			addError("the given 'sender' does not match any existing sender");
-			initiateStatusCode(22);
+			invalidate(5);
 		}
 		if (!documentInformation.hasSubject()) {
-			invalid();
-			addError("'documentInformation' does not contain a 'subject'");
-			initiateStatusCode(23);
+			invalidate(6);
 		}
 	}
 
 	private void validateDocument() {
-		if (!message.hasContent()) {
-			invalid();
-			addError("'message' field does not contain any message");
-			initiateStatusCode(31);
+		if (!message.hasContent() || message.getMessage().length() == 0) {
+			invalidate(7);
 		} else if (message.getTransactionID() == 0) {
-			invalid();
-			addError("'transaction ID' is empty");
-			initiateStatusCode(32);
-		} else if (message.getMessage().length() < 1) {
-			invalid();
-			addError("message can not be empty");
-			initiateStatusCode(33);
+			invalidate(8);
+		} else if (message.getMessage().length() > 1000) {
+			invalidate(9);
 		}
 
 	}
 
-	private void invalid() {
+	private void invalidate(int errorCode) {
 		valid = false;
+		this.addError(HibernateMain.getStatusWithStatus_ID(errorCode));
+		this.statusCode = errorCode;
 	}
 
 	public boolean isValid() {
@@ -111,12 +97,5 @@ public class DocumentValidator {
 
 	public String getErrors() {
 		return errors;
-	}
-
-	public void initiateStatusCode(int statusCode) {
-		// If there is no statusCode add statusCode
-		if (this.statusCode != 0) {
-			this.statusCode = statusCode;
-		}
 	}
 }
