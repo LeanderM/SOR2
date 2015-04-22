@@ -138,7 +138,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 	 * facade
 	 */
 	public List retrieveInformation() {
-		List result = HibernateMain.getAllMail();
+		List result = HibernateMain.getLazyMessages();
 		return result;
 	}
 

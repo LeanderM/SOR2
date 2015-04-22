@@ -41,6 +41,8 @@ public abstract class HibernateMain {
 	// bevat de response message voor feedback voor de inputs
 	private static Integer id;
 
+	private static int counter;
+
 	/*
 	 * instantieerd de hibernate factory en vult de variable van een factory met
 	 * alle models gedefineert in de hibernate map
@@ -763,4 +765,32 @@ public abstract class HibernateMain {
 		}
 		return status;
 	}
+
+	// pieters lazyloading tot nu toe
+	//
+
+	public static List getLazyMessages() {
+		checkFactoryExists();
+		initParams();
+		counter = 0;
+
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Messages.class);
+			crit.setMaxResults(2);
+			crit.setFirstResult(counter);
+			List results = crit.list();
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		counter = counter + 2;
+		return data;
+	}
+
 }
