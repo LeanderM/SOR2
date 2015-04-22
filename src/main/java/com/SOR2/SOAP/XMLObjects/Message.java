@@ -15,19 +15,35 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "Document")
 public class Message implements Serializable {
 
-	private String content;
+	private static final long serialVersionUID = 8836226163119733084L;
+	private String message;
+	private Integer transactionID;
 
-	@XmlElement(name = "content", required = true)
-	public String getContent() {
-		return content;
+	@XmlElement(name = "message", required = true)
+	public String getMessage() {
+		return message;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	/**
+	 * get the ID of the current transaction
+	 * 
+	 * @return
+	 */
+	@XmlElement(name = "transactionID", required = true)
+	public Integer getTransactionID() {
+		return this.transactionID;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public void setTransactionID(Integer transactionID) {
+		this.transactionID = transactionID;
 	}
 
 	public boolean hasContent() {
-		if (content == null || content.length() == 0) {
+		if (message == null || message.length() == 0) {
 			return false;
 		}
 		return true;

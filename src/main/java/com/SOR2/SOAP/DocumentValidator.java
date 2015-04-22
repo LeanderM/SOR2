@@ -80,9 +80,18 @@ public class DocumentValidator {
 	private void validateDocument() {
 		if (!message.hasContent()) {
 			invalid();
-			addError("'message' does not contain any 'content'");
+			addError("'message' field does not contain any message");
 			initiateStatusCode(31);
+		} else if (message.getTransactionID() == 0) {
+			invalid();
+			addError("'transaction ID' is empty");
+			initiateStatusCode(32);
+		} else if (message.getMessage().length() < 1) {
+			invalid();
+			addError("message can not be empty");
+			initiateStatusCode(33);
 		}
+
 	}
 
 	private void invalid() {

@@ -35,7 +35,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		System.out.println("[Header] Receiver = "
 				+ documentInformation.getReceiver() + ", Subject = "
 				+ documentInformation.getSubject());
-		System.out.println("[Document] Content = " + message.getContent());
+		System.out.println("[Document] Content = " + message.getMessage());
 		return new ResponseMessage(true, "No Errors");
 
 	}
