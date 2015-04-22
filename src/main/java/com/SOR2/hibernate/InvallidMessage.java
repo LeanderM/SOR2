@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 // Tabel in de database.
 @Entity
-@Table(name = "invallidMessage")
+@Table(name = "invallidMessages")
 public class InvallidMessage {
 
 	// Kolom message_ID in database
@@ -30,7 +30,7 @@ public class InvallidMessage {
 
 	// Veld voor de sender
 	// Kolom sender in database
-	@Column(name = "sender")
+	@Column(name = "invSender")
 	private String sender;
 
 	// Veld voor de date
@@ -39,7 +39,7 @@ public class InvallidMessage {
 	@Column(name = "date")
 	private String date;
 
-	@Column(name = "receiver")
+	@Column(name = "invReceiver")
 	private String receiver;
 
 	@Column(name = "status")
