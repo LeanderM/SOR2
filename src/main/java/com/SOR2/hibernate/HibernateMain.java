@@ -793,4 +793,25 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	public static List getUserNamespaceAndUrl(String usr) {
+		checkFactoryExists();
+		initParams();
+		counter = 0;
+
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(UserConnectData.class);
+			crit.add(Restrictions.eq("Username", usr));
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return data;
+	}
+
 }
