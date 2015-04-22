@@ -45,12 +45,17 @@ public class DocumentValidator {
 		validateDocument();
 	}
 
+	public boolean getReceiverexists(String usr) {
+		return HibernateMain.checkUsrExists(usr);
+
+	}
+
 	private void validateDocumentInformation() {
 		if (!documentInformation.hasReceiver()) {
 			invalid();
 			addError("'documentInformation' Does not contain a 'receiver'");
 			initiateStatusCode(11);
-		} else if (!destinationList.hasKey(documentInformation.getReceiver())) {
+		} else if (!getReceiverexists(documentInformation.getReceiver())) {
 			invalid();
 			addError("the given 'receiver' does not match any existing receiver");
 			initiateStatusCode(12);

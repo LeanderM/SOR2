@@ -153,6 +153,9 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 
 		// We vormen de bestaande List in een List met String arrays
 		// Deze zijn gemakkelijker aan een tabel toe te voegen
+
+		System.out.println(data.size());
+
 		for (int i = 0; i < data.size(); i++) {
 			// Messages object ophalen
 			InvallidMessage row = (InvallidMessage) data.get(i);

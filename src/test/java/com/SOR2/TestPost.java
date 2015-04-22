@@ -1,5 +1,7 @@
 package com.SOR2;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +29,7 @@ public class TestPost {
 	@Before
 	public void init() {
 		send = new SendDocument();
-		document = "{'title':'sometitle','destination':'Belastingsdiens','content':'somecontent'}";
+		document = "{'title':'sometitle','destination':'Belastingsdienst','content':'somecontent'}";
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class TestPost {
 	 */
 	@Test
 	public void test() {
-		// assertTrue(send.send(document.toString()));
+		assertTrue(send.send(document.toString()));
 
 	}
 

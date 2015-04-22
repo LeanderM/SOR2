@@ -31,10 +31,10 @@ public class UserStoryTesting {
 
 	@Before
 	public void init() {
-		nameToCheck = "mark";
+		BeBelastingsdienstBelastingsdienstBelastingsdienstlastingsdienst nameToCheck = "test";
 		url = "http://localhost:8080/services/DocumentReceiver";
 		documentInformation = new DocumentInformation();
-		documentInformation.setReceiver("Belastingsdienst");
+		documentInformation.setReceiver("jesse");
 		documentInformation.setSubject("testTitle");
 		documentInformation.setSender(nameToCheck);
 		document = new Message();
@@ -79,4 +79,5 @@ public class UserStoryTesting {
 
 	}
 }
+
 // einde
