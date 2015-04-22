@@ -3,7 +3,6 @@ package com.SOR2.ADMIN_PAGE;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.WebPage;
 
-import com.SOR2.HomePage;
 import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.SESSION.BackendSession;
 import com.SOR2.hibernate.HibernateMain;
@@ -32,7 +31,8 @@ public class BeheerschermRedirect extends WebPage implements
 			throw new RestartResponseAtInterceptPageException(
 					BeheerschermUser.class);
 		} else {
-			throw new RestartResponseAtInterceptPageException(HomePage.class);
+			throw new RestartResponseAtInterceptPageException(
+					BeheerschermAdmin.class);
 		}
 	}
 }

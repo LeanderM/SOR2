@@ -13,7 +13,6 @@ import org.apache.wicket.request.component.IRequestableComponent;
 
 import com.SOR2.ADMIN_PAGE.BeheerschermAdmin;
 import com.SOR2.ADMIN_PAGE.BeheerschermRedirect;
-import com.SOR2.AJAX_EXAMPLE.TestPage;
 import com.SOR2.SESSION.AuthenticatedWebPage;
 import com.SOR2.SESSION.BackendSession;
 import com.SOR2.SESSION.LoginPage;
@@ -55,8 +54,6 @@ public final class WicketApplication extends WebApplication {
 		super.init();
 
 		// hier ziet u de routing van de webpaginas
-		mountPage("homepage", HomePage.class);
-		mountPage("testpage", TestPage.class);
 		mountPage("beheerscherm", BeheerschermRedirect.class);
 
 		// Bootstrap settings
