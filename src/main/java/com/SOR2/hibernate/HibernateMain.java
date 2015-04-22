@@ -797,7 +797,7 @@ public abstract class HibernateMain {
 	/**
 	 * 
 	 * Deze methode dient ervoor om te kijken welke url en namespace deze user
-	 * heeft.
+	 * heeft. f
 	 * 
 	 * @param usr
 	 *            de naam die gechekt moet gaan worden
