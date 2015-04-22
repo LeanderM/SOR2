@@ -54,7 +54,9 @@ public abstract class HibernateMain {
 					.addAnnotatedClass(Message_recipients.class)
 					.addAnnotatedClass(Messages.class)
 					.addAnnotatedClass(InvallidMessage.class)
+					.addAnnotatedClass(BerichtStatus.class)
 					.addAnnotatedClass(Users.class).buildSessionFactory();
+
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);
@@ -236,6 +238,29 @@ public abstract class HibernateMain {
 			openSession.close();
 		}
 		return id;
+	}
+
+	/**
+	 * voegt een status toe aan de databse
+	 *
+	 */
+	public static void addStatus(String status) {
+
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			BerichtStatus type = new BerichtStatus();
+			type.setStatus(status);
+			openSession.save(type);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
 	}
 
 	/**
