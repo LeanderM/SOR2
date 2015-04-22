@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-//Tabel in de database.
+//Tabel in de database. test
 @Entity
 @Table(name = "userConnectData")
 public class UserConnectData {

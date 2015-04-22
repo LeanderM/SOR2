@@ -793,6 +793,7 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	// test
 	public static List getUserNamespaceAndUrl(String usr) {
 		checkFactoryExists();
 		initParams();
