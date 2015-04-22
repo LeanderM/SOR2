@@ -727,4 +727,40 @@ public abstract class HibernateMain {
 		return status;
 	}
 
+	/**
+	 * 
+	 * Deze methode dient ervoor om te kijken welke status bij de int hoort
+	 * 
+	 * @param id
+	 *            het id van de status die opgehaalt moet gaan worden
+	 * @return de status als String
+	 */
+	public static String getStatusWithStatus_ID(int id) {
+		checkFactoryExists();
+		initParams();
+		String status = null;
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(BerichtStatus.class);
+			crit.add(Restrictions.eq("status_id", id));
+			List results = crit.list();
+			data = crit.list();
+			if (data == null) {
+				trans.commit();
+				return "deze status bestaat niet";
+			}
+			for (Object obj : data) {
+				BerichtStatus looped = (BerichtStatus) obj;
+				status = looped.getStatus();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return status;
+	}
 }
