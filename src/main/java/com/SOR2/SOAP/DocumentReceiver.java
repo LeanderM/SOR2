@@ -3,6 +3,7 @@ package com.SOR2.SOAP;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.validation.constraints.NotNull;
 
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
@@ -24,6 +25,6 @@ public interface DocumentReceiver {
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(
 			// DocumentInformation moet in de header
-			@WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
+			@NotNull @WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
 			@WebParam(name = "message") Message message);
 }

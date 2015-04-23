@@ -150,8 +150,14 @@ public class PostHandler {
 				"message"));
 
 		// and another element inside the document element
-		SOAPElement XMLcontent = XMLmessage.addChildElement("content");
-		XMLcontent.addTextNode(message.getMessage());
+		SOAPElement XMLMessageContent = XMLmessage.addChildElement("message");
+		XMLMessageContent.addTextNode(message.getMessage());
+
+		// and another element inside the document element
+		SOAPElement XMLTransactionID = XMLmessage
+				.addChildElement("transactionID");
+		XMLTransactionID.addTextNode(message.getTransactionID().toString());
+
 	}
 
 	/**
