@@ -3,6 +3,7 @@ package com.SOR2.SOAP;
 import java.util.HashMap;
 
 /**
+ * TODO LEGACY
  * Dit is een singleton klasse die een lijst met destination-namen en
  * destination-urls bijhoud
  * 

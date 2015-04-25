@@ -49,7 +49,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 	@Override
 	public void onClickInvalid(AjaxRequestTarget target) {
 		// Methode die de elementen gaat aanpassen
-		processInvallidMessageCall();
+		processInvalidMessageCall();
 
 		// Voeg de dataViewContainer toe aan via de handler
 		target.add(dataViewContainer);
@@ -142,12 +142,12 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 		return result;
 	}
 
-	private void processInvallidMessageCall() {
-		setInformationInvallid(HibernateMain.getAllInvallidMessages());
+	private void processInvalidMessageCall() {
+		setInformationInvalid(HibernateMain.getAllInvallidMessages());
 
 	}
 
-	private void setInformationInvallid(List data) {
+	private void setInformationInvalid(List data) {
 		// Een nieuwe ArrayList
 		List<String[]> dataList = new ArrayList<String[]>();
 

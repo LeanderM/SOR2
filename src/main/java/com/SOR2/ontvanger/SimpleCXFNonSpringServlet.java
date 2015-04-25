@@ -9,6 +9,7 @@ import org.apache.cxf.BusFactory;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 
 /**
+ * TODO LEGACY
  * Dit is de Servlet die er voor zorgt dat de SOAP service van de testOntvanger
  * bereikbaar is
  * 

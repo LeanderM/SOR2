@@ -1,7 +1,6 @@
 package com.SOR2.SOAP;
 
 import javax.jws.WebService;
-import javax.xml.bind.annotation.XmlElement;
 
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
@@ -30,7 +29,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * Verwacht de volgende objecten: documentInformation, message
 	 */
 	@Override
-	public ResponseMessage sendDocument(DocumentInformation documentInformation, Message message) {
+	public ResponseMessage sendDocument(
+			DocumentInformation documentInformation, Message message) {
 
 		// We check if all the parameters are present
 		if (documentInformation == null) {
@@ -54,12 +54,29 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					documentInformation.getReceiver(), 1);
 
 			// get the list of destinations
-			DestinationList list = DestinationList.getInstance();
-			// Post the document
-			PostHandler poster = new PostHandler(documentInformation, message,
-					list.getURL(documentInformation.getReceiver()),
-					list.getNameSpace(documentInformation.getReceiver()));
-			return new ResponseMessage(true);
+			DestinationHandler destination = new DestinationHandler(documentInformation.getReceiver());
+
+			if (destination.valid()) {
+				System.out.println(" TESTING " + destination.getUrl() + "  " + destination.getNameSpace());
+				
+				// Post the document
+				PostHandler poster = new PostHandler(documentInformation,
+						message,
+						destination.getUrl(),
+						destination.getNameSpace());
+				return new ResponseMessage(true);
+
+			} else {
+				// it was not possible to retrieve the correct destination for
+				// the specified Receiver
+				HibernateMain.addInvallidMessage(message.getMessage(),
+						documentInformation.getSender(),
+						documentInformation.getSubject(),
+						documentInformation.getReceiver(), 112);
+				
+				validator.addError("The server can not find a valid address for this registered receiver");
+				return new ResponseMessage(false, validator.getErrors());
+			}
 
 		} else {
 			// if the message is invalid we will still keep it in the
@@ -74,5 +91,4 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(false, validator.getErrors());
 		}
 	}
-
 }
