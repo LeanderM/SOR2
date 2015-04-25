@@ -33,8 +33,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
 		<wtp.version>none</wtp.version>
-		<cxf.version>2.2.3</cxf.version> 
-		<!-- <cxf.version>3.0.0</cxf.version>--> 
+		<!-- <cxf.version>2.2.3</cxf.version> -->
+		<cxf.version>3.0.3</cxf.version>
 	</properties>
 	<dependencies>
 		<!-- WICKET DEPENDENCIES -->
@@ -143,22 +143,35 @@
 			<version>${cxf.version}</version>
 		</dependency>-->
 		<!-- Voor validation -->
+		<!--  new -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>4.1.6.RELEASE</version>
+		</dependency>
+		<!-- old -->
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-transports-http</artifactId>
-			<version>3.0.0</version>
+			<version>${cxf.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-ws-policy</artifactId>
-			<version>3.0.0</version>
+			<version>${cxf.version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>3.0.0</version>
+			<version>${cxf.version}</version>
 		</dependency>
+		
 		<!-- <dependency>
 			<groupId>org.apache.cxf</groupId>
 			<artifactId>cxf-core</artifactId>

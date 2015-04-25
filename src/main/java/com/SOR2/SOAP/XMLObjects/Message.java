@@ -3,7 +3,7 @@ package com.SOR2.SOAP.XMLObjects;
 import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * Een classe voor documenten die met de SOAPcalls binnenkomen
@@ -12,7 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @version 0.1.0
  *
  */
-@XmlRootElement(name = "Document")
+@XmlType(name = "message")
 public class Message implements Serializable {
 
 	private static final long serialVersionUID = 8836226163119733084L;

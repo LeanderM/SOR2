@@ -3,7 +3,9 @@ package com.SOR2.SOAP;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlElement;
 
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
@@ -25,6 +27,8 @@ public interface DocumentReceiver {
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(
 			// DocumentInformation moet in de header
-			@NotNull @WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
-			@WebParam(name = "message") Message message);
+			// @Valid geeft aan dat aan alle validatieregels van de
+			// DocumentInformation class moet worden voldaan
+			@NotNull(message = "documentInformation can not be null") @Valid @WebParam(name = "documentInformation", header = true) @XmlElement(name = "documentInformation", required = true, nillable = false) DocumentInformation documentInformation,
+			@NotNull @WebParam(name = "message") Message message);
 }

@@ -1,6 +1,7 @@
 package com.SOR2.SOAP;
 
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlElement;
 
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
@@ -29,8 +30,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * Verwacht de volgende objecten: documentInformation, message
 	 */
 	@Override
-	public ResponseMessage sendDocument(
-			DocumentInformation documentInformation, Message message) {
+	public ResponseMessage sendDocument(DocumentInformation documentInformation, Message message) {
+
 		// We check if all the parameters are present
 		if (documentInformation == null) {
 			return new ResponseMessage(false,
@@ -61,7 +62,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(true);
 
 		} else {
-			// if the message is invalid we will still keep it in the dataBase
+			// if the message is invalid we will still keep it in the
+			// dataBase
 			HibernateMain.addInvallidMessage(message.getMessage(),
 					documentInformation.getSender(),
 					documentInformation.getSubject(),
@@ -72,4 +74,5 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(false, validator.getErrors());
 		}
 	}
+
 }
