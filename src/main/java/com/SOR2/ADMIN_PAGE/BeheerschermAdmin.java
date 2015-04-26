@@ -30,7 +30,6 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 		AuthenticatedWebPage {
 
 	private static final long serialVersionUID = 1L;
-	private Label testLabel;
 	private DataView<String[]> dataView;
 	private AjaxPagingNavigator navigation;
 	private WebMarkupContainer dataViewContainer;
@@ -50,6 +49,19 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 	public void onClickInvalid(AjaxRequestTarget target) {
 		// Methode die de elementen gaat aanpassen
 		processInvalidMessageCall();
+
+		// Voeg de dataViewContainer toe aan via de handler
+		target.add(dataViewContainer);
+	}
+
+	// Override the onclick voor de validmessagesButton
+	@Override
+	public void onClickValid(AjaxRequestTarget target) {
+		// haal gegevens op om de tabel mee te vullen
+		List currentData = retrieveInformation();
+
+		// voer de methode uit die de tabel bouwt
+		setInformation(currentData);
 
 		// Voeg de dataViewContainer toe aan via de handler
 		target.add(dataViewContainer);
@@ -77,7 +89,9 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 			textRow[0] = message_Id.toString();
 			textRow[1] = row.getSender();
 			textRow[2] = row.getSubject();
-			textRow[3] = row.getMessage();
+
+			// TODO dit kan sneller door éénmaal alle statussen op te halen
+			textRow[3] = HibernateMain.getStatusWithStatus_ID(row.getStatus());
 			textRow[4] = row.getReceiver();
 			textRow[5] = row.getDate();
 			// Voeg de String array toe aan de dataList
@@ -106,15 +120,8 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 			}
 		};
 
-		// Div die de tabel omringt
-		dataViewContainer = new WebMarkupContainer("dataViewContainer");
-		dataViewContainer.setOutputMarkupId(true);
-
 		// Geeft aan hoeveel items er per page moeten worden weergegeven
 		dataView.setItemsPerPage(15);
-
-		// Voeg de dataView aan de container toe
-		dataViewContainer.add(dataView);
 
 		// PagingNavigator die gebruik maakt van ajax
 		navigation = new AjaxPagingNavigator("pagingNavigator", dataView) {
@@ -125,12 +132,22 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 			}
 		};
 
-		// Voeg de navigatie toe aan de dataViewContainer
-		dataViewContainer.add(navigation);
+		// check of de table al gerendered is
+		if (dataViewContainer == null) {
+			// Div die de tabel omringt
+			dataViewContainer = new WebMarkupContainer("dataViewContainer");
+			dataViewContainer.setOutputMarkupId(true);
 
-		// Voeg de dataViewContainer toe aan de pagina
-		add(dataViewContainer);
-
+			// Voeg de dataView aan de container toe
+			dataViewContainer.add(dataView);
+			// Voeg de navigatie toe aan de dataViewContainer
+			dataViewContainer.add(navigation);
+			// Voeg de dataViewContainer toe aan de pagina
+			add(dataViewContainer);
+		} else {
+			dataViewContainer.replace(dataView);
+			dataViewContainer.replace(navigation);
+		}
 	}
 
 	/**
@@ -167,7 +184,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 			textRow[0] = message_Id.toString();
 			textRow[1] = row.getSender();
 			textRow[2] = row.getSubject();
-			textRow[3] = row.getMessage();
+			textRow[3] = HibernateMain.getStatusWithStatus_ID(row.getStatus());
 			textRow[4] = row.getReceiver();
 			textRow[5] = row.getDate();
 			// Voeg de String array toe aan de dataList

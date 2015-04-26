@@ -99,6 +99,34 @@ public abstract class BeheerschermSjabloon extends WebPage implements
 		};
 		invalidMessage.setOutputMarkupId(true);
 		add(invalidMessage);
+
+		/*
+		 * 
+		 * validMessages button
+		 */
+		final AbstractDefaultAjaxBehavior validMessageClickMethod = new AbstractDefaultAjaxBehavior() {
+
+			@Override
+			protected void respond(AjaxRequestTarget target) {
+				onClickValid(target);
+			}
+
+		};
+		add(validMessageClickMethod);
+
+		Button validMessage = new Button("Valid Messages") {
+
+			@Override
+			protected void onComponentTag(ComponentTag tag) {
+				// voeg de ajax call toe aan de component tag om uit te voeren
+				// bij onMouseDown
+				tag.put("onMouseDown", "Wicket.Ajax.get({'u':'"
+						+ validMessageClickMethod.getCallbackUrl() + "'});");
+				super.onComponentTag(tag);
+			}
+		};
+		validMessage.setOutputMarkupId(true);
+		add(validMessage);
 	}
 
 	// Onclick voor de refreshButton
@@ -114,6 +142,9 @@ public abstract class BeheerschermSjabloon extends WebPage implements
 
 	// Onclick voor de invalidmessagesButton
 	public abstract void onClickInvalid(AjaxRequestTarget target);
+
+	// Onclick voor de validMessagesButton
+	public abstract void onClickValid(AjaxRequestTarget target);
 
 	/*
 	 * Als de page al eens is gerendered zal de pagina helemaal opnieuw worden

@@ -20,9 +20,13 @@
 		<script type="text/javascript">
 			$(function() {
 				$("td[colspan=6]").find("p").hide();
-				$("table").click(
+				$(document).ajaxComplete(function() {
+					$("td[colspan=6]").find("p").hide();
+				});
+				$(".messageTable").on(
+						"click",
+						"td",
 						function(event) {
-							event.stopPropagation();
 							var $target = $(event.target);
 							if ($target.closest("td").attr("colspan") > 1
 									&& $target.hasClass(".subRow")) {
