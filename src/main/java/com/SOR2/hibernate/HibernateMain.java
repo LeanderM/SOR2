@@ -745,7 +745,7 @@ public abstract class HibernateMain {
 		try {
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(BerichtStatus.class);
-			crit.add(Restrictions.eq("status_id", id));
+			crit.add(Restrictions.eq("status_ID", id));
 			List results = crit.list();
 			data = crit.list();
 			if (data == null) {

@@ -18,7 +18,6 @@ public class DocumentValidator {
 	private Message message;
 	private Boolean valid;
 	private String errors;
-	private DestinationList destinationList;
 	private int statusCode;
 
 	public int getStatusCode() {
@@ -34,8 +33,7 @@ public class DocumentValidator {
 		this.documentInformation = documentInformation;
 		this.message = document;
 		valid = true;
-		statusCode = 0;
-		destinationList = DestinationList.getInstance();
+		statusCode = 1;
 
 		validate();
 	}
@@ -45,21 +43,27 @@ public class DocumentValidator {
 		validateDocument();
 	}
 
-	public boolean getReceiverexists(String usr) {
+	public boolean receiverExists(String usr) {
 		return HibernateMain.checkUsrExists(usr);
 
+	}
+
+	public boolean senderExists(String usr) {
+		return HibernateMain.checkUsrExists(usr);
 	}
 
 	private void validateDocumentInformation() {
 		if (!documentInformation.hasReceiver()) {
 			invalidate(2);
-		} else if (!getReceiverexists(documentInformation.getReceiver())) {
+
+		} else if (!receiverExists(documentInformation.getReceiver())) {
 			invalidate(3);
+		} else {
+			checkDestinationInfo();
 		}
 		if (!documentInformation.hasSender()) {
 			invalidate(4);
-		} else if (!HibernateMain.checkUsrExists(documentInformation
-				.getSender())) {
+		} else if (!senderExists(documentInformation.getSender())) {
 			invalidate(5);
 		}
 		if (!documentInformation.hasSubject()) {
@@ -68,7 +72,7 @@ public class DocumentValidator {
 	}
 
 	private void validateDocument() {
-		if (!message.hasContent() || message.getMessage().length() == 0) {
+		if (!message.hasContent()) {
 			invalidate(7);
 		} else if (message.getTransactionID() == 0) {
 			invalidate(8);
@@ -81,7 +85,19 @@ public class DocumentValidator {
 	private void invalidate(int errorCode) {
 		valid = false;
 		this.addError(HibernateMain.getStatusWithStatus_ID(errorCode));
-		this.statusCode = errorCode;
+
+		// Er is nu maar support voor één statusCode per bericht
+		if (statusCode == 1) {
+			this.statusCode = errorCode;
+		}
+	}
+
+	private void checkDestinationInfo() {
+		DestinationHandler destination = new DestinationHandler(
+				documentInformation.getReceiver());
+		if (!destination.valid()) {
+			invalidate(10);
+		}
 	}
 
 	public boolean isValid() {
@@ -92,10 +108,11 @@ public class DocumentValidator {
 		if (errors == null) {
 			errors = "";
 		}
-		errors += "| [Error]: " + error;
+		errors += "| [Error]: " + error + "\n";
 	}
 
 	public String getErrors() {
 		return errors;
 	}
+
 }

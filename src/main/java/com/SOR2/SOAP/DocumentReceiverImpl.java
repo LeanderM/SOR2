@@ -55,38 +55,27 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 
 			// get the list of destinations
 			DestinationHandler destination = new DestinationHandler(documentInformation.getReceiver());
-
-			if (destination.valid()) {
-				System.out.println(" TESTING " + destination.getUrl() + "  " + destination.getNameSpace());
-				
-				// Post the document
-				PostHandler poster = new PostHandler(documentInformation,
-						message,
-						destination.getUrl(),
-						destination.getNameSpace());
-				return new ResponseMessage(true);
-
-			} else {
-				// it was not possible to retrieve the correct destination for
-				// the specified Receiver
-				HibernateMain.addInvallidMessage(message.getMessage(),
-						documentInformation.getSender(),
-						documentInformation.getSubject(),
-						documentInformation.getReceiver(), 112);
-				
-				validator.addError("The server can not find a valid address for this registered receiver");
-				return new ResponseMessage(false, validator.getErrors());
-			}
+	
+			System.out.println(" TESTING " + destination.getUrl() + "  " + destination.getNameSpace());
+			
+			// Post the document
+			PostHandler poster = new PostHandler(documentInformation,
+					message,
+					destination.getUrl(),
+					destination.getNameSpace());
+			return new ResponseMessage(true);
 
 		} else {
 			// if the message is invalid we will still keep it in the
 			// dataBase
-			HibernateMain.addInvallidMessage(message.getMessage(),
-					documentInformation.getSender(),
-					documentInformation.getSubject(),
-					documentInformation.getReceiver(),
-					validator.getStatusCode());
-
+			// There is no point in saving if there is both no valid sender and receiver
+			if(validator.receiverExists(documentInformation.getReceiver()) || validator.senderExists(documentInformation.getSender())) {
+				HibernateMain.addInvallidMessage(message.getMessage(),
+						documentInformation.getSender(),
+						documentInformation.getSubject(),
+						documentInformation.getReceiver(),
+						validator.getStatusCode());
+			}
 			// in case the message was not valid we return all the errors
 			return new ResponseMessage(false, validator.getErrors());
 		}
