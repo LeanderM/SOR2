@@ -111,10 +111,15 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				String[] messagesArray = item.getModelObject();
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
+
+				// De status aan het uivouw colometje toevoegen
+				item.add(new Label("slidingRow", messagesArray[3]));
+
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),
 							messagesArray[i]));
+
 				}
 				item.add(repeatingView);
 			}
@@ -204,6 +209,8 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				String[] messagesArray = item.getModelObject();
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
+				// De status aan het uivouw colometje toevoegen
+				item.add(new Label("slidingRow", messagesArray[3]));
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),
