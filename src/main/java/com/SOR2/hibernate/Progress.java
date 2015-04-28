@@ -1,6 +1,6 @@
 package com.SOR2.hibernate;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +29,7 @@ public class Progress {
 
 	@GeneratedValue
 	@Column(name = "date")
-	private Date date;
+	private Timestamp date;
 
 	public int getStatus_ID() {
 		return status_ID;
@@ -63,11 +63,11 @@ public class Progress {
 		this.vallid = vallid;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 }
