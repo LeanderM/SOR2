@@ -80,6 +80,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 		// We vormen de bestaande List in een List met String arrays
 		// Deze zijn gemakkelijker aan een tabel toe te voegen
 		for (int i = 0; i < data.size(); i++) {
+
 			// Messages object ophalen
 			Messages row = (Messages) data.get(i);
 			// Nieuwe String array maken
@@ -112,24 +113,6 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				String[] messagesArray = item.getModelObject();
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
-
-				// Haal de progress op
-				List progresses = HibernateMain.getProgressForMessage(
-						Integer.parseInt(messagesArray[0]), true);
-				// Voeg alle progresses toe aan een String
-				String progressString = "";
-				for (int i = 0; i < progresses.size(); i++) {
-					Progress progress = (Progress) progresses.get(i);
-					progressString += "  [" + (progresses.size() - i ) + "]  ";
-					progressString += progress.getDate();
-					progressString += "   -   ";
-					progressString += progress.getProgressMessage();
-					progressString += " ..... ";
-				}
-				// Voeg de String toe aan een label en voeg deze toe aan de
-				// regel
-				item.add(new Label("slidingRow", progressString));
-
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),
@@ -137,6 +120,28 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 
 				}
 				item.add(repeatingView);
+
+				RepeatingView progressView = new RepeatingView("slidingRow");
+				// Haal de progress op
+				List progresses = HibernateMain.getProgressForMessage(
+						Integer.parseInt(messagesArray[0]), true);
+				// Voeg alle progresses toe aan een String
+				String progressString;
+				for (int i = 0; i < progresses.size(); i++) {
+					progressString = "";
+					Progress progress = (Progress) progresses.get(i);
+					progressString += "  [" + (progresses.size() - i) + "]  ";
+					progressString += progress.getDate();
+					progressString += "   -   ";
+					progressString += progress.getProgressMessage();
+					progressString += " ..... ";
+					progressView.add(new Label(repeatingView.newChildId(),
+							progressString));
+				}
+
+				// Voeg de String toe aan een label en voeg deze toe aan de
+				// regel
+				item.add(progressView);
 			}
 		};
 
@@ -225,29 +230,35 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
 
-				// Haal de progress op
-				List progresses = HibernateMain.getProgressForMessage(
-						Integer.parseInt(messagesArray[0]), true);
-				// Voeg alle progresses toe aan een String
-				String progressString = "";
-				for (int i = 0; i < progresses.size(); i++) {
-					Progress progress = (Progress) progresses.get(i);
-					progressString += "  [" + (progresses.size() - i ) + "]  ";
-					progressString += progress.getDate();
-					progressString += "   -   ";
-					progressString += progress.getProgressMessage();
-					progressString += " ..... ";
-				}
-				// Voeg de String toe aan een label en voeg deze toe aan de
-				// regel
-				item.add(new Label("slidingRow", progressString));
-
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),
 							messagesArray[i]));
 				}
 				item.add(repeatingView);
+
+				// Rij voor de progress
+				RepeatingView progressView = new RepeatingView("slidingRow");
+				// Haal de progress op
+				List progresses = HibernateMain.getProgressForMessage(
+						Integer.parseInt(messagesArray[0]), false);
+				// Voeg alle progresses toe aan een String
+				String progressString;
+				for (int i = 0; i < progresses.size(); i++) {
+					progressString = "";
+					Progress progress = (Progress) progresses.get(i);
+					progressString += "  [" + (progresses.size() - i) + "]  ";
+					progressString += progress.getDate();
+					progressString += "   -   ";
+					progressString += progress.getProgressMessage();
+					progressString += " ..... ";
+					progressView.add(new Label(repeatingView.newChildId(),
+							progressString));
+				}
+
+				// Voeg de String toe aan een label en voeg deze toe aan de
+				// regel
+				item.add(progressView);
 			}
 		};
 

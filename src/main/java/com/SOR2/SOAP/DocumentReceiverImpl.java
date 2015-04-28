@@ -82,6 +82,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 				}
 
 			}
+			
 			if(done) {
 				// we add a new progress for this message
 				HibernateMain.addProgress(id, "Message was succesfully delivered", true);
