@@ -120,13 +120,14 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				String progressString = "";
 				for (int i = 0; i < progresses.size(); i++) {
 					Progress progress = (Progress) progresses.get(i);
-					progressString += "  [" + (i + 1) + "]  ";
+					progressString += "  [" + (progresses.size() - i ) + "]  ";
 					progressString += progress.getDate();
 					progressString += "   -   ";
 					progressString += progress.getProgressMessage();
 					progressString += " ..... ";
 				}
-				// Voeg de String toe aan een label en voeg deze toe aan de regel
+				// Voeg de String toe aan een label en voeg deze toe aan de
+				// regel
 				item.add(new Label("slidingRow", progressString));
 
 				// Een loop om cellen aan de rij toe te voegen
@@ -223,7 +224,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				String[] messagesArray = item.getModelObject();
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
-				
+
 				// Haal de progress op
 				List progresses = HibernateMain.getProgressForMessage(
 						Integer.parseInt(messagesArray[0]), true);
@@ -231,15 +232,16 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 				String progressString = "";
 				for (int i = 0; i < progresses.size(); i++) {
 					Progress progress = (Progress) progresses.get(i);
-					progressString += "  [" + (i + 1) + "]  ";
+					progressString += "  [" + (progresses.size() - i ) + "]  ";
 					progressString += progress.getDate();
 					progressString += "   -   ";
 					progressString += progress.getProgressMessage();
 					progressString += " ..... ";
 				}
-				// Voeg de String toe aan een label en voeg deze toe aan de regel
+				// Voeg de String toe aan een label en voeg deze toe aan de
+				// regel
 				item.add(new Label("slidingRow", progressString));
-				
+
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),

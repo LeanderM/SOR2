@@ -126,7 +126,7 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 				String progressString = "";
 				for (int i = 0; i < progresses.size(); i++) {
 					Progress progress = (Progress) progresses.get(i);
-					progressString += "  [" + (i + 1) + "]  ";
+					progressString += "  [" + (progresses.size() - i ) + "]  ";
 					progressString += progress.getDate();
 					progressString += "   -   ";
 					progressString += progress.getProgressMessage();
@@ -235,7 +235,7 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 				String progressString = "";
 				for (int i = 0; i < progresses.size(); i++) {
 					Progress progress = (Progress) progresses.get(i);
-					progressString += "  [" + (i + 1) + "]  ";
+					progressString += "  [" + (progresses.size() - i ) + "]  ";
 					progressString += progress.getDate();
 					progressString += "   -   ";
 					progressString += progress.getProgressMessage();
