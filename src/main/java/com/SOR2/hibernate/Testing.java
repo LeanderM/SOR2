@@ -1,6 +1,7 @@
 package com.SOR2.hibernate;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Testing {
 	// tsdfvsdfg
@@ -51,6 +52,14 @@ public class Testing {
 		System.out.println("ayyy");
 		System.out.println(data.size());
 		System.out.println(data.get(17));
+		System.out.println("---------------------------");
+
+		List progresList = HibernateMain.getProgressForMessage(0, true);
+
+		for (Object obj : progresList) {
+			Progress looped = (Progress) obj;
+			System.out.println(looped.getProgressMessage());
+		}
 
 		// System.out.println(HibernateMain.addProgress(0, "testprogressie",
 		// true));

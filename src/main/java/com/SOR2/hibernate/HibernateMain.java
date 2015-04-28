@@ -910,4 +910,29 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	public static List getProgressForMessage(int message_id, boolean vallid) {
+		checkFactoryExists();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Progress.class);
+			crit.add(Restrictions.eq("vallid", vallid));
+			crit.add(Restrictions.eq("message_id", message_id)).addOrder(
+					Order.desc("date"));
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
+	}
+
 }
