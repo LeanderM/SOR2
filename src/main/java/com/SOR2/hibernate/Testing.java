@@ -1,9 +1,9 @@
 package com.SOR2.hibernate;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class Testing {
-
+	// tsdfvsdfg
 	public static void main(String[] args) {
 
 		/*
@@ -45,13 +45,19 @@ public class Testing {
 
 		// System.out.println(HibernateMain.checkUsrExists("test"));
 
-		List data = HibernateMain.getUserNamespaceAndUrl("jesse");
+		HashMap<Integer, String> data = HibernateMain
+				.getAllStatusVallidOrInvallid(false);
 
+		System.out.println("ayyy");
 		System.out.println(data.size());
-		for (Object obj : data) {
-			UserConnectData loop = (UserConnectData) obj;
-			System.out.println(loop.getUsername());
-		}
+		System.out.println(data.get(17));
+
+		// System.out.println(HibernateMain.addProgress(0, "testprogressie",
+		// true));
+		// for (Object obj : data) {
+		// UserConnectData loop = (UserConnectData) obj;
+		// System.out.println(loop.getUsername());
+		// }
 
 		/*
 		 * System.out.println(HibernateMain

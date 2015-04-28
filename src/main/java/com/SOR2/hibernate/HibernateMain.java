@@ -1,6 +1,7 @@
 package com.SOR2.hibernate;
 
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -58,6 +59,7 @@ public abstract class HibernateMain {
 					.addAnnotatedClass(InvallidMessage.class)
 					.addAnnotatedClass(BerichtStatus.class)
 					.addAnnotatedClass(UserConnectData.class)
+					.addAnnotatedClass(Progress.class)
 					.addAnnotatedClass(Users.class).buildSessionFactory();
 
 		} catch (Throwable ex) {
@@ -294,6 +296,32 @@ public abstract class HibernateMain {
 		} finally {
 			openSession.close();
 		}
+	}
+
+	public static int addProgress(int message_id, String progressMsg,
+			boolean vallid) {
+
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Progress type = new Progress();
+
+			type.setMessage_id(message_id);
+			type.setProgressMessage(progressMsg);
+			type.setVallid(vallid);
+			id = (Integer) openSession.save(type);
+			openSession.save(type);
+
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return id;
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////
@@ -765,6 +793,65 @@ public abstract class HibernateMain {
 			openSession.close();
 		}
 		return status;
+	}
+
+	/**
+	 * 
+	 * Deze methode dient ervoor om te kijken welke status bij de int hoort.
+	 * 
+	 * @param id
+	 *            het id van de status die opgehaalt moet gaan worden
+	 * @return de status als String
+	 */
+	public static HashMap<Integer, String> getAllStatusVallidOrInvallid(
+			boolean vallid) {
+		checkFactoryExists();
+		initParams();
+		if (vallid) {
+			try {
+				trans = openSession.beginTransaction();
+				Criteria crit = openSession.createCriteria(Messages.class);
+				List results = crit.list();
+				data = crit.list();
+				trans.commit();
+			} catch (HibernateException e) {
+				if (trans != null)
+					trans.rollback();
+				e.printStackTrace();
+			} finally {
+				openSession.close();
+			}
+			HashMap<Integer, String> map = new HashMap<Integer, String>();
+			for (Object obj : data) {
+				Messages looped = (Messages) obj;
+				map.put(looped.getMessage_ID(),
+						getStatusByMessage_ID(looped.getMessage_ID()));
+			}
+			return map;
+		} else {
+			try {
+				trans = openSession.beginTransaction();
+				Criteria crit = openSession
+						.createCriteria(InvallidMessage.class);
+				List results = crit.list();
+				data = crit.list();
+				trans.commit();
+			} catch (HibernateException e) {
+				if (trans != null)
+					trans.rollback();
+				e.printStackTrace();
+			} finally {
+				openSession.close();
+			}
+			HashMap<Integer, String> map = new HashMap<Integer, String>();
+			for (Object obj : data) {
+				InvallidMessage looped = (InvallidMessage) obj;
+				map.put(looped.getInvallidMessage_ID(),
+						getStatusByInvallidMessage_ID(looped
+								.getInvallidMessage_ID()));
+			}
+			return map;
+		}
 	}
 
 	// pieters lazyloading tot nu toe
