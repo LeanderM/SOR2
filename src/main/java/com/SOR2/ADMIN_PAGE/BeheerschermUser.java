@@ -18,6 +18,7 @@ import com.SOR2.SESSION.BackendSession;
 import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.InvallidMessage;
 import com.SOR2.hibernate.Messages;
+import com.SOR2.hibernate.Progress;
 
 /**
  * Dit is een wicket WebPage klasse die als serverside controller voor het
@@ -117,8 +118,23 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 				String[] messagesArray = item.getModelObject();
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
-				// De status aan het uivouw colometje toevoegen
-				item.add(new Label("slidingRow", messagesArray[3]));
+				
+				// Haal de progress op
+				List progresses = HibernateMain.getProgressForMessage(
+						Integer.parseInt(messagesArray[0]), true);
+				// Voeg alle progresses toe aan een String
+				String progressString = "";
+				for (int i = 0; i < progresses.size(); i++) {
+					Progress progress = (Progress) progresses.get(i);
+					progressString += "  [" + (i + 1) + "]  ";
+					progressString += progress.getDate();
+					progressString += "   -   ";
+					progressString += progress.getProgressMessage();
+					progressString += " ..... ";
+				}
+				// Voeg de String toe aan een label en voeg deze toe aan de regel
+				item.add(new Label("slidingRow", progressString));
+				
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),
@@ -211,8 +227,23 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 				String[] messagesArray = item.getModelObject();
 				// Een rij
 				RepeatingView repeatingView = new RepeatingView("dataRow");
-				// De status aan het uivouw colometje toevoegen
-				item.add(new Label("slidingRow", messagesArray[3]));
+				
+				// Haal de progress op
+				List progresses = HibernateMain.getProgressForMessage(
+						Integer.parseInt(messagesArray[0]), true);
+				// Voeg alle progresses toe aan een String
+				String progressString = "";
+				for (int i = 0; i < progresses.size(); i++) {
+					Progress progress = (Progress) progresses.get(i);
+					progressString += "  [" + (i + 1) + "]  ";
+					progressString += progress.getDate();
+					progressString += "   -   ";
+					progressString += progress.getProgressMessage();
+					progressString += " ..... ";
+				}
+				// Voeg de String toe aan een label en voeg deze toe aan de regel
+				item.add(new Label("slidingRow", progressString));
+				
 				// Een loop om cellen aan de rij toe te voegen
 				for (int i = 0; i < messagesArray.length; i++) {
 					repeatingView.add(new Label(repeatingView.newChildId(),
