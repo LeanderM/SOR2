@@ -47,12 +47,16 @@ public class PostHandler {
 	private SOAPMessage soapResponse;
 	private String nameSpace;
 	private boolean success;
+	private int messageId;
+	private DocumentInformation documentInformation;
+	private Message message;
+	private String url;
 
 	// Verwacht: documentInformation, message, url voor de bestemming van de
 	// SOAP call,
 	// nameSpace van de SOAP ontvanger bv. http://ontvanger.SOR2.com/
 	public PostHandler(DocumentInformation documentInformation,
-			Message message, String url, String nameSpace) {
+			Message message, String url, String nameSpace, int messageId) {
 
 		// We instantiate the needed objects
 		try {
@@ -62,22 +66,25 @@ public class PostHandler {
 			soapMessage = messageFactory.createMessage();
 			this.nameSpace = nameSpace;
 			success = false;
+			this.messageId = messageId;
+
+			this.documentInformation = documentInformation;
+			this.message = message;
+			this.url = url;
+
 		} catch (UnsupportedOperationException e) {
 			e.printStackTrace();
 		} catch (SOAPException e) {
 			e.printStackTrace();
 		}
 
-		// Start the process of sending a SOAPcall
-		executeSOAPRequest(documentInformation, message, url);
 	}
 
 	/**
 	 * Deze methode roept de methodes aan die de SOAPmessage opbouwen en
 	 * verzenden, met de juiste parameters verder luisterd hij voor exceptions
 	 */
-	private void executeSOAPRequest(DocumentInformation documentInformation,
-			Message message, String url) {
+	public void executeSOAPRequest() {
 		try {
 			// Build the body and header of the SOAPMessage
 			buildSOAPHeader(documentInformation);
@@ -195,14 +202,13 @@ public class PostHandler {
 
 		// We get te text value from success
 		success = Boolean.parseBoolean(elementList.item(0).getTextContent());
-
+		
 		// We check if the receiver deemed our message acceptable
 		if (success) {
 			System.out.println("Everything went successful!");
 
 		} else {
-			System.out
-					.println("Sorry, the receiver did not accept our message.");
+			System.out.println("Sorry, the receiver did not accept our message.");
 		}
 
 	}

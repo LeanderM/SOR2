@@ -104,7 +104,7 @@ public class DocumentValidator {
 		return valid;
 	}
 
-	private void addError(String error) {
+	public void addError(String error) {
 		if (errors == null) {
 			errors = "";
 		}
