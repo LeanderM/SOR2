@@ -54,7 +54,11 @@ public class Testing {
 		 * System.out.println("---------------------------");
 		 */
 
-		System.out.println(HibernateMain.getStatusByUUID(UUID.randomUUID(), true));
+		UUID test = UUID.randomUUID();
+		
+		HibernateMain.addMessage(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1);
+		
+		System.out.println(HibernateMain.getStatusByUUID(test, true));
 
 		/*
 		 * List progresList = HibernateMain.getProgressForMessage(0, true);
