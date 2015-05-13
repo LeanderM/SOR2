@@ -1,8 +1,5 @@
 package com.SOR2.hibernate;
 
-import java.util.HashMap;
-import java.util.List;
-
 public class Testing {
 	// tsdfvsdfg
 	public static void main(String[] args) {
@@ -46,20 +43,23 @@ public class Testing {
 
 		// System.out.println(HibernateMain.checkUsrExists("test"));
 
-		HashMap<Integer, String> data = HibernateMain
-				.getAllStatusVallidOrInvallid(true);
+		/*
+		 * HashMap<Integer, String> data = HibernateMain
+		 * .getAllStatusVallidOrInvallid(true);
+		 * 
+		 * System.out.println("ayyy"); System.out.println(data.size());
+		 * System.out.println(data.get(17));
+		 * System.out.println("---------------------------");
+		 */
 
-		System.out.println("ayyy");
-		System.out.println(data.size());
-		System.out.println(data.get(17));
-		System.out.println("---------------------------");
+		System.out.println(HibernateMain.checkMessage_idExists(17, false));
 
-/*		List progresList = HibernateMain.getProgressForMessage(0, true);
-
-		for (Object obj : progresList) {
-			Progress looped = (Progress) obj;
-			System.out.println(looped.getProgressMessage());
-		} */
+		/*
+		 * List progresList = HibernateMain.getProgressForMessage(0, true);
+		 * 
+		 * for (Object obj : progresList) { Progress looped = (Progress) obj;
+		 * System.out.println(looped.getProgressMessage()); }
+		 */
 
 		// System.out.println(HibernateMain.addProgress(0, "testprogressie",
 		// true));
