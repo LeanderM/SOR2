@@ -7,6 +7,7 @@ public class InformationProviderImpl implements InformationProvider {
 	@Override
 	public String getMessageStatus(int messageID) {
 
+		// We get the status from HibernateMain
 		String status = HibernateMain.getStatusByMessage_ID(messageID);
 
 		if (status.length() > 0) {
