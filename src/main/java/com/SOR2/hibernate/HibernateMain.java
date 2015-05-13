@@ -980,20 +980,29 @@ public abstract class HibernateMain {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param UUID een uuid waarmee gebruikers een status kunnen ophalen
+	 * @param vallid is een boolean waarvoor wordt gekeken of het hier om een valide
+	 *        bericht gaat of een invallid bericht.          
+	 * 
+	 * @return een lijst met messegas specifiek aan de megegeven user
+	 */	
 	public static String getStatusByUUID(UUID uuid, boolean vallid){
 		checkFactoryExists();
 		initParams();
 		String status = null;
+		List initialData = null;
 		try {
 			trans = openSession.beginTransaction();
 			if (vallid) {
 				Criteria crit = openSession.createCriteria(Messages.class);
 				crit.add(Restrictions.eq("uuid", uuid.toString()));
-				data = crit.list();
+				initialData = crit.list();
 			} else {
 				Criteria crit = openSession.createCriteria(InvallidMessage.class);
 				crit.add(Restrictions.eq("uuid", uuid.toString()));
-				data = crit.list();
+				initialData = crit.list();
 			}
 			trans.commit();
 		} catch (HibernateException e) {
@@ -1005,13 +1014,13 @@ public abstract class HibernateMain {
 		}
 		
 		if(vallid){
-			for (Object obj : data) {
+			for (Object obj : initialData) {
 				Messages loop = (Messages) obj;
 				status  = getStatusWithStatus_ID(loop.getStatus());
 			}			
 		}
 		else{
-			for (Object obj : data) {
+			for (Object obj : initialData) {
 				InvallidMessage loop = (InvallidMessage) obj;
 				status  = getStatusWithStatus_ID(loop.getStatus());
 			}
