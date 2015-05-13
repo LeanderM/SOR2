@@ -65,7 +65,9 @@ public class PostHandler {
 			connection = soapConnectionFactory.createConnection();
 			messageFactory = MessageFactory.newInstance();
 			soapMessage = messageFactory.createMessage();
-			// TODO http://tomee.apache.org/examples-trunk/simple-webservice/README.html
+			// TODO
+			// http://tomee.apache.org/examples-trunk/simple-webservice/README.html
+			// commit
 			// adding the namespace to the soap envelope
 			SOAPEnvelope envelope = soapMessage.getSOAPPart().getEnvelope();
 			envelope.addNamespaceDeclaration("ont",
