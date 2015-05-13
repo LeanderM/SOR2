@@ -298,6 +298,10 @@ public abstract class HibernateMain {
 		}
 	}
 
+	/*
+	 *  voegt een progressiemoment toe aan de database dat bij een message hoord. Het is belangrijk dat er
+	 *  gecontroleerd wordt of de message vallid is of niet.
+	 */
 	public static int addProgress(int message_id, String progressMsg,
 			boolean vallid) {
 
@@ -797,11 +801,11 @@ public abstract class HibernateMain {
 
 	/**
 	 * 
-	 * Deze methode dient ervoor om te kijken welke status bij de int hoort.
+	 * Deze methode dient ervoor om alle bestaande statusen in 1 keer op te halen om de huidige implementatie
+	 * van de tabel te versnellen.
 	 * 
-	 * @param id
-	 *            het id van de status die opgehaalt moet gaan worden
-	 * @return de status als String
+	 * @param valid een boolean waarmee gekeken kan worden of de messages valid zijn of niet
+	 * @return de hasmap met alle valide of invalide statusen
 	 */
 	public static HashMap<Integer, String> getAllStatusVallidOrInvallid(
 			boolean vallid) {
@@ -910,12 +914,18 @@ public abstract class HibernateMain {
 		return data;
 	}
 
+	
+	/**
+	 * 
+	 * @param message_id de id waarvoor het progressiebericht wordt opgehaald 
+	 *        vallid is een boolean waarvoor wordt gekeken of het hier om een valide bericht gaat of een invallid bericht.
+	 *        
+	 * @return een lijst met messegas specifiek aan de megegeven user
+	 */
 	public static List getProgressForMessage(int message_id, boolean vallid) {
 		checkFactoryExists();
 		initParams();
-
 		try {
-
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(Progress.class);
 			crit.add(Restrictions.eq("vallid", vallid));
@@ -923,7 +933,6 @@ public abstract class HibernateMain {
 					Order.desc("date"));
 			data = crit.list();
 			trans.commit();
-
 		} catch (HibernateException e) {
 			if (trans != null)
 				trans.rollback();
@@ -931,8 +940,6 @@ public abstract class HibernateMain {
 		} finally {
 			openSession.close();
 		}
-
 		return data;
 	}
-
 }
