@@ -48,19 +48,18 @@
          <Set name="maxIdleTime">30000</Set>
        </New>
      </Arg>
-     
-     <security-constraint>
+  
+   </Call>
+   
+   <security-constraint>
     <web-resource-collection>
-      <web-resource-name>Everything in the webapp</web-resource-name>
+      <web-resource-name>SOR2-v3</web-resource-name>
       <url-pattern>/*</url-pattern>
     </web-resource-collection>
     <user-data-constraint>
       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
-  
-  
-   </Call>
 	
 	<!--  new webservices -->
     <display-name>cxf</display-name>
