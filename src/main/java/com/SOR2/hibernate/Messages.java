@@ -18,6 +18,10 @@ public class Messages {
 	// Veld voor message_ID
 	private int message_ID;
 
+	// veld voor uuid
+	@Column(name = "uuid")
+	private String uuid;
+
 	// Veld voor de message
 	// Kolom message in database
 	@Column(name = "message")
@@ -150,6 +154,14 @@ public class Messages {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 }

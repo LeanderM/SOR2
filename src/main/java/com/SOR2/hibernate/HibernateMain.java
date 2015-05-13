@@ -3,6 +3,7 @@ package com.SOR2.hibernate;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -167,7 +168,7 @@ public abstract class HibernateMain {
 	 * voegt een message toe aan de databse
 	 *
 	 */
-	public static int addMessage(String message, String sender, String subject,
+	public static int addMessage(UUID uuid ,String message, String sender, String subject,
 			String receiver, int status) {
 
 		checkFactoryExists();
@@ -175,6 +176,7 @@ public abstract class HibernateMain {
 		try {
 			trans = openSession.beginTransaction();
 			Messages type = new Messages();
+			type.setUuid(uuid.toString());
 			type.setMessage(message);
 			type.setSender(sender);
 			type.setSubject(subject);
@@ -196,7 +198,7 @@ public abstract class HibernateMain {
 	/*
 	 * voegt een invalid message toe aan de database
 	 */
-	public static int addInvallidMessage(String message, String sender,
+	public static int addInvallidMessage(UUID uuid ,String message, String sender,
 			String subject, String receiver, int status) {
 
 		checkFactoryExists();
@@ -204,6 +206,7 @@ public abstract class HibernateMain {
 		try {
 			trans = openSession.beginTransaction();
 			InvallidMessage type = new InvallidMessage();
+			type.setUuid(uuid.toString());
 			type.setMessage(message);
 			type.setSender(sender);
 			type.setSubject(subject);
@@ -976,5 +979,45 @@ public abstract class HibernateMain {
 		}
 		return false;
 	}
+	
+	public static String getStatusByUUID(UUID uuid, boolean vallid){
+		checkFactoryExists();
+		initParams();
+		String status = null;
+		try {
+			trans = openSession.beginTransaction();
+			if (vallid) {
+				Criteria crit = openSession.createCriteria(Messages.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			} else {
+				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		
+		if(vallid){
+			for (Object obj : data) {
+				Messages loop = (Messages) obj;
+				status  = getStatusWithStatus_ID(loop.getStatus());
+			}			
+		}
+		else{
+			for (Object obj : data) {
+				InvallidMessage loop = (InvallidMessage) obj;
+				status  = getStatusWithStatus_ID(loop.getStatus());
+			}
+		}
+		return status;
+	}
+	
 
 }

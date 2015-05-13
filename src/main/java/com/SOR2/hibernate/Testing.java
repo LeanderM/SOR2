@@ -1,5 +1,7 @@
 package com.SOR2.hibernate;
 
+import java.util.UUID;
+
 public class Testing {
 	// tsdfvsdfg
 	public static void main(String[] args) {
@@ -52,7 +54,7 @@ public class Testing {
 		 * System.out.println("---------------------------");
 		 */
 
-		System.out.println(HibernateMain.checkMessage_idExists(17, false));
+		System.out.println(HibernateMain.getStatusByUUID(UUID.randomUUID(), true));
 
 		/*
 		 * List progresList = HibernateMain.getProgressForMessage(0, true);
