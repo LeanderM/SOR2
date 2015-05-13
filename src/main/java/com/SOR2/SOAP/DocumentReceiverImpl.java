@@ -1,5 +1,7 @@
 package com.SOR2.SOAP;
 
+import java.util.UUID;
+
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
@@ -42,10 +44,14 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		DocumentValidator validator = new DocumentValidator(
 				documentInformation, message);
 
+		// We create a UUID
+		UUID uuid = UUID.randomUUID();
+
 		// check if valid
 		if (validator.isValid()) {
+
 			// we add the message to the dataBase.
-			int id = HibernateMain.addMessage(message.getMessage(),
+			int id = HibernateMain.addMessage(uuid, message.getMessage(),
 					documentInformation.getSender(),
 					documentInformation.getSubject(),
 					documentInformation.getReceiver(), 1);
@@ -88,7 +94,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 				// we add a new progress for this message
 				HibernateMain.addProgress(id,
 						"Message was succesfully delivered", true);
-				return new ResponseMessage(true);
+				return new ResponseMessage(true, uuid);
 			} else {
 				// we add a new progress for this message
 				HibernateMain
@@ -98,7 +104,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 								true);
 				validator
 						.addError("Sending was unsuccessful after 5 tries, stopped");
-				return new ResponseMessage(false, validator.getErrors());
+				return new ResponseMessage(false, validator.getErrors(), uuid);
 			}
 
 		} else {
@@ -108,8 +114,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			// receiver
 			if (validator.receiverExists(documentInformation.getReceiver())
 					|| validator.senderExists(documentInformation.getSender())) {
-				int id = HibernateMain.addInvallidMessage(message.getMessage(),
-						documentInformation.getSender(),
+				int id = HibernateMain.addInvallidMessage(uuid,
+						message.getMessage(), documentInformation.getSender(),
 						documentInformation.getSubject(),
 						documentInformation.getReceiver(),
 						validator.getStatusCode());
@@ -118,7 +124,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 						"Message was validated unsuccessfully, stopped", false);
 			}
 			// in case the message was not valid we return all the errors
-			return new ResponseMessage(false, validator.getErrors());
+			return new ResponseMessage(false, validator.getErrors(), uuid);
 		}
 	}
 }

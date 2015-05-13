@@ -11,6 +11,7 @@ import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPConnection;
 import javax.xml.soap.SOAPConnectionFactory;
 import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
@@ -64,6 +65,12 @@ public class PostHandler {
 			connection = soapConnectionFactory.createConnection();
 			messageFactory = MessageFactory.newInstance();
 			soapMessage = messageFactory.createMessage();
+			// TODO http://tomee.apache.org/examples-trunk/simple-webservice/README.html
+			// adding the namespace to the soap envelope
+			SOAPEnvelope envelope = soapMessage.getSOAPPart().getEnvelope();
+			envelope.addNamespaceDeclaration("ont",
+					"http://ontvanger.SOR2.com/");
+
 			this.nameSpace = nameSpace;
 			success = false;
 			this.messageId = messageId;
@@ -121,7 +128,7 @@ public class PostHandler {
 
 		// This needs to be there because SOAP expects the namespaces
 		// of the child elements to be empty, but still be there
-		XMLdocumentInformation.addAttribute(new QName("xmlns"), "");
+		// TODO XMLdocumentInformation.addAttribute(new QName("xmlns"), "");
 		SOAPElement XMLsender = XMLdocumentInformation
 				.addChildElement("sender");
 		SOAPElement XMLdestination = XMLdocumentInformation
@@ -150,7 +157,7 @@ public class PostHandler {
 
 		// This needs to be there because SOAP expects the namespaces
 		// of the child elements to be empty, but still be there
-		bodyElement.addAttribute(new QName("xmlns"), "");
+		// TODO bodyElement.addAttribute(new QName("xmlns"), "");
 
 		// create elements within the element we just created
 		SOAPElement XMLmessage = bodyElement.addChildElement(new QName("",
@@ -202,13 +209,14 @@ public class PostHandler {
 
 		// We get te text value from success
 		success = Boolean.parseBoolean(elementList.item(0).getTextContent());
-		
+
 		// We check if the receiver deemed our message acceptable
 		if (success) {
 			System.out.println("Everything went successful!");
 
 		} else {
-			System.out.println("Sorry, the receiver did not accept our message.");
+			System.out
+					.println("Sorry, the receiver did not accept our message.");
 		}
 
 	}

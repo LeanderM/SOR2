@@ -1,5 +1,7 @@
 package com.SOR2.SOAP.XMLObjects;
 
+import java.util.UUID;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -17,18 +19,26 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ResponseMessage {
 	private boolean success;
 	private String errorMessage;
+	private UUID uuid;
 
 	public ResponseMessage() {
 	}
 
-	public ResponseMessage(boolean success) {
+	public ResponseMessage(boolean success, UUID uuid) {
 		this.success = success;
 		errorMessage = "no Errors";
+		this.uuid = uuid;
 	}
 
 	public ResponseMessage(boolean success, String errorMessage) {
 		this.success = success;
 		this.errorMessage = errorMessage;
+	}
+
+	public ResponseMessage(boolean success, String errorMessage, UUID uuid) {
+		this.success = success;
+		this.errorMessage = errorMessage;
+		this.uuid = uuid;
 	}
 
 	@XmlElement(name = "success")
@@ -47,5 +57,13 @@ public class ResponseMessage {
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
+	}
+
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
 	}
 }
