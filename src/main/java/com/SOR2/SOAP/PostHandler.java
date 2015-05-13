@@ -65,9 +65,7 @@ public class PostHandler {
 			connection = soapConnectionFactory.createConnection();
 			messageFactory = MessageFactory.newInstance();
 			soapMessage = messageFactory.createMessage();
-			// TODO
-			// http://tomee.apache.org/examples-trunk/simple-webservice/README.html
-			// commit
+
 			// adding the namespace to the soap envelope
 			SOAPEnvelope envelope = soapMessage.getSOAPPart().getEnvelope();
 			envelope.addNamespaceDeclaration("ont",
@@ -120,17 +118,20 @@ public class PostHandler {
 		SOAPHeader soapHeader = soapMessage.getSOAPHeader();
 
 		// QName for documentInformatie
-		QName QdocumentInformation = new QName(nameSpace, "documentInformation");
-
+		QName QdocumentInformation = new QName(nameSpace,
+				"documentInformation", "ont");
+		// nameSpace
 		// create the following elements: documentInformation, destination,
 		// title
 		// in the soap header
 		SOAPElement XMLdocumentInformation = soapHeader
 				.addChildElement(QdocumentInformation);
 
+		XMLdocumentInformation.removeNamespaceDeclaration("ont");
+		// XMLdocumentInformation.setPrefix("ont");
+
 		// This needs to be there because SOAP expects the namespaces
 		// of the child elements to be empty, but still be there
-		// TODO XMLdocumentInformation.addAttribute(new QName("xmlns"), "");
 		SOAPElement XMLsender = XMLdocumentInformation
 				.addChildElement("sender");
 		SOAPElement XMLdestination = XMLdocumentInformation
@@ -152,14 +153,15 @@ public class PostHandler {
 		SOAPBody soapBody = soapMessage.getSOAPBody();
 
 		// namespace QName of the body element
-		QName bodyName = new QName(nameSpace, "sendDocument");
+		QName bodyName = new QName(nameSpace, "sendDocument", "ont");
 
 		// add the body element to the body
 		SOAPBodyElement bodyElement = soapBody.addBodyElement(bodyName);
 
+		bodyElement.removeNamespaceDeclaration("ont");
+
 		// This needs to be there because SOAP expects the namespaces
 		// of the child elements to be empty, but still be there
-		// TODO bodyElement.addAttribute(new QName("xmlns"), "");
 
 		// create elements within the element we just created
 		SOAPElement XMLmessage = bodyElement.addChildElement(new QName("",

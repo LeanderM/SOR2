@@ -16,7 +16,7 @@ import com.SOR2.hibernate.HibernateMain;
  * @version 0.1.0
  *
  *          WSDL te vinden op
- *          http://localhost:8080/services/DocumentReceiver?wsdl
+ *          http://localhost:8443/services/DocumentReceiver?wsdl
  */
 public class DocumentReceiverImpl implements DocumentReceiver {
 	/**

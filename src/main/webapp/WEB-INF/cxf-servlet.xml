@@ -25,9 +25,10 @@
             <bean class="com.SOR2.SOAP.DocumentReceiverImpl"/>
         </jaxws:serviceBean>
         <!-- Verwijzing naar validation -->
+        <!--  
         <jaxws:features>
         	<ref bean="commonValidationFeature" />
-     	</jaxws:features>
+     	</jaxws:features>-->
     </jaxws:server>
     
     <!-- De test ontvanger -->
