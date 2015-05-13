@@ -1,7 +1,5 @@
 package com.SOR2.SOAP;
 
-import javax.jws.WebService;
-
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
@@ -18,7 +16,6 @@ import com.SOR2.hibernate.HibernateMain;
  *          WSDL te vinden op
  *          http://localhost:8080/services/DocumentReceiver?wsdl
  */
-@WebService(endpointInterface = "com.SOR2.SOAP.DocumentReceiver", serviceName = "DocumentReceiver")
 public class DocumentReceiverImpl implements DocumentReceiver {
 	/**
 	 * Deze methode neemt SOAPcalls aan met DocumentInformation en Document
@@ -54,7 +51,9 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					documentInformation.getReceiver(), 1);
 
 			// we add a new progress for this message
-			HibernateMain.addProgress(id, "Message successfully validated and ready for sending", true);
+			HibernateMain.addProgress(id,
+					"Message successfully validated and ready for sending",
+					true);
 
 			// build the handler
 			DestinationHandler destination = new DestinationHandler(
@@ -63,7 +62,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			// Post the document
 			PostHandler poster = new PostHandler(documentInformation, message,
 					destination.getUrl(), destination.getNameSpace(), id);
-			
+
 			boolean done = false;
 
 			for (int i = 0; i < 5 && !done; i++) {
@@ -73,7 +72,9 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					done = true;
 				} else {
 					// we add a new progress for this message
-					HibernateMain.addProgress(id, "Sending was unsuccessful retrying in 15 seconds, " + (5 - i) + " retries left", true);
+					HibernateMain.addProgress(id,
+							"Sending was unsuccessful retrying in 15 seconds, "
+									+ (5 - i) + " retries left", true);
 					try {
 						Thread.sleep(15000);
 					} catch (InterruptedException e) {
@@ -82,15 +83,21 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 				}
 
 			}
-			
-			if(done) {
+
+			if (done) {
 				// we add a new progress for this message
-				HibernateMain.addProgress(id, "Message was succesfully delivered", true);
+				HibernateMain.addProgress(id,
+						"Message was succesfully delivered", true);
 				return new ResponseMessage(true);
 			} else {
 				// we add a new progress for this message
-				HibernateMain.addProgress(id, "Sending was unsuccessful after 5 tries, stopped", true);
-				validator.addError("Sending was unsuccessful after 5 tries, stopped");
+				HibernateMain
+						.addProgress(
+								id,
+								"Sending was unsuccessful after 5 tries, stopped",
+								true);
+				validator
+						.addError("Sending was unsuccessful after 5 tries, stopped");
 				return new ResponseMessage(false, validator.getErrors());
 			}
 
@@ -107,7 +114,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 						documentInformation.getReceiver(),
 						validator.getStatusCode());
 				// we add a new progress for this message
-				HibernateMain.addProgress(id, "Message was validated unsuccessfully, stopped", false);
+				HibernateMain.addProgress(id,
+						"Message was validated unsuccessfully, stopped", false);
 			}
 			// in case the message was not valid we return all the errors
 			return new ResponseMessage(false, validator.getErrors());
