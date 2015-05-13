@@ -299,8 +299,9 @@ public abstract class HibernateMain {
 	}
 
 	/*
-	 *  voegt een progressiemoment toe aan de database dat bij een message hoord. Het is belangrijk dat er
-	 *  gecontroleerd wordt of de message vallid is of niet.
+	 * voegt een progressiemoment toe aan de database dat bij een message hoord.
+	 * Het is belangrijk dat er gecontroleerd wordt of de message vallid is of
+	 * niet.
 	 */
 	public static int addProgress(int message_id, String progressMsg,
 			boolean vallid) {
@@ -801,10 +802,12 @@ public abstract class HibernateMain {
 
 	/**
 	 * 
-	 * Deze methode dient ervoor om alle bestaande statusen in 1 keer op te halen om de huidige implementatie
-	 * van de tabel te versnellen.
+	 * Deze methode dient ervoor om alle bestaande statusen in 1 keer op te
+	 * halen om de huidige implementatie van de tabel te versnellen.
 	 * 
-	 * @param valid een boolean waarmee gekeken kan worden of de messages valid zijn of niet
+	 * @param valid
+	 *            een boolean waarmee gekeken kan worden of de messages valid
+	 *            zijn of niet
 	 * @return de hasmap met alle valide of invalide statusen
 	 */
 	public static HashMap<Integer, String> getAllStatusVallidOrInvallid(
@@ -914,12 +917,13 @@ public abstract class HibernateMain {
 		return data;
 	}
 
-	
 	/**
 	 * 
-	 * @param message_id de id waarvoor het progressiebericht wordt opgehaald 
-	 *        vallid is een boolean waarvoor wordt gekeken of het hier om een valide bericht gaat of een invallid bericht.
-	 *        
+	 * @param message_id
+	 *            de id waarvoor het progressiebericht wordt opgehaald vallid is
+	 *            een boolean waarvoor wordt gekeken of het hier om een valide
+	 *            bericht gaat of een invallid bericht.
+	 * 
 	 * @return een lijst met messegas specifiek aan de megegeven user
 	 */
 	public static List getProgressForMessage(int message_id, boolean vallid) {
@@ -932,6 +936,7 @@ public abstract class HibernateMain {
 			crit.add(Restrictions.eq("message_id", message_id)).addOrder(
 					Order.desc("date"));
 			data = crit.list();
+
 			trans.commit();
 		} catch (HibernateException e) {
 			if (trans != null)
@@ -942,4 +947,34 @@ public abstract class HibernateMain {
 		}
 		return data;
 	}
+	// test
+	
+	public static boolean checkMessage_idExists(int message_id, boolean vallid) {
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			if (vallid) {
+				Criteria crit = openSession.createCriteria(Messages.class);
+				crit.add(Restrictions.eq("message_ID", message_id));
+				data = crit.list();
+			} else {
+				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				crit.add(Restrictions.eq("invallidMessage_ID", message_id));
+				data = crit.list();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		if (data.size() != 0) {
+			return true;
+		}
+		return false;
+	}
+
 }
