@@ -47,19 +47,19 @@ public class Testing {
 		// System.out.println(HibernateMain.checkUsrExists("test"));
 
 		HashMap<Integer, String> data = HibernateMain
-				.getAllStatusVallidOrInvallid(false);
+				.getAllStatusVallidOrInvallid(true);
 
 		System.out.println("ayyy");
 		System.out.println(data.size());
 		System.out.println(data.get(17));
 		System.out.println("---------------------------");
 
-		List progresList = HibernateMain.getProgressForMessage(0, true);
+/*		List progresList = HibernateMain.getProgressForMessage(0, true);
 
 		for (Object obj : progresList) {
 			Progress looped = (Progress) obj;
 			System.out.println(looped.getProgressMessage());
-		}
+		} */
 
 		// System.out.println(HibernateMain.addProgress(0, "testprogressie",
 		// true));
