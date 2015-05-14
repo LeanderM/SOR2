@@ -53,12 +53,34 @@ public class PostHandler {
 	private Message message;
 	private String url;
 
+	
+	static {
+		
+	    //for localhost testing only
+		// anders werkt het verzenden met SSL certificaat niet lekker met de hostname localhost
+	    javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+	    new javax.net.ssl.HostnameVerifier(){
+ 
+	        public boolean verify(String hostname,
+	                javax.net.ssl.SSLSession sslSession) {
+	            if (hostname.equals("localhost")) {
+	                return true;
+	            }
+	            return false;
+	        }
+	    });
+	}
+ 
+	
 	// Verwacht: documentInformation, message, url voor de bestemming van de
 	// SOAP call,
 	// nameSpace van de SOAP ontvanger bv. http://ontvanger.SOR2.com/
 	public PostHandler(DocumentInformation documentInformation,
 			Message message, String url, String nameSpace, int messageId) {
 
+		
+		
+		
 		// We instantiate the needed objects
 		try {
 			soapConnectionFactory = SOAPConnectionFactory.newInstance();

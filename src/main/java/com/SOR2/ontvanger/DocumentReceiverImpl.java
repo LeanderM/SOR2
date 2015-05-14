@@ -17,7 +17,7 @@ import com.SOR2.SOAP.XMLObjects.ResponseMessage;
  *          WSDL te vinden op
  *          http://localhost:8080/testservices/DocumentReceiver?wsdl
  */
-@WebService(endpointInterface = "com.SOR2.ontvanger.DocumentReceiver", serviceName = "DocumentReceiver")
+@WebService(endpointInterface = "com.SOR2.ontvanger.DocumentReceiver")
 public class DocumentReceiverImpl implements DocumentReceiver {
 
 	@Override

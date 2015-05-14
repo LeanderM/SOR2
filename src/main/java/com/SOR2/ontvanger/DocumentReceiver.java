@@ -9,7 +9,7 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
-@WebService
+@WebService(serviceName = "TestReceiver")
 public interface DocumentReceiver {
 	/**
 	 * Een classe die dient als implementatie voor een tweede SOAPontvanger Deze
