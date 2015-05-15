@@ -43,10 +43,10 @@ public class SoapClientSSL {
 			this.documentInformation = documentInformation;
 			// save to variable
 			this.message = message;
-			// url
-			this.url = new URL("https://localhost:8443/services/testreceiver?wsdl");
-			// nameSpace, serviceName
-			serviceQName = new QName("http://ontvanger.SOR2.com/", "TestReceiver");
+			// url "https://localhost:8443/services/testreceiver?wsdl"
+			this.url = new URL(url);
+			// nameSpace "http://ontvanger.SOR2.com/" , serviceName 
+			serviceQName = new QName(nameSpace, "TestReceiver");
 			// create the service using the QName and URL
 			service = Service.create(this.url, serviceQName);			
 			// We get the interface class so we can use it to see what methods are available 
