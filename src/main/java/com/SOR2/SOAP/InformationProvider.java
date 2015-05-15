@@ -1,5 +1,7 @@
 package com.SOR2.SOAP;
 
+import java.util.UUID;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
