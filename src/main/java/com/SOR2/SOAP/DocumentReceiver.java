@@ -23,10 +23,6 @@ public interface DocumentReceiver {
 	 * Een SOAP methode die DocumentInformation en message als parameters heeft.
 	 */
 	@WebMethod(operationName = "sendDocument")
-	ResponseMessage sendDocument(
-	// DocumentInformation moet in de header
-	// @Valid geeft aan dat aan alle validatieregels van de
-	// DocumentInformation class moet worden voldaan
-			/* @NotNull(message = "documentInformation can not be null") @Valid */@WebParam(name = "documentInformation", header = true) @XmlElement(name = "documentInformation", required = true, nillable = false) DocumentInformation documentInformation,
-			/* @NotNull */@WebParam(name = "message") Message message);
+	ResponseMessage sendDocument(	
+			@WebParam(name = "message") Message message, /* DocumentInformation moet in de header*/	@WebParam(name = "documentInformation", header = true) @XmlElement(name = "documentInformation", required = true, nillable = false) DocumentInformation documentInformation);
 }

@@ -29,7 +29,7 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 */
 	@Override
 	public ResponseMessage sendDocument(
-			DocumentInformation documentInformation, Message message) {
+			Message message, DocumentInformation documentInformation) {
 
 		// We check if all the parameters are present
 		if (documentInformation == null) {
