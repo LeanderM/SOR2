@@ -1028,5 +1028,39 @@ public abstract class HibernateMain {
 		return status;
 	}
 	
+	
+	
+	public static boolean checkUUIDExists(UUID uuid, boolean vallid) {
+		checkFactoryExists();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			if (vallid) {
+				Criteria crit = openSession.createCriteria(Messages.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			} else {
+				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		if (data.size() != 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	
+	
+	
+	
 
 }
