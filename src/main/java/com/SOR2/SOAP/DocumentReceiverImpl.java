@@ -66,15 +66,18 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 					documentInformation.getReceiver());
 
 			// Post the document
-			PostHandler poster = new PostHandler(documentInformation, message,
-					destination.getUrl(), destination.getNameSpace(), id);
+			/*PostHandler poster = new PostHandler(documentInformation, message,
+					destination.getUrl(), destination.getNameSpace(), id);*/
 
 			boolean done = false;
-
+			
+			SoapClientSSL client = new SoapClientSSL(documentInformation, message, destination.getUrl(), destination.getNameSpace(), "");
+						
 			for (int i = 0; i < 5 && !done; i++) {
-				poster.executeSOAPRequest();
-				if (poster.successfull()) {
-
+				//poster.executeSOAPRequest();
+				client.sendSoapCall();
+				//poster.successfull()
+				if (client.successFull()) {
 					done = true;
 				} else {
 					// we add a new progress for this message

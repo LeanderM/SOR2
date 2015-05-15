@@ -46,7 +46,7 @@ public class ResponseMessage {
 		return success;
 	}
 
-	public void setSuccess(Boolean success) {
+	public void setSuccess(boolean success) {
 		this.success = success;
 	}
 

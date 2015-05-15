@@ -17,7 +17,7 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:soap="http://cxf.apache.org/bindings/soap" xmlns:http-conf="http://cxf.apache.org/transports/http/configuration" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd">
     
     <!-- De DocumentReceiver -->
     <jaxws:server id="jaxwsService" serviceClass="com.SOR2.SOAP.DocumentReceiver" address="/documentreceiver">
@@ -48,5 +48,11 @@
     <!--  Class die gebruikt wordt voor validation -->
     <bean id="commonValidationFeature" class="org.apache.cxf.validation.BeanValidationFeature"/>
     
-
+    <!-- http client -->
+    <!-- toegevoegt omdat de soap client anders problemen krijgt met het SSL certificaat (disableCNCheck="true")-->
+    <http-conf:conduit name="*.http-conduit">
+	   <http-conf:tlsClientParameters disableCNCheck="true">
+	       <!-- other tls configuration parameters, like trustManagers -->
+	    </http-conf:tlsClientParameters>     
+	</http-conf:conduit>
 </beans>

@@ -23,6 +23,7 @@ public interface DocumentReceiver {
 
 	@WebMethod(operationName = "sendDocument")
 	ResponseMessage sendDocument(
-			@WebParam(name = "documentInformation", header = true) DocumentInformation documentInformation,
-			@WebParam(name = "message") @XmlElement(required = false, nillable = false) Message message);
+			// Header parameters als laatst noteren andere werkt het niet lekker met clients
+			@WebParam(name = "message") @XmlElement(required = true, nillable = false) Message message,
+			@WebParam(name = "documentInformation", header = true) @XmlElement(required = true, nillable = false) DocumentInformation documentInformation);
 }

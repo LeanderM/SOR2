@@ -1,5 +1,6 @@
 package com.SOR2.ontvanger;
 
+import javax.jws.HandlerChain;
 import javax.jws.WebService;
 
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
@@ -18,11 +19,12 @@ import com.SOR2.SOAP.XMLObjects.ResponseMessage;
  *          http://localhost:8080/testservices/DocumentReceiver?wsdl
  */
 @WebService(endpointInterface = "com.SOR2.ontvanger.DocumentReceiver")
+@HandlerChain(file = "handlers.xml")
 public class DocumentReceiverImpl implements DocumentReceiver {
 
 	@Override
 	public ResponseMessage sendDocument(
-			DocumentInformation documentInformation, Message message) {
+			 Message message, DocumentInformation documentInformation) {
 
 		if (documentInformation == null) {
 			return new ResponseMessage(false,

@@ -24,7 +24,7 @@
 			<param-value>com.SOR2.WicketApplication</param-value>
 		</init-param>
 	</filter>
-
+	
 	<filter-mapping>
 		<filter-name>wicket.SOR2-v3</filter-name>
 		<url-pattern>/*</url-pattern>
