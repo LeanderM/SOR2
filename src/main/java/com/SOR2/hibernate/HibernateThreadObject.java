@@ -138,6 +138,67 @@ public class HibernateThreadObject {
 		}
 	}
 
+	/**
+	 * voegt een message toe aan de databse
+	 *
+	 */
+	public int addMessage(UUID uuid, String message, String sender,
+			String subject, String receiver, int status) {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Messages type = new Messages();
+			type.setUuid(uuid.toString());
+			type.setMessage(message);
+			type.setSender(sender);
+			type.setSubject(subject);
+			type.setReceiver(receiver);
+			type.setStatus(status);
+
+			id = (Integer) openSession.save(type);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return id;
+	}
+
+	/*
+	 * voegt een invalid message toe aan de database
+	 */
+	public int addInvallidMessage(UUID uuid, String message, String sender,
+			String subject, String receiver, int status) {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			InvallidMessage type = new InvallidMessage();
+			type.setUuid(uuid.toString());
+			type.setMessage(message);
+			type.setSender(sender);
+			type.setSubject(subject);
+			type.setReceiver(receiver);
+			type.setStatus(status);
+
+			id = (Integer) openSession.save(type);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return id;
+	}
+
 	// alle getters moet nog comments maken
 
 	public boolean sendQueHasItems() {
