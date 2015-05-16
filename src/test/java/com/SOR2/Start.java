@@ -8,6 +8,8 @@ import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import com.SOR2.THREADS.ThreadHandler;
+
 public class Start {
 	public static void main(String[] args) throws Exception {
 		int timeout = (int) Duration.ONE_HOUR.getMilliseconds();
@@ -61,6 +63,11 @@ public class Start {
 		// server.getContainer().addEventListener(mBeanContainer);
 		// mBeanContainer.start();
 
+		// make a new threadHandler and instruct it to create the threads
+		System.out.println("INITIATING THREADS");
+		ThreadHandler threadHandler = new ThreadHandler();
+		threadHandler.startThreads();
+
 		server.setHandler(bb);
 
 		try {
@@ -75,5 +82,6 @@ public class Start {
 			e.printStackTrace();
 			System.exit(1);
 		}
+
 	}
 }
