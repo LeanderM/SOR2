@@ -86,7 +86,7 @@ public class HibernateThreadObject {
 
 	// populeer de 2 nieuwe tabellen
 
-	public void addSendQueItem(UUID uuid, String message, String sender,
+	public int addSendQueItem(UUID uuid, String message, String sender,
 			String subject, String receiver, int status) {
 
 		checkFactoryExistsElseInit();
@@ -101,7 +101,7 @@ public class HibernateThreadObject {
 			type.setReceiver(receiver);
 			type.setStatus(status);
 
-			openSession.save(type);
+			id = (Integer) openSession.save(type);
 			trans.commit();
 		} catch (HibernateException e) {
 			if (trans != null)
@@ -110,9 +110,10 @@ public class HibernateThreadObject {
 		} finally {
 			openSession.close();
 		}
+		return id;
 	}
 
-	public void addValidationQueItem(UUID uuid, String message, String sender,
+	public int addValidationQueItem(UUID uuid, String message, String sender,
 			String subject, String receiver, int status) {
 
 		checkFactoryExistsElseInit();
@@ -127,7 +128,7 @@ public class HibernateThreadObject {
 			type.setReceiver(receiver);
 			type.setStatus(status);
 
-			openSession.save(type);
+			id = (Integer) openSession.save(type);
 			trans.commit();
 		} catch (HibernateException e) {
 			if (trans != null)
@@ -136,6 +137,7 @@ public class HibernateThreadObject {
 		} finally {
 			openSession.close();
 		}
+		return id;
 	}
 
 	/**
