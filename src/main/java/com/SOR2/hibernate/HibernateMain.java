@@ -73,7 +73,7 @@ public abstract class HibernateMain {
 	 * checkt of de factory al geinstantieerd is als dit niet het geval is wordt
 	 * dat alsnog gedaan
 	 */
-	public static void checkFactoryExists() {
+	public static void checkFactoryExistsElseInit() {
 		if (factory == null) {
 			initFactory();
 		}
@@ -118,7 +118,7 @@ public abstract class HibernateMain {
 	 */
 	public static Integer addAccountType(String name) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -143,7 +143,7 @@ public abstract class HibernateMain {
 	public static int addID(String accountType, String firstName,
 			String message, String message_recipients) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -171,7 +171,7 @@ public abstract class HibernateMain {
 	public static int addMessage(UUID uuid ,String message, String sender, String subject,
 			String receiver, int status) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -201,7 +201,7 @@ public abstract class HibernateMain {
 	public static int addInvallidMessage(UUID uuid ,String message, String sender,
 			String subject, String receiver, int status) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -231,7 +231,7 @@ public abstract class HibernateMain {
 	 */
 	public static int addMessageRecipient(String recId, int message_id) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -256,7 +256,7 @@ public abstract class HibernateMain {
 	 */
 	public static void addStatus(String status) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -279,7 +279,7 @@ public abstract class HibernateMain {
 	 */
 	public static void addUser(int accountType, String password, String username) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -309,7 +309,7 @@ public abstract class HibernateMain {
 	public static int addProgress(int message_id, String progressMsg,
 			boolean vallid) {
 
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -353,7 +353,7 @@ public abstract class HibernateMain {
 	// ////////////////////////////////////////////////////////////////////////////
 	public static List getSpecificSelectionRawSQL(String colom, String table,
 			String otherSQL) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -384,7 +384,7 @@ public abstract class HibernateMain {
 	 * @return een lijst met messegas specifiek aan de megegeven user
 	 */
 	public static List getMailForAdmin(String usr) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -420,7 +420,7 @@ public abstract class HibernateMain {
 	 */
 	public static List getInvallidMessagesForSpecificSenderOrReciever(
 			String sender, String receiver) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -449,7 +449,7 @@ public abstract class HibernateMain {
 	 * @return alle invalide berichten die op het moment in de database staan
 	 */
 	public static List getAllInvallidMessages() {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -476,7 +476,7 @@ public abstract class HibernateMain {
 	 * @return alle statussen die in de database staan.
 	 */
 	public static List getAllStatussen() {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -503,7 +503,7 @@ public abstract class HibernateMain {
 	 * @return alle valide berichten die op het moment in de database staan.
 	 */
 	public static List getAllMail() {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -539,7 +539,7 @@ public abstract class HibernateMain {
 	 *         een lege lijst
 	 */
 	public static List checkLogin(String usr, String pass) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -574,7 +574,7 @@ public abstract class HibernateMain {
 	 * @return een boolean of de user bestaat of niet
 	 */
 	public static boolean checkUsrExists(String usr) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 
 		try {
@@ -618,7 +618,7 @@ public abstract class HibernateMain {
 	public static String getUserTypeForAccount(String usr) {
 		Account_type singleType = null;
 		Integer specified = null;
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 
@@ -636,7 +636,7 @@ public abstract class HibernateMain {
 
 			initParams();
 			factory = null;
-			checkFactoryExists();
+			checkFactoryExistsElseInit();
 
 			trans = openSession.beginTransaction();
 			Criteria critTwee = openSession.createCriteria(Account_type.class);
@@ -673,7 +673,7 @@ public abstract class HibernateMain {
 	public static String getStatusByMessage_ID(int message_ID) {
 		String status = null;
 		Integer status_ID = null;
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -690,7 +690,7 @@ public abstract class HibernateMain {
 
 			initParams();
 			factory = null;
-			checkFactoryExists();
+			checkFactoryExistsElseInit();
 
 			trans = openSession.beginTransaction();
 			Criteria critTwee = openSession.createCriteria(BerichtStatus.class);
@@ -724,7 +724,7 @@ public abstract class HibernateMain {
 	public static String getStatusByInvallidMessage_ID(int invallidMessage_ID) {
 		String status = null;
 		Integer status_ID = null;
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -741,7 +741,7 @@ public abstract class HibernateMain {
 
 			initParams();
 			factory = null;
-			checkFactoryExists();
+			checkFactoryExistsElseInit();
 
 			trans = openSession.beginTransaction();
 			Criteria critTwee = openSession.createCriteria(BerichtStatus.class);
@@ -775,7 +775,7 @@ public abstract class HibernateMain {
 	 * @return de status als String
 	 */
 	public static String getStatusWithStatus_ID(int id) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		String status = null;
 		try {
@@ -815,7 +815,7 @@ public abstract class HibernateMain {
 	 */
 	public static HashMap<Integer, String> getAllStatusVallidOrInvallid(
 			boolean vallid) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		if (vallid) {
 			try {
@@ -868,7 +868,7 @@ public abstract class HibernateMain {
 	//
 
 	public static List getLazyMessages() {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		counter = 0;
 
@@ -902,7 +902,7 @@ public abstract class HibernateMain {
 	 * @return de response van de database
 	 */
 	public static List getUserNamespaceAndUrl(String usr) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -930,7 +930,7 @@ public abstract class HibernateMain {
 	 * @return een lijst met messegas specifiek aan de megegeven user
 	 */
 	public static List getProgressForMessage(int message_id, boolean vallid) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -953,7 +953,7 @@ public abstract class HibernateMain {
 	// test
 	
 	public static boolean checkMessage_idExists(int message_id, boolean vallid) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
@@ -989,7 +989,7 @@ public abstract class HibernateMain {
 	 * @return een lijst met messegas specifiek aan de megegeven user
 	 */	
 	public static String getStatusByUUID(UUID uuid, boolean vallid){
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		String status = null;
 		List initialData = null;
@@ -1031,7 +1031,7 @@ public abstract class HibernateMain {
 	
 	
 	public static boolean checkUUIDExists(UUID uuid, boolean vallid) {
-		checkFactoryExists();
+		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();

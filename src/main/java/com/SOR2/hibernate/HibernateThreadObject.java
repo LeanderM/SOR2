@@ -1,0 +1,295 @@
+package com.SOR2.hibernate;
+
+import java.io.FileNotFoundException;
+import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.AnnotationConfiguration;
+
+public class HibernateThreadObject {
+
+	// bevat de factory zelf
+	private SessionFactory factory;
+	// bevat de huidige sessie met de database. Bij de start van een nieuwe
+	// methode word deze gereset
+	private Session openSession;
+	// bevat informatie om hetgene over te zetten naar de db of om gegevens
+	// eruit te halen
+	private Transaction trans;
+
+	// bevat de lijst met return data
+	private List data;
+
+	// bevat de response message voor feedback voor de inputs
+	private Integer id;
+
+	private int counter;
+
+	public HibernateThreadObject() {
+		initFactory();
+	}
+
+	/*
+	 * instantieerd de hibernate factory en vult de variable van een factory met
+	 * alle models gedefineert in de hibernate map
+	 */
+	@SuppressWarnings("deprecation")
+	private void initFactory() {
+		try {
+			factory = new AnnotationConfiguration().configure()
+					.addAnnotatedClass(SendQueItem.class)
+					.addAnnotatedClass(ValidationQueItem.class)
+					.buildSessionFactory();
+
+		} catch (Throwable ex) {
+			System.err.println("Failed to create sessionFactory object." + ex);
+			throw new ExceptionInInitializerError(ex);
+		}
+	}
+
+	/**
+	 * checkt of de factory al geinstantieerd is als dit niet het geval is wordt
+	 * dat alsnog gedaan
+	 */
+	private void checkFactoryExistsElseInit() {
+		if (factory == null) {
+			initFactory();
+		}
+	}
+
+	/**
+	 * schoont en initieerd de parameters die over de verschillende methoden
+	 * gebruikt worden.
+	 *
+	 * @param value1
+	 *            Eerste waarde voor de berekening
+	 *
+	 * @throws FileNotFoundException
+	 *
+	 * @returns Resultaat van de berekening.
+	 */
+	private void initParams() {
+		// reset all data
+		id = null;
+		openSession = null;
+		trans = null;
+		data = null;
+		// open sessie
+		openSession = factory.openSession();
+
+	}
+
+	// populeer de 2 nieuwe tabellen
+
+	public void addSendQueItem(UUID uuid, String message, String sender,
+			String subject, String receiver, int status) {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			SendQueItem type = new SendQueItem();
+			type.setUuid(uuid.toString());
+			type.setMessage(message);
+			type.setSender(sender);
+			type.setSubject(subject);
+			type.setReceiver(receiver);
+			type.setStatus(status);
+
+			openSession.save(type);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+	}
+
+	public void addValidationQueItem(UUID uuid, String message, String sender,
+			String subject, String receiver, int status) {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			ValidationQueItem type = new ValidationQueItem();
+			type.setUuid(uuid.toString());
+			type.setMessage(message);
+			type.setSender(sender);
+			type.setSubject(subject);
+			type.setReceiver(receiver);
+			type.setStatus(status);
+
+			openSession.save(type);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+	}
+
+	// alle getters moet nog comments maken
+
+	public boolean sendQueHasItems() {
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(SendQueItem.class);
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return (data.size() != 0) ? true : false;
+	}
+
+	public boolean validationQueHasItems() {
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(ValidationQueItem.class);
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return (data.size() != 0) ? true : false;
+	}
+
+	public SendQueItem getFirstSendQueItem() {
+		checkFactoryExistsElseInit();
+		initParams();
+		SendQueItem item = null;
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(SendQueItem.class);
+			crit.setFirstResult(0);
+			crit.setMaxResults(1);
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return (SendQueItem) data.get(0);
+	}
+
+	public ValidationQueItem getFirstValidationQueItem() {
+		checkFactoryExistsElseInit();
+		initParams();
+		SendQueItem item = null;
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(ValidationQueItem.class);
+			crit.setFirstResult(0);
+			crit.setMaxResults(1);
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return (ValidationQueItem) data.get(0);
+	}
+
+	public void deleteFirstSendQueItem() {
+		SendQueItem toDell = getFirstSendQueItem();
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			openSession.delete(toDell);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+	}
+
+	public void deleteFirstValidationQueItem() {
+		ValidationQueItem toDell = getFirstValidationQueItem();
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			openSession.delete(toDell);
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+	}
+
+	public List getAllValidationItems() {
+		checkFactoryExistsElseInit();
+		initParams();
+		SendQueItem item = null;
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(ValidationQueItem.class);
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return data;
+
+	}
+
+	public List getAllSendQueItems() {
+		checkFactoryExistsElseInit();
+		initParams();
+		SendQueItem item = null;
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(SendQueItem.class);
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return data;
+	}
+
+}

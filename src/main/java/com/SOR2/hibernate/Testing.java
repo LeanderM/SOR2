@@ -56,13 +56,42 @@ public class Testing {
 
 		UUID test = UUID.randomUUID();
 		
-		HibernateMain.addMessage(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1);
+		HibernateThreadObject obj = new HibernateThreadObject();
 		
+	/*	obj.addSendQueItem(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1);
+		obj.addSendQueItem(test, "hallo iedereen22222", "test", "test", "Belastingsdienst", 1);
+		obj.addValidationQueItem(test, "hallo iedereentoVAL", "test", "", "Belastingsdienst", 1);
+		obj.addValidationQueItem(test, "hallo iedereen22222toVAL", "test", "test", "Belastingsdienst", 1);
+	*/
+		
+		
+		
+		
+		
+		System.out.println(obj.getFirstSendQueItem().getMessage());
+		obj.deleteFirstSendQueItem();
+		System.out.println("deleted");
+		System.out.println(obj.getFirstSendQueItem().getMessage());
+		
+		System.out.println(obj.getAllSendQueItems().size());
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	/*	
 		System.out.println(HibernateMain.getStatusByUUID(test, true));
 		
 		System.out.println(HibernateMain.checkUUIDExists(test, false));
 
-		System.out.println(HibernateMain.checkUUIDExists(UUID.randomUUID(), false));
+		System.out.println(HibernateMain.checkUUIDExists(UUID.randomUUID(), false));    */
 		
 		/*
 		 * List progresList = HibernateMain.getProgressForMessage(0, true);
