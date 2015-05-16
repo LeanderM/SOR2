@@ -87,7 +87,7 @@ public class HibernateThreadObject {
 	// populeer de 2 nieuwe tabellen
 
 	public int addSendQueItem(UUID uuid, String message, String sender,
-			String subject, String receiver, int status) {
+			String subject, String receiver, int status, int message_id) {
 
 		checkFactoryExistsElseInit();
 		initParams();
@@ -100,6 +100,7 @@ public class HibernateThreadObject {
 			type.setSubject(subject);
 			type.setReceiver(receiver);
 			type.setStatus(status);
+			type.setMessage_id(message_id);
 
 			id = (Integer) openSession.save(type);
 			trans.commit();

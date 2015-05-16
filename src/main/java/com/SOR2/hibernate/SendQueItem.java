@@ -48,6 +48,9 @@ public class SendQueItem {
 	@Column(name = "status")
 	private int status;
 
+	@Column(name = "message_id")
+	private int message_id;
+
 	public SendQueItem() {
 
 	}
@@ -114,6 +117,14 @@ public class SendQueItem {
 
 	public void setSendque_id(int sendque_id) {
 		this.sendque_id = sendque_id;
+	}
+
+	public int getMessage_id() {
+		return message_id;
+	}
+
+	public void setMessage_id(int message_id) {
+		this.message_id = message_id;
 	}
 
 }
