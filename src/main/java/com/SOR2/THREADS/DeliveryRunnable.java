@@ -9,15 +9,20 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 import com.SOR2.hibernate.HibernateMain;
+import com.SOR2.hibernate.HibernateThreadObject;
 
 public class DeliveryRunnable implements Runnable {
 
 	private boolean running;
-
+	private HibernateThreadObject hibernate;
+	
 	@Override
 	public void run() {
 		System.out.println("starting DeliveryThread");
 		running = true;
+		// new object of HibernateThreadObject a class especialy made to make hibernate calls without 
+		// creating problems with resources between threads
+		hibernate = new HibernateThreadObject();
 		int i = 0;
 		while (running) {
 			System.out.println("DeliveryThread is running Cycle:" + i++);

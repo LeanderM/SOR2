@@ -19,6 +19,15 @@ public class Message implements Serializable {
 	private String message;
 	private Integer transactionID;
 
+	public Message(String message, Integer transactionID) {
+		this.message = message;
+		this.transactionID = transactionID;
+	}
+
+	public Message(String message) {
+		this.message = message;
+	}
+
 	@XmlElement(name = "message", required = true)
 	public String getMessage() {
 		return message;
