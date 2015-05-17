@@ -416,7 +416,7 @@ public class HibernateThreadObject {
 	 * 
 	 * @param id
 	 *            het id van de status die opgehaalt moet gaan worden
-	 * @return de status als String
+	 * @return de status als String asdf
 	 */
 	public String getStatusWithStatus_ID(int id) {
 		checkFactoryExistsElseInit();
