@@ -48,6 +48,7 @@ public class HibernateThreadObject {
 					.addAnnotatedClass(ValidationQueItem.class)
 					.addAnnotatedClass(Messages.class)
 					.addAnnotatedClass(InvallidMessage.class)
+					.addAnnotatedClass(BerichtStatus.class)
 					.addAnnotatedClass(Progress.class).buildSessionFactory();
 
 		} catch (Throwable ex) {
@@ -208,14 +209,13 @@ public class HibernateThreadObject {
 		}
 		return id;
 	}
-	
+
 	/*
 	 * voegt een progressiemoment toe aan de database dat bij een message hoord.
 	 * Het is belangrijk dat er gecontroleerd wordt of de message vallid is of
 	 * niet.
 	 */
-	public int addProgress(String uuid, String progressMsg,
-			boolean vallid) {
+	public int addProgress(String uuid, String progressMsg, boolean vallid) {
 
 		checkFactoryExistsElseInit();
 		initParams();

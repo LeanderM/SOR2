@@ -79,13 +79,15 @@ public class Testing {
 		
 		
 		*/
-		
+		/*
 		List data = obj.getAllSendQueItems();
 		
 		obj.deleteItemsFromDB(data);
 		
 		
+		*/
 		
+		System.out.println(obj.getStatusWithStatus_ID(4));
 		
 		
 		
