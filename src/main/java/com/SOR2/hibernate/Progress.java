@@ -18,8 +18,8 @@ public class Progress {
 	@Column(name = "progress_id")
 	private int status_ID;
 
-	@Column(name = "message_id")
-	private int message_id;
+	@Column(name = "uuid")
+	private String uuid;
 
 	@Column(name = "progressMessage")
 	private String progressMessage;
@@ -39,12 +39,12 @@ public class Progress {
 		this.status_ID = status_ID;
 	}
 
-	public int getMessage_id() {
-		return message_id;
+	public String getUUID() {
+		return uuid;
 	}
 
-	public void setMessage_id(int message_id) {
-		this.message_id = message_id;
+	public void setUUID(String uuid) {
+		this.uuid = uuid;
 	}
 
 	public String getProgressMessage() {

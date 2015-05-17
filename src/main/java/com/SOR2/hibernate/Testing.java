@@ -1,6 +1,7 @@
 package com.SOR2.hibernate;
 
 import java.util.UUID;
+import java.util.List;
 
 public class Testing {
 	// tsdfvsdfg
@@ -57,17 +58,17 @@ public class Testing {
 		UUID test = UUID.randomUUID();
 		
 		HibernateThreadObject obj = new HibernateThreadObject();
-		
-	/*	obj.addSendQueItem(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1);
-		obj.addSendQueItem(test, "hallo iedereen22222", "test", "test", "Belastingsdienst", 1);
+/*		
+		obj.addSendQueItem(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1, 15);
+		obj.addSendQueItem(test, "hallo iedereen22222", "test", "test", "Belastingsdienst", 1, 3);
 		obj.addValidationQueItem(test, "hallo iedereentoVAL", "test", "", "Belastingsdienst", 1);
 		obj.addValidationQueItem(test, "hallo iedereen22222toVAL", "test", "test", "Belastingsdienst", 1);
-	*/
+*/	
 		
 		
 		
 		
-		
+		/*
 		System.out.println(obj.getFirstSendQueItem().getMessage());
 		obj.deleteFirstSendQueItem();
 		System.out.println("deleted");
@@ -77,9 +78,11 @@ public class Testing {
 		
 		
 		
+		*/
 		
+		List data = obj.getAllSendQueItems();
 		
-		
+		obj.deleteItemsFromDB(data);
 		
 		
 		

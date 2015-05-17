@@ -168,8 +168,8 @@ public abstract class HibernateMain {
 	 * voegt een message toe aan de databse
 	 *
 	 */
-	public static int addMessage(UUID uuid ,String message, String sender, String subject,
-			String receiver, int status) {
+	public static int addMessage(UUID uuid, String message, String sender,
+			String subject, String receiver, int status) {
 
 		checkFactoryExistsElseInit();
 		initParams();
@@ -198,8 +198,8 @@ public abstract class HibernateMain {
 	/*
 	 * voegt een invalid message toe aan de database
 	 */
-	public static int addInvallidMessage(UUID uuid ,String message, String sender,
-			String subject, String receiver, int status) {
+	public static int addInvallidMessage(UUID uuid, String message,
+			String sender, String subject, String receiver, int status) {
 
 		checkFactoryExistsElseInit();
 		initParams();
@@ -306,7 +306,7 @@ public abstract class HibernateMain {
 	 * Het is belangrijk dat er gecontroleerd wordt of de message vallid is of
 	 * niet.
 	 */
-	public static int addProgress(int message_id, String progressMsg,
+	public static int addProgress(String uuid, String progressMsg,
 			boolean vallid) {
 
 		checkFactoryExistsElseInit();
@@ -315,7 +315,7 @@ public abstract class HibernateMain {
 			trans = openSession.beginTransaction();
 			Progress type = new Progress();
 
-			type.setMessage_id(message_id);
+			type.setUUID(uuid);
 			type.setProgressMessage(progressMsg);
 			type.setVallid(vallid);
 			id = (Integer) openSession.save(type);
@@ -950,8 +950,9 @@ public abstract class HibernateMain {
 		}
 		return data;
 	}
+
 	// test
-	
+
 	public static boolean checkMessage_idExists(int message_id, boolean vallid) {
 		checkFactoryExistsElseInit();
 		initParams();
@@ -962,7 +963,8 @@ public abstract class HibernateMain {
 				crit.add(Restrictions.eq("message_ID", message_id));
 				data = crit.list();
 			} else {
-				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				Criteria crit = openSession
+						.createCriteria(InvallidMessage.class);
 				crit.add(Restrictions.eq("invallidMessage_ID", message_id));
 				data = crit.list();
 			}
@@ -979,16 +981,18 @@ public abstract class HibernateMain {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 
-	 * @param UUID een uuid waarmee gebruikers een status kunnen ophalen
-	 * @param vallid is een boolean waarvoor wordt gekeken of het hier om een valide
-	 *        bericht gaat of een invallid bericht.          
+	 * @param UUID
+	 *            een uuid waarmee gebruikers een status kunnen ophalen
+	 * @param vallid
+	 *            is een boolean waarvoor wordt gekeken of het hier om een
+	 *            valide bericht gaat of een invallid bericht.
 	 * 
 	 * @return een lijst met messegas specifiek aan de megegeven user
-	 */	
-	public static String getStatusByUUID(UUID uuid, boolean vallid){
+	 */
+	public static String getStatusByUUID(UUID uuid, boolean vallid) {
 		checkFactoryExistsElseInit();
 		initParams();
 		String status = null;
@@ -1000,7 +1004,8 @@ public abstract class HibernateMain {
 				crit.add(Restrictions.eq("uuid", uuid.toString()));
 				initialData = crit.list();
 			} else {
-				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				Criteria crit = openSession
+						.createCriteria(InvallidMessage.class);
 				crit.add(Restrictions.eq("uuid", uuid.toString()));
 				initialData = crit.list();
 			}
@@ -1012,24 +1017,21 @@ public abstract class HibernateMain {
 		} finally {
 			openSession.close();
 		}
-		
-		if(vallid){
+
+		if (vallid) {
 			for (Object obj : initialData) {
 				Messages loop = (Messages) obj;
-				status  = getStatusWithStatus_ID(loop.getStatus());
-			}			
-		}
-		else{
+				status = getStatusWithStatus_ID(loop.getStatus());
+			}
+		} else {
 			for (Object obj : initialData) {
 				InvallidMessage loop = (InvallidMessage) obj;
-				status  = getStatusWithStatus_ID(loop.getStatus());
+				status = getStatusWithStatus_ID(loop.getStatus());
 			}
 		}
 		return status;
 	}
-	
-	
-	
+
 	public static boolean checkUUIDExists(UUID uuid, boolean vallid) {
 		checkFactoryExistsElseInit();
 		initParams();
@@ -1040,7 +1042,8 @@ public abstract class HibernateMain {
 				crit.add(Restrictions.eq("uuid", uuid.toString()));
 				data = crit.list();
 			} else {
-				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				Criteria crit = openSession
+						.createCriteria(InvallidMessage.class);
 				crit.add(Restrictions.eq("uuid", uuid.toString()));
 				data = crit.list();
 			}
@@ -1057,10 +1060,5 @@ public abstract class HibernateMain {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	
 
 }

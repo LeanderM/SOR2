@@ -46,7 +46,7 @@ public class HibernateThreadObject {
 					.addAnnotatedClass(ValidationQueItem.class)
 					.addAnnotatedClass(Messages.class)
 					.addAnnotatedClass(InvallidMessage.class)
-					.buildSessionFactory();
+					.addAnnotatedClass(Progress.class).buildSessionFactory();
 
 		} catch (Throwable ex) {
 			System.err.println("Failed to create sessionFactory object." + ex);
@@ -322,7 +322,6 @@ public class HibernateThreadObject {
 	public List getAllValidationItems() {
 		checkFactoryExistsElseInit();
 		initParams();
-		SendQueItem item = null;
 		try {
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(ValidationQueItem.class);
@@ -342,7 +341,6 @@ public class HibernateThreadObject {
 	public List getAllSendQueItems() {
 		checkFactoryExistsElseInit();
 		initParams();
-		SendQueItem item = null;
 		try {
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(SendQueItem.class);
@@ -356,6 +354,24 @@ public class HibernateThreadObject {
 			openSession.close();
 		}
 		return data;
+	}
+
+	public void deleteItemsFromDB(List toDel) {
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			for (Object obj : toDel) {
+				openSession.delete(obj);
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
 	}
 
 }
