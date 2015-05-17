@@ -1,5 +1,6 @@
 package com.SOR2.THREADS;
 
+
 import java.util.ArrayList;
 
 import com.SOR2.SOAP.DestinationHandler;
@@ -24,7 +25,7 @@ public class DeliveryRunnable implements Runnable {
 		// creating problems with resources between threads
 		hibernate = new HibernateThreadObject();
 		int i = 0;
-		while (running) {
+/*		while (running) {
 			System.out.println("DeliveryThread is running Cycle:" + i++);
 			try {
 				System.out.println("DeliveryThread going to sleep");
@@ -32,7 +33,7 @@ public class DeliveryRunnable implements Runnable {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		}*/
 	}
 
 	public boolean isRunning() {

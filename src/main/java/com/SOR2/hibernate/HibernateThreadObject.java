@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.exception.ConstraintViolationException;
 
 public class HibernateThreadObject {
 
@@ -89,7 +90,7 @@ public class HibernateThreadObject {
 	// populeer de 2 nieuwe tabellen
 
 	public int addSendQueItem(UUID uuid, String message, String sender,
-			String subject, String receiver, int status) {
+			String subject, String receiver, int status) throws ConstraintViolationException {
 
 		checkFactoryExistsElseInit();
 		initParams();
@@ -116,7 +117,7 @@ public class HibernateThreadObject {
 	}
 
 	public int addValidationQueItem(UUID uuid, String message, String sender,
-			String subject, String receiver, int status) {
+			String subject, String receiver, int status) throws ConstraintViolationException {
 
 		checkFactoryExistsElseInit();
 		initParams();
@@ -147,7 +148,7 @@ public class HibernateThreadObject {
 	 *
 	 */
 	public int addMessage(UUID uuid, String message, String sender,
-			String subject, String receiver, int status) {
+			String subject, String receiver, int status) throws ConstraintViolationException {
 
 		checkFactoryExistsElseInit();
 		initParams();
@@ -177,7 +178,7 @@ public class HibernateThreadObject {
 	 * voegt een invalid message toe aan de database
 	 */
 	public int addInvallidMessage(UUID uuid, String message, String sender,
-			String subject, String receiver, int status) {
+			String subject, String receiver, int status) throws ConstraintViolationException {
 
 		checkFactoryExistsElseInit();
 		initParams();

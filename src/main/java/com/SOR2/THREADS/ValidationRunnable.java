@@ -1,7 +1,10 @@
 package com.SOR2.THREADS;
 
+
 import java.util.List;
 import java.util.UUID;
+
+import org.hibernate.exception.ConstraintViolationException;
 
 import com.SOR2.SOAP.DocumentValidator;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
@@ -48,23 +51,28 @@ public class ValidationRunnable implements Runnable {
 		List<ValidationQueItem> queItems;
 
 		while (running) {
+			System.out.println("Starting Validation Cycle");
+
+			// hibernateMethod that gets all the messages from the
+			// validationQue the type of casting works but is maybe not the
+			// pretiest
+			queItems = (List<ValidationQueItem>) (List<?>) hibernate
+					.getAllValidationItems();
 			// Check if there is at least one message in the Que
-			if (hibernate.getFirstValidationQueItem() != null) {
-				// hibernateMethod that gets all the messages from the
-				// validationQue the type of casting works but is maybe not the
-				// pretiest
-				queItems = (List<ValidationQueItem>) (List<?>) hibernate
-						.getAllValidationItems();
+			System.out.println("Items to be validated: " + queItems.size());
+
+			if (queItems.size() > 0) {
 				// Start validating
 				validateItems(queItems);
-
 			}
 			// We sleep for 10 seconds till the next validation cycle
 			try {
-				Thread.sleep(10000);
+				System.out.println("Ending Validation Cycle");
+				Thread.sleep(30000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 		}
 	}
 
@@ -88,7 +96,8 @@ public class ValidationRunnable implements Runnable {
 					validationQueItem.getSubject());
 
 			// TODO transactionID moet ook in Message komen maar bevindt zich
-			// momenteel nog niet in validationQueItem, daarom gebruiken we een test waarde (111)
+			// momenteel nog niet in validationQueItem, daarom gebruiken we een
+			// test waarde (111)
 			message = new Message(validationQueItem.getMessage(), 111);
 
 			// a more thorough validation
@@ -102,20 +111,31 @@ public class ValidationRunnable implements Runnable {
 				// update the progress already
 				// This could also be solved if we could set the id of the
 				// Progress ourselves
-				int messageID = hibernate.addMessage(
-						UUID.fromString(validationQueItem.getUuid()),
-						message.getMessage(), documentInformation.getSender(),
-						documentInformation.getSubject(),
-						documentInformation.getReceiver(), validator.getStatusCode());
+				try {
 
-				hibernate.addSendQueItem(
-						UUID.fromString(validationQueItem.getUuid()),
-						message.getMessage(), documentInformation.getSender(),
-						documentInformation.getSubject(),
-						documentInformation.getReceiver(), validator.getStatusCode(), messageID);
+					hibernate.addMessage(
+							UUID.fromString(validationQueItem.getUuid()),
+							message.getMessage(),
+							documentInformation.getSender(),
+							documentInformation.getSubject(),
+							documentInformation.getReceiver(),
+							validator.getStatusCode());
+
+					hibernate.addSendQueItem(
+							UUID.fromString(validationQueItem.getUuid()),
+							message.getMessage(),
+							documentInformation.getSender(),
+							documentInformation.getSubject(),
+							documentInformation.getReceiver(),
+							validator.getStatusCode());
+
+				} catch (ConstraintViolationException e) {
+					e.printStackTrace();
+				}
 
 				// TODO method still needs to be made
 				// we add a new progress for this message
+
 				/*
 				 * hibernate.addProgress( validationQueItem.getUuid(),
 				 * "Message successfully validated and ready for sending",
@@ -135,13 +155,17 @@ public class ValidationRunnable implements Runnable {
 
 					// TODO we need a way to remove the message from the que
 					// after it was validated, or to set it to false
-
-					int id = hibernate.addInvallidMessage(
-							UUID.fromString(validationQueItem.getUuid()),
-							message.getMessage(),
-							documentInformation.getSender(),
-							documentInformation.getSubject(),
-							documentInformation.getReceiver(), validator.getStatusCode());
+					try {
+						hibernate.addInvallidMessage(
+								UUID.fromString(validationQueItem.getUuid()),
+								message.getMessage(),
+								documentInformation.getSender(),
+								documentInformation.getSubject(),
+								documentInformation.getReceiver(),
+								validator.getStatusCode());
+					} catch (ConstraintViolationException e) {
+						e.printStackTrace();
+					}
 					// TODO method still needs to be made
 					// TODO we want to update the status of this message
 					// we add a new progress for this message
@@ -154,6 +178,8 @@ public class ValidationRunnable implements Runnable {
 					 */
 				}
 			}
+			System.out.println("Validated: " + queItems.size() + " items");
+			hibernate.deleteItemsFromDB(queItems);
 		}
 	}
 }
