@@ -1,6 +1,5 @@
 package com.SOR2.THREADS;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -44,9 +43,7 @@ public class ValidationRunnable implements Runnable {
 	}
 
 	private void startValidating() {
-		System.out.println("start validating");
-		// boolean that tell if there are messages in the que
-		boolean messagesInQue;
+		System.out.println("Start validating");
 		// Variable that contains all the messages
 		List<ValidationQueItem> queItems;
 
@@ -55,7 +52,7 @@ public class ValidationRunnable implements Runnable {
 
 			// hibernateMethod that gets all the messages from the
 			// validationQue the type of casting works but is maybe not the
-			// pretiest
+			// prettiest
 			queItems = (List<ValidationQueItem>) (List<?>) hibernate
 					.getAllValidationItems();
 			// Check if there is at least one message in the Que
@@ -87,7 +84,7 @@ public class ValidationRunnable implements Runnable {
 
 		for (int i = 0; i < queItems.size(); i++) {
 			// an Object Array that represent one message
-			validationQueItem = queItems.get(0);
+			validationQueItem = queItems.get(i);
 			// get the message and documentInformation from the array
 			// with Objects
 			documentInformation = new DocumentInformation(
@@ -102,7 +99,7 @@ public class ValidationRunnable implements Runnable {
 
 			// a more thorough validation
 			DocumentValidator validator = new DocumentValidator(
-					documentInformation, message);
+					documentInformation, message, hibernate);
 
 			// check if valid
 			if (validator.isValid()) {
@@ -172,6 +169,7 @@ public class ValidationRunnable implements Runnable {
 
 					// TODO progress will form now on be linked to UUID this
 					// needs to be updated
+
 					/*
 					 * hibernate.addProgress( validationQueItem.getUuid(),
 					 * "Message was validated unsuccessfully, stopped", false);

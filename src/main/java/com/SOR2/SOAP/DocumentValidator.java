@@ -3,6 +3,7 @@ package com.SOR2.SOAP;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.hibernate.HibernateMain;
+import com.SOR2.hibernate.HibernateThreadObject;
 
 /**
  * De DocumentValidator kan controlleerd Document en DocumentInformation
@@ -19,6 +20,7 @@ public class DocumentValidator {
 	private Boolean valid;
 	private String errors;
 	private int statusCode;
+	HibernateThreadObject hibernate;
 
 	public int getStatusCode() {
 		return statusCode;
@@ -29,11 +31,12 @@ public class DocumentValidator {
 	}
 
 	public DocumentValidator(DocumentInformation documentInformation,
-			Message document) {
+			Message document, HibernateThreadObject hibernate) {
 		this.documentInformation = documentInformation;
 		this.message = document;
 		valid = true;
 		statusCode = 1;
+		this.hibernate = hibernate;
 
 		validate();
 	}
@@ -84,7 +87,7 @@ public class DocumentValidator {
 
 	private void invalidate(int errorCode) {
 		valid = false;
-		this.addError(HibernateMain.getStatusWithStatus_ID(errorCode));
+		this.addError(hibernate.getStatusWithStatus_ID(errorCode));
 
 		// Er is nu maar support voor één statusCode per bericht
 		if (statusCode == 1) {
