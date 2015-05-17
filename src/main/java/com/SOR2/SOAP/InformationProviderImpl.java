@@ -25,6 +25,8 @@ public class InformationProviderImpl implements InformationProvider {
 			boolean valid = false; 
 			boolean invalid = false;
 			
+			// TODO dit moet worden herzien aangezien de structuur van de db verandert is
+			// de methode moet gaan zoeken in alle 3 de tabellen
 			valid = HibernateMain.checkUUIDExists(uuid, true);
 			invalid = HibernateMain.checkUUIDExists(uuid, false);
 			

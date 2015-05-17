@@ -6,31 +6,34 @@ import com.SOR2.SOAP.DestinationHandler;
 import com.SOR2.SOAP.SoapClientSSL;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
+import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.HibernateThreadObject;
 import com.SOR2.hibernate.SendQueItem;
 
 public class DeliveryRunnable implements Runnable {
 
 	private boolean running;
+	private boolean cycle;
+	private boolean sleep;
 	private HibernateThreadObject hibernate;
+
+	public DeliveryRunnable() {
+		running = false;
+		cycle = false;
+		sleep = false;
+	}
 
 	@Override
 	public void run() {
+		checkForSleep();
 		System.out.println("starting DeliveryThread");
 		running = true;
+		setCycle(true);
 		// new object of HibernateThreadObject a class especialy made to make
 		// hibernate calls without
 		// creating problems with resources between threads
 		hibernate = new HibernateThreadObject();
-		int i = 0;
-		/*
-		 * while (running) {
-		 * System.out.println("DeliveryThread is running Cycle:" + i++); try {
-		 * System.out.println("DeliveryThread going to sleep");
-		 * Thread.sleep(5000); } catch (InterruptedException e) {
-		 * e.printStackTrace(); } }
-		 */
-		/* startDelivering(); */
+		startDelivering();
 	}
 
 	public boolean isRunning() {
@@ -53,6 +56,8 @@ public class DeliveryRunnable implements Runnable {
 		Message message;
 
 		while (running) {
+			checkForSleep();
+			setCycle(true);
 			System.out.println("Start delivery cycle");
 			queItems = (List<SendQueItem>) (List<?>) hibernate
 					.getAllSendQueItems();
@@ -63,6 +68,7 @@ public class DeliveryRunnable implements Runnable {
 			}
 			try {
 				System.out.println("Ending delivery Cycle");
+				setCycle(false);
 				Thread.sleep(30000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -110,14 +116,10 @@ public class DeliveryRunnable implements Runnable {
 					done = true;
 				} else {
 					// we add a new progress for this message
-					// TODO the que needs an id to be able to add
-					// statusUpdates
-					// TODO
-					/*
-					 * HibernateMain.addProgress(id,
-					 * "Sending was unsuccessful retrying in 15 seconds, " + (5
-					 * - i) + " retries left", true);
-					 */
+					HibernateMain.addProgress(sendQueItem.getUuid(),
+							"Sending was unsuccessful retrying in 15 seconds, "
+									+ (5 - i) + " retries left", true);
+
 					try {
 						Thread.sleep(15000);
 					} catch (InterruptedException e) {
@@ -128,21 +130,46 @@ public class DeliveryRunnable implements Runnable {
 
 			if (done) {
 				// we add a new progress for this message
-				// TODO
-				/*
-				 * HibernateMain.addProgress(id,
-				 * "Message was succesfully delivered", true);
-				 */
+				HibernateMain.addProgress(sendQueItem.getUuid(),
+						"Message was succesfully delivered", true);
+
 			} else {
 				// we add a new progress for this message
-				/*
-				 * HibernateMain .addProgress( id,
-				 * "Sending was unsuccessful after 5 tries, stopped", true);
-				 */
+				HibernateMain
+						.addProgress(
+								sendQueItem.getUuid(),
+								"Sending was unsuccessful after 5 tries, stopped",
+								true);
 			}
 		}
 		System.out.println("Delivered: " + queItems.size() + " items");
 		hibernate.deleteItemsFromDB(queItems);
+	}
+
+	private void checkForSleep() {
+		while (sleep) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean isCycle() {
+		return cycle;
+	}
+
+	public void setCycle(boolean cycle) {
+		this.cycle = cycle;
+	}
+
+	public boolean isSleep() {
+		return sleep;
+	}
+
+	public void setSleep(boolean sleep) {
+		this.sleep = sleep;
 	}
 
 }
