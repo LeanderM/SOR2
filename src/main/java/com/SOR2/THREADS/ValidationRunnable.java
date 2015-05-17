@@ -14,23 +14,26 @@ import com.SOR2.hibernate.ValidationQueItem;
 public class ValidationRunnable implements Runnable {
 
 	private boolean running;
+	private boolean cycle;
+	private boolean sleep;
 	private HibernateThreadObject hibernate;
+
+	public ValidationRunnable() {
+		running = false;
+		cycle = false;
+		sleep = false;
+	}
 
 	@Override
 	public void run() {
+		checkForSleep();
 		System.out.println("starting ValidationThread");
 		running = true;
+		cycle = true;
 		// new object of HibernateThreadObject a class especialy made to make
 		// hibernate calls without
 		// creating problems with resources between threads
 		hibernate = new HibernateThreadObject();
-		/*
-		 * int i = 0; while (running) {
-		 * System.out.println("ValidationThread is running Cycle:" + i++); try {
-		 * System.out.println("ValidationThread going to sleep");
-		 * Thread.sleep(5000); } catch (InterruptedException e) {
-		 * e.printStackTrace(); } }
-		 */
 		startValidating();
 	}
 
@@ -48,6 +51,9 @@ public class ValidationRunnable implements Runnable {
 		List<ValidationQueItem> queItems;
 
 		while (running) {
+			checkForSleep();
+
+			cycle = false;
 			System.out.println("Starting Validation Cycle");
 
 			// hibernateMethod that gets all the messages from the
@@ -62,8 +68,9 @@ public class ValidationRunnable implements Runnable {
 				// Start validating
 				validateItems(queItems);
 			}
-			// We sleep for 10 seconds till the next validation cycle
+			// We sleep seconds till the next validation cycle
 			try {
+				cycle = false;
 				System.out.println("Ending Validation Cycle");
 				Thread.sleep(30000);
 			} catch (InterruptedException e) {
@@ -130,14 +137,10 @@ public class ValidationRunnable implements Runnable {
 					e.printStackTrace();
 				}
 
-				// TODO method still needs to be made
 				// we add a new progress for this message
-
-				/*
-				 * hibernate.addProgress( validationQueItem.getUuid(),
-				 * "Message successfully validated and ready for sending",
-				 * true);
-				 */
+				hibernate.addProgress(validationQueItem.getUuid(),
+						"Message successfully validated and ready for sending",
+						true);
 
 			} else {
 				// if the message is invalid we will still keep it in
@@ -150,8 +153,6 @@ public class ValidationRunnable implements Runnable {
 						|| validator.senderExists(documentInformation
 								.getSender())) {
 
-					// TODO we need a way to remove the message from the que
-					// after it was validated, or to set it to false
 					try {
 						hibernate.addInvallidMessage(
 								UUID.fromString(validationQueItem.getUuid()),
@@ -165,19 +166,42 @@ public class ValidationRunnable implements Runnable {
 					}
 					// TODO method still needs to be made
 					// TODO we want to update the status of this message
+
 					// we add a new progress for this message
+					hibernate.addProgress(validationQueItem.getUuid(),
+							"Message was validated unsuccessfully, stopped",
+							false);
 
-					// TODO progress will form now on be linked to UUID this
-					// needs to be updated
-
-					/*
-					 * hibernate.addProgress( validationQueItem.getUuid(),
-					 * "Message was validated unsuccessfully, stopped", false);
-					 */
 				}
 			}
 			System.out.println("Validated: " + queItems.size() + " items");
 			hibernate.deleteItemsFromDB(queItems);
 		}
+	}
+
+	private void checkForSleep() {
+		while (sleep) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public boolean isCycle() {
+		return cycle;
+	}
+
+	public void setCycle(boolean cycle) {
+		this.cycle = cycle;
+	}
+
+	public boolean isSleep() {
+		return sleep;
+	}
+
+	public void setSleep(boolean sleep) {
+		this.sleep = sleep;
 	}
 }

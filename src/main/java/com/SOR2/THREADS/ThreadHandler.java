@@ -15,12 +15,7 @@ public class ThreadHandler {
 	public void startThreads() {
 		validationThread = new Thread(validationRunnable);
 		validationThread.start();
-		// Sleep zodat de console duidelijker te lezen is
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 		deliveryThread = new Thread(deliveryRunnable);
 		deliveryThread.start();
 	}
