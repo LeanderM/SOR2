@@ -19,7 +19,9 @@ public class DocumentInformation implements Serializable {
 	private String sender;
 	private String receiver;
 	private String subject;
-
+	
+	public DocumentInformation(){}
+	
 	public DocumentInformation(String sender, String receiver, String subject) {
 		this.sender = sender;
 		this.receiver = receiver;

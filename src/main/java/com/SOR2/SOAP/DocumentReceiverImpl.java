@@ -5,7 +5,7 @@ import java.util.UUID;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
-import com.SOR2.hibernate.HibernateMain;
+import com.SOR2.hibernate.HibernateThreadObject;
 
 /**
  * De DocumentReceiverImpl class is een implementatie van de SOAP interface
@@ -28,8 +28,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 	 * Verwacht de volgende objecten: documentInformation, message
 	 */
 	@Override
-	public ResponseMessage sendDocument(
-			Message message, DocumentInformation documentInformation) {
+	public ResponseMessage sendDocument(Message message,
+			DocumentInformation documentInformation) {
 
 		// We check if all the parameters are present
 		if (documentInformation == null) {
@@ -47,43 +47,51 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		// We create a UUID
 		UUID uuid = UUID.randomUUID();
 
+		HibernateThreadObject hibernate = new HibernateThreadObject();
+
 		// check if valid
 		if (validator.isValid()) {
 
 			// we add the message to the dataBase.
-			int id = HibernateMain.addMessage(uuid, message.getMessage(),
+			int id = hibernate.addMessage(uuid, message.getMessage(),
 					documentInformation.getSender(),
 					documentInformation.getSubject(),
 					documentInformation.getReceiver(), 1);
 
 			// we add a new progress for this message
-			HibernateMain.addProgress(id,
+			// TODO dit moet gaan werken met UUID
+/*			hibernate.addProgress(id,
 					"Message successfully validated and ready for sending",
-					true);
+					true);*/
 
 			// build the handler
 			DestinationHandler destination = new DestinationHandler(
 					documentInformation.getReceiver());
 
 			// Post the document
-			/*PostHandler poster = new PostHandler(documentInformation, message,
-					destination.getUrl(), destination.getNameSpace(), id);*/
+			/*
+			 * PostHandler poster = new PostHandler(documentInformation,
+			 * message, destination.getUrl(), destination.getNameSpace(), id);
+			 */
 
 			boolean done = false;
-			
-			SoapClientSSL client = new SoapClientSSL(documentInformation, message, destination.getUrl(), destination.getNameSpace(), "");
-						
+
+			SoapClientSSL client = new SoapClientSSL(documentInformation,
+					message, destination.getUrl(), destination.getNameSpace(),
+					"");
+
 			for (int i = 0; i < 5 && !done; i++) {
-				//poster.executeSOAPRequest();
+				// poster.executeSOAPRequest();
 				client.sendSoapCall();
-				//poster.successfull()
+				// poster.successfull()
 				if (client.successFull()) {
 					done = true;
 				} else {
 					// we add a new progress for this message
-					HibernateMain.addProgress(id,
+					// TODO dit moet gaan werken met UUID
+/*					hibernate.addProgress(id,
 							"Sending was unsuccessful retrying in 15 seconds, "
-									+ (5 - i) + " retries left", true);
+									+ (5 - i) + " retries left", true);*/
 					try {
 						Thread.sleep(15000);
 					} catch (InterruptedException e) {
@@ -95,16 +103,18 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 
 			if (done) {
 				// we add a new progress for this message
-				HibernateMain.addProgress(id,
-						"Message was succesfully delivered", true);
+				// TODO dit moet gaan werken met UUID
+/*				hibernate.addProgress(id, "Message was succesfully delivered",
+						true);*/
 				return new ResponseMessage(true, uuid);
 			} else {
 				// we add a new progress for this message
-				HibernateMain
+				// TODO dit moet gaan werken met UUID
+/*				hibernate
 						.addProgress(
 								id,
 								"Sending was unsuccessful after 5 tries, stopped",
-								true);
+								true);*/
 				validator
 						.addError("Sending was unsuccessful after 5 tries, stopped");
 				return new ResponseMessage(false, validator.getErrors(), uuid);
@@ -117,14 +127,15 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			// receiver
 			if (validator.receiverExists(documentInformation.getReceiver())
 					|| validator.senderExists(documentInformation.getSender())) {
-				int id = HibernateMain.addInvallidMessage(uuid,
+				int id = hibernate.addInvallidMessage(uuid,
 						message.getMessage(), documentInformation.getSender(),
 						documentInformation.getSubject(),
 						documentInformation.getReceiver(),
 						validator.getStatusCode());
 				// we add a new progress for this message
-				HibernateMain.addProgress(id,
-						"Message was validated unsuccessfully, stopped", false);
+				// TODO dit moet gaan werken met UUID
+/*				hibernate.addProgress(id,
+						"Message was validated unsuccessfully, stopped", false);*/
 			}
 			// in case the message was not valid we return all the errors
 			return new ResponseMessage(false, validator.getErrors(), uuid);
