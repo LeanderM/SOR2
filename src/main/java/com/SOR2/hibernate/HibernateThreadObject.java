@@ -208,6 +208,37 @@ public class HibernateThreadObject {
 		}
 		return id;
 	}
+	
+	/*
+	 * voegt een progressiemoment toe aan de database dat bij een message hoord.
+	 * Het is belangrijk dat er gecontroleerd wordt of de message vallid is of
+	 * niet.
+	 */
+	public int addProgress(String uuid, String progressMsg,
+			boolean vallid) {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Progress type = new Progress();
+
+			type.setUUID(uuid);
+			type.setProgressMessage(progressMsg);
+			type.setVallid(vallid);
+			id = (Integer) openSession.save(type);
+			openSession.save(type);
+
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return id;
+	}
 
 	// alle getters moet nog comments maken
 
