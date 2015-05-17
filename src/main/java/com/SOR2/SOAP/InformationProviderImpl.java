@@ -18,7 +18,7 @@ public class InformationProviderImpl implements InformationProvider {
 	public String getMessageStatus(String messageID) {
 		
 		// Regular expression to check if the String resembles the UUID format
-		if (messageID.length() > 0 && messageID.matches("[a-f0-9]{8}-[a-f0-9]{4}-4[0-9]{3}-[89ab][a-f0-9]{3}-[0-9a-f]{12}")) {
+		if (messageID.length() > 0 && messageID.matches("[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[0-9a-f]{12}")) {
 
 			UUID uuid = UUID.fromString(messageID);
 	
