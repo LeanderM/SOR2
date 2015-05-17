@@ -44,6 +44,8 @@ public class HibernateThreadObject {
 			factory = new AnnotationConfiguration().configure()
 					.addAnnotatedClass(SendQueItem.class)
 					.addAnnotatedClass(ValidationQueItem.class)
+					.addAnnotatedClass(Messages.class)
+					.addAnnotatedClass(InvallidMessage.class)
 					.buildSessionFactory();
 
 		} catch (Throwable ex) {
