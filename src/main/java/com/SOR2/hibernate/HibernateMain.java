@@ -247,6 +247,36 @@ public abstract class HibernateMain {
 		}
 	}
 
+	/**
+	 * voegt een user toe aan de databse
+	 *
+	 */
+	public static void addUserConnectData(String namespace, String url,
+			String username, String ServiceName) {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			UserConnectData type = new UserConnectData();
+
+			type.setNamespace(namespace);
+			type.setUrl(url);
+			type.setUsername(username);
+			type.setServiceName(ServiceName);
+
+			openSession.save(type);
+
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+	}
+
 	/*
 	 * voegt een progressiemoment toe aan de database dat bij een message hoord.
 	 * Het is belangrijk dat er gecontroleerd wordt of de message vallid is of
