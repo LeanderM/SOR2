@@ -20,6 +20,9 @@ public class UserConnectData {
 	@Column(name = "namespace")
 	public String namespace;
 
+	@Column(name = "ServiceName")
+	private String ServiceName;
+
 	public UserConnectData() {
 
 	}
@@ -46,5 +49,13 @@ public class UserConnectData {
 
 	public void setNamespace(String space) {
 		this.namespace = space;
+	}
+
+	public String getServiceName() {
+		return ServiceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		ServiceName = serviceName;
 	}
 }
