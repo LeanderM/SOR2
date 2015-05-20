@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
-import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.HibernateThreadObject;
 
 /**
@@ -47,10 +46,8 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 		// Check for sender and password
 		if (documentInformation.hasSender()
 				&& documentInformation.hasPassword()) {
-			// Compare sender password pair to database entries, 
+			// Compare sender password pair to database entries,
 			// if there are 0 entries returned it does not exist
-			System.out.println(hibernate.checkLogin(documentInformation.getSender(),
-					documentInformation.getPassword()).size());
 			if (hibernate.checkLogin(documentInformation.getSender(),
 					documentInformation.getPassword()).size() > 0) {
 				// Do nothing username and password are correct

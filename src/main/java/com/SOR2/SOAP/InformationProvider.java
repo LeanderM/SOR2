@@ -18,6 +18,6 @@ public interface InformationProvider {
 	 */
 
 	@WebMethod(operationName = "getMessageStatus")
-	String getMessageStatus(@WebParam(name = "messageID") String messageID);
+	String getMessageStatus(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "messageID") String messageID);
 
 }
