@@ -30,25 +30,24 @@ public class InformationProviderImpl implements InformationProvider {
 			boolean invalid = false;
 			boolean inValidation = false;
 
-			// TODO dit moet worden herzien aangezien de structuur van de db
-			// verandert is
-			// de methode moet gaan zoeken in alle 3 de tabellen
 			valid = hibernate.checkUUIDExistsInMessageOrInvallid(uuid, true);
 			invalid = hibernate.checkUUIDExistsInMessageOrInvallid(uuid, false);
 			inValidation = hibernate.checkUUIDExistsInValidationQue(uuid);
 
 			String status;
 			if (valid) {
-				System.out.println("valid message");
 				status = HibernateMain.getStatusByUUID(uuid, true);
 				if (status.length() > 0) {
 					return status;
+				} else {
+					return "Problem occured while getting status for valid message";
 				}
 			} else if (invalid) {
-				System.out.println("invalid message");
 				status = HibernateMain.getStatusByUUID(uuid, false);
 				if (status.length() > 0) {
 					return status;
+				} else {
+					return "Problem occured while getting status for invalid message";
 				}
 			} else if (inValidation) {
 				return "Message is being validated";
