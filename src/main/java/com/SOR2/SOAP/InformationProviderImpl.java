@@ -35,7 +35,7 @@ public class InformationProviderImpl implements InformationProvider {
 				// Compare sender password pair to database entries,
 				// if there are 0 entries returned it does not exist
 				if (hibernate.checkLogin(username, password).size() > 0) {
-					// Do nothing username and password are correct
+					// Do nothing username and password are correct //
 				} else {
 					return "| [Error]: No valid sender and password pair";
 				}
