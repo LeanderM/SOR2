@@ -958,14 +958,14 @@ public abstract class HibernateMain {
 	 * 
 	 * @return een lijst met messegas specifiek aan de megegeven user
 	 */
-	public static List getProgressForMessage(int message_id, boolean vallid) {
+	public static List getProgressForMessage(UUID uuid, boolean vallid) {
 		checkFactoryExistsElseInit();
 		initParams();
 		try {
 			trans = openSession.beginTransaction();
 			Criteria crit = openSession.createCriteria(Progress.class);
 			crit.add(Restrictions.eq("vallid", vallid));
-			crit.add(Restrictions.eq("message_id", message_id)).addOrder(
+			crit.add(Restrictions.eq("uuid", uuid.toString())).addOrder(
 					Order.desc("date"));
 			data = crit.list();
 
