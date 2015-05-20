@@ -1,7 +1,5 @@
 package com.SOR2.SOAP;
 
-import java.util.UUID;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -11,7 +9,7 @@ import javax.jws.WebService;
  * 	Deze webservice is bedoelt om de status van berichten op te halen doormiddel van een ID
  */
 
-@WebService
+@WebService(serviceName = "InformationProvider", targetNamespace = "https://SOAP.SOR2.com")
 public interface InformationProvider {
 
 	/*
