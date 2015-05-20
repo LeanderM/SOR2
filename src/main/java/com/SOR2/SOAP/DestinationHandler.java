@@ -9,6 +9,7 @@ public class DestinationHandler {
 
 	private String nameSpace;
 	private String url;
+	private String serviceName;
 	private boolean valid;
 
 	public DestinationHandler(String userName) {
@@ -26,6 +27,10 @@ public class DestinationHandler {
 
 		if (row.getUrl() != null) {
 			url = row.getUrl();
+		}
+
+		if (row.getServiceName() != null) {
+			setServiceName(row.getServiceName());
 		}
 
 		valid = checkIfValid();
@@ -49,7 +54,17 @@ public class DestinationHandler {
 			return false;
 		} else if (!(url.length() > 0)) {
 			return false;
+		} else if (!(serviceName.length() > 0)) {
+			return false;
 		}
 		return true;
+	}
+
+	public String getServiceName() {
+		return serviceName;
+	}
+
+	public void setServiceName(String serviceName) {
+		this.serviceName = serviceName;
 	}
 }

@@ -103,7 +103,7 @@ public class DeliveryRunnable implements Runnable {
 
 			SoapClientSSL client = new SoapClientSSL(documentInformation,
 					message, destination.getUrl(), destination.getNameSpace(),
-					"");
+					destination.getServiceName());
 
 			// for now we will use the loop for retries
 			// TODO improvement would be to keep the retries in the
