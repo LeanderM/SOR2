@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="1028.0">com.SOR2.SOAP.DocumentReceiver</node>
+    <node x="14.770833333333485" y="400.0">com.SOR2.SOAP.DocumentValidator</node>
+    <node x="0.0" y="55.0">com.SOR2.SOAP.DestinationHandler</node>
+    <node x="434.0" y="895.0">com.SOR2.SOAP.XMLObjects.ResponseMessage</node>
+    <node x="580.7222222222222" y="33.0">com.SOR2.SOAP.XMLObjects.Message</node>
+    <node x="860.0" y="895.0">com.SOR2.SOAP.InformationProvider</node>
+    <node x="860.0" y="997.0">com.SOR2.SOAP.InformationProviderImpl</node>
+    <node x="1196.6666666666665" y="903.3333333333333">com.SOR2.SOAP.HANDLERS.LoggingHandler</node>
+    <node x="689.7708333333335" y="422.0">com.SOR2.SOAP.PostHandler</node>
+    <node x="1344.7708333333335" y="499.0">com.SOR2.SOAP.SoapClientSSL</node>
+    <node x="1040.0" y="0.0">com.SOR2.SOAP.XMLObjects.DocumentInformation</node>
+    <node x="208.75" y="1263.0">com.SOR2.SOAP.DocumentReceiverImpl</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.SOR2.SOAP.InformationProviderImpl" target="com.SOR2.SOAP.InformationProvider">
+      <point x="0.0" y="-26.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.PostHandler" target="com.SOR2.SOAP.XMLObjects.Message">
+      <point x="-158.7500000000001" y="-203.0" />
+      <point x="848.5208333333334" y="370.0" />
+      <point x="764.2222222222222" y="370.0" />
+      <point x="0.0" y="137.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.SoapClientSSL" target="com.SOR2.SOAP.XMLObjects.Message">
+      <point x="-68.25" y="-126.0" />
+      <point x="1413.0208333333335" y="370.0" />
+      <point x="886.5555555555554" y="370.0" />
+      <point x="122.33333333333326" y="137.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.PostHandler" target="com.SOR2.SOAP.XMLObjects.DocumentInformation">
+      <point x="158.7499999999999" y="-203.0" />
+      <point x="1166.0208333333335" y="380.0" />
+      <point x="1232.0" y="380.0" />
+      <point x="0.0" y="170.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.SoapClientSSL" target="com.SOR2.SOAP.XMLObjects.DocumentInformation">
+      <point x="68.25" y="-126.0" />
+      <point x="1549.5208333333335" y="360.0" />
+      <point x="1360.0" y="360.0" />
+      <point x="128.0" y="170.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.DocumentValidator" target="com.SOR2.SOAP.XMLObjects.Message">
+      <point x="0.0" y="-225.0" />
+      <point x="342.2708333333335" y="370.0" />
+      <point x="641.8888888888889" y="370.0" />
+      <point x="-122.33333333333331" y="137.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.DocumentValidator" target="com.SOR2.SOAP.XMLObjects.DocumentInformation">
+      <point x="218.33333333333337" y="-225.0" />
+      <point x="560.6041666666669" y="380.0" />
+      <point x="1104.0" y="380.0" />
+      <point x="-128.0" y="170.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.DocumentReceiverImpl" target="com.SOR2.SOAP.XMLObjects.ResponseMessage">
+      <point x="103.5" y="-26.0" />
+      <point x="519.25" y="1238.0" />
+      <point x="624.5" y="1238.0" />
+      <point x="0.0" y="159.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.DocumentReceiverImpl" target="com.SOR2.SOAP.DocumentReceiver">
+      <point x="-103.5" y="-26.0" />
+      <point x="312.25" y="1238.0" />
+      <point x="207.0" y="1238.0" />
+      <point x="0.0" y="26.0" />
+    </edge>
+    <edge source="com.SOR2.SOAP.DocumentValidator" target="com.SOR2.SOAP.DestinationHandler">
+      <point x="-218.33333333333337" y="-225.0" />
+      <point x="123.93750000000011" y="380.0" />
+      <point x="155.0" y="380.0" />
+      <point x="0.0" y="115.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="1021.4999999999998" y="652.5" />
+  <SelectedNodes>
+    <node>com.SOR2.SOAP.HANDLERS.LoggingHandler</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
