@@ -16,6 +16,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 
 /**
  * Met behulp van deze facade klasse is het mogelijk om methoden aan te spreken
@@ -321,6 +322,34 @@ public abstract class HibernateMain {
 			id = (Integer) openSession.save(type);
 			openSession.save(type);
 
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return id;
+	}
+
+	public static int addValidationQueItem(UUID uuid, String message,
+			String sender, String subject, String receiver, int status)
+			throws ConstraintViolationException {
+
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			ValidationQueItem type = new ValidationQueItem();
+			type.setUuid(uuid.toString());
+			type.setMessage(message);
+			type.setSender(sender);
+			type.setSubject(subject);
+			type.setReceiver(receiver);
+			type.setStatus(status);
+
+			id = (Integer) openSession.save(type);
 			trans.commit();
 		} catch (HibernateException e) {
 			if (trans != null)

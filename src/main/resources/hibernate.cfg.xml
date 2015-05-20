@@ -9,7 +9,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://37.59.111.21:3306/SOR2</property>
         <property name="hibernate.connection.username">SOR2_dev</property>
         <property name="hibernate.connection.password">SOR2-troll_password</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.current_session_context_class">thread</property>
         <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
     </session-factory>

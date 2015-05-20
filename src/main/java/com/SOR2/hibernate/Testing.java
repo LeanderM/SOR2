@@ -58,6 +58,7 @@ public class Testing {
 		UUID test = UUID.randomUUID();
 		
 		HibernateThreadObject obj = new HibernateThreadObject();
+		System.out.println(obj.getAllSendQueItems());
 /*		
 		obj.addSendQueItem(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1, 15);
 		obj.addSendQueItem(test, "hallo iedereen22222", "test", "test", "Belastingsdienst", 1, 3);
