@@ -55,8 +55,6 @@ public abstract class HibernateMain {
 		try {
 			factory = new AnnotationConfiguration().configure()
 					.addAnnotatedClass(Account_type.class)
-					.addAnnotatedClass(ID.class)
-					.addAnnotatedClass(Message_recipients.class)
 					.addAnnotatedClass(Messages.class)
 					.addAnnotatedClass(InvallidMessage.class)
 					.addAnnotatedClass(BerichtStatus.class)
@@ -138,34 +136,6 @@ public abstract class HibernateMain {
 	}
 
 	/**
-	 * voegt een ID toe aan de databse
-	 *
-	 */
-	public static int addID(String accountType, String firstName,
-			String message, String message_recipients) {
-
-		checkFactoryExistsElseInit();
-		initParams();
-		try {
-			trans = openSession.beginTransaction();
-			ID type = new ID();
-			type.setAccountType(accountType);
-			type.setFirstName(firstName);
-			type.setMessage(message);
-			type.setMessage_recipients(message_recipients);
-			id = (Integer) openSession.save(type);
-			trans.commit();
-		} catch (HibernateException e) {
-			if (trans != null)
-				trans.rollback();
-			e.printStackTrace();
-		} finally {
-			openSession.close();
-		}
-		return id;
-	}
-
-	/**
 	 * voegt een message toe aan de databse
 	 *
 	 */
@@ -214,31 +184,6 @@ public abstract class HibernateMain {
 			type.setReceiver(receiver);
 			type.setStatus(status);
 
-			id = (Integer) openSession.save(type);
-			trans.commit();
-		} catch (HibernateException e) {
-			if (trans != null)
-				trans.rollback();
-			e.printStackTrace();
-		} finally {
-			openSession.close();
-		}
-		return id;
-	}
-
-	/**
-	 * voegt een message receipient toe aan de databse
-	 *
-	 */
-	public static int addMessageRecipient(String recId, int message_id) {
-
-		checkFactoryExistsElseInit();
-		initParams();
-		try {
-			trans = openSession.beginTransaction();
-			Message_recipients type = new Message_recipients();
-			type.setRecipient_id(recId);
-			type.setMessage_id(message_id);
 			id = (Integer) openSession.save(type);
 			trans.commit();
 		} catch (HibernateException e) {

@@ -520,8 +520,6 @@ public class HibernateThreadObject {
 			Criteria crit = openSession.createCriteria(Users.class);
 			crit.add(Restrictions.eq("username", usr));
 			crit.add(Restrictions.eq("password", pass));
-			List results = crit.list();
-
 			data = crit.list();
 			trans.commit();
 
@@ -532,7 +530,6 @@ public class HibernateThreadObject {
 		} finally {
 			openSession.close();
 		}
-
 		return data;
 	}
 

@@ -1,7 +1,7 @@
 package com.SOR2.hibernate;
 
-import java.util.UUID;
 import java.util.List;
+import java.util.UUID;
 
 public class Testing {
 	// tsdfvsdfg
@@ -56,49 +56,45 @@ public class Testing {
 		 */
 
 		UUID test = UUID.randomUUID();
-		
+
 		HibernateThreadObject obj = new HibernateThreadObject();
 		System.out.println(obj.getAllSendQueItems());
-/*		
-		obj.addSendQueItem(test, "hallo iedereen", "test", "test", "Belastingsdienst", 1, 15);
-		obj.addSendQueItem(test, "hallo iedereen22222", "test", "test", "Belastingsdienst", 1, 3);
-		obj.addValidationQueItem(test, "hallo iedereentoVAL", "test", "", "Belastingsdienst", 1);
-		obj.addValidationQueItem(test, "hallo iedereen22222toVAL", "test", "test", "Belastingsdienst", 1);
-*/	
-		
-		
-		
-		
 		/*
-		System.out.println(obj.getFirstSendQueItem().getMessage());
-		obj.deleteFirstSendQueItem();
-		System.out.println("deleted");
-		System.out.println(obj.getFirstSendQueItem().getMessage());
-		
-		System.out.println(obj.getAllSendQueItems().size());
-		
-		
-		
-		*/
-		/*
-		List data = obj.getAllSendQueItems();
-		
-		obj.deleteItemsFromDB(data);
-		
-		
-		*/
-		
-		System.out.println(obj.getStatusWithStatus_ID(4));
-		
-		
-		
-	/*	
-		System.out.println(HibernateMain.getStatusByUUID(test, true));
-		
-		System.out.println(HibernateMain.checkUUIDExists(test, false));
+		 * obj.addSendQueItem(test, "hallo iedereen", "test", "test",
+		 * "Belastingsdienst", 1, 15); obj.addSendQueItem(test,
+		 * "hallo iedereen22222", "test", "test", "Belastingsdienst", 1, 3);
+		 * obj.addValidationQueItem(test, "hallo iedereentoVAL", "test", "",
+		 * "Belastingsdienst", 1); obj.addValidationQueItem(test,
+		 * "hallo iedereen22222toVAL", "test", "test", "Belastingsdienst", 1);
+		 */
 
-		System.out.println(HibernateMain.checkUUIDExists(UUID.randomUUID(), false));    */
-		
+		/*
+		 * System.out.println(obj.getFirstSendQueItem().getMessage());
+		 * obj.deleteFirstSendQueItem(); System.out.println("deleted");
+		 * System.out.println(obj.getFirstSendQueItem().getMessage());
+		 * 
+		 * System.out.println(obj.getAllSendQueItems().size());
+		 */
+		/*
+		 * List data = obj.getAllSendQueItems();
+		 * 
+		 * obj.deleteItemsFromDB(data);
+		 */
+
+		System.out.println(obj.getStatusWithStatus_ID(4));
+
+		List dataUser = obj.checkLogin("jesse", "jesse");
+		System.out.println(dataUser.size());
+
+		/*
+		 * System.out.println(HibernateMain.getStatusByUUID(test, true));
+		 * 
+		 * System.out.println(HibernateMain.checkUUIDExists(test, false));
+		 * 
+		 * System.out.println(HibernateMain.checkUUIDExists(UUID.randomUUID(),
+		 * false));
+		 */
+
 		/*
 		 * List progresList = HibernateMain.getProgressForMessage(0, true);
 		 * 
