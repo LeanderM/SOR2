@@ -2,6 +2,7 @@ package com.SOR2.ADMIN_PAGE;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
@@ -89,7 +90,7 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 			// Messages object ophalen
 			Messages row = (Messages) data.get(i);
 			// Nieuwe String array maken
-			String[] textRow = new String[6];
+			String[] textRow = new String[7];
 			// Alle data uit de map in de String array stoppen
 			Object message_Id = row.getMessage_ID();
 
@@ -101,6 +102,7 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 			textRow[3] = HibernateMain.getStatusWithStatus_ID(row.getStatus());
 			textRow[4] = row.getReceiver();
 			textRow[5] = row.getDate();
+			textRow[6] = row.getUuid();
 			// Voeg de String array toe aan de dataList
 			dataList.add(textRow);
 		}
@@ -120,17 +122,16 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 				RepeatingView repeatingView = new RepeatingView("dataRow");
 
 				// Een loop om cellen aan de rij toe te voegen
-				for (int i = 0; i < messagesArray.length; i++) {
-					repeatingView.add(new Label(repeatingView.newChildId(),
-							messagesArray[i]));
-				}
+                for (int i = 0; i < messagesArray.length; i++) {
+                    repeatingView.add(new Label(repeatingView.newChildId(),
+                            messagesArray[i]));
+                }
 				item.add(repeatingView);
 
 				// Rij voor de progress
 				RepeatingView progressView = new RepeatingView("slidingRow");
 				// Haal de progress op
-				List progresses = HibernateMain.getProgressForMessage(
-						Integer.parseInt(messagesArray[0]), true);
+				List progresses = HibernateMain.getProgressForMessage(UUID.fromString(messagesArray[6]), true);
 				// Voeg alle progresses toe aan een String
 				String progressString;
 				for (int i = 0; i < progresses.size(); i++) {
@@ -245,7 +246,7 @@ public class BeheerschermUser extends BeheerschermSjabloon implements
 				// Rij voor de progress
 				RepeatingView progressView = new RepeatingView("slidingRow");
 				// Haal de progress op
-				List progresses = HibernateMain.getProgressForMessage(Integer.parseInt(messagesArray[0]), false);
+				List progresses = HibernateMain.getProgressForMessage(UUID.fromString(messagesArray[6]), false);
 				// Voeg alle progresses toe aan een String
 				String progressString;
 				for (int i = 0; i < progresses.size(); i++) {
