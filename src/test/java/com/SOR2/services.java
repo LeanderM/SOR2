@@ -58,7 +58,7 @@ public class services {
 
 		TestSoapClientSSL client = new TestSoapClientSSL(docInfo, messageContent,
 				"https://localhost:8443/services/documentreceiver?wsdl",
-				"soap", "DocumentReceiver");
+				"https://SOAP.SOR2.com", "DocumentReceiver");
 
 		client.sendSoapCall();
 		return client.successFull();
