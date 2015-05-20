@@ -202,7 +202,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 			// Messages object ophalen
 			InvallidMessage row = (InvallidMessage) data.get(i);
 			// Nieuwe String array maken
-			String[] textRow = new String[6];
+			String[] textRow = new String[7];
 			// Alle data uit de map in de String array stoppen
 			Object message_Id = row.getInvallidMessage_ID();
 
@@ -212,6 +212,7 @@ public class BeheerschermAdmin extends BeheerschermSjabloon implements
 			textRow[3] = HibernateMain.getStatusWithStatus_ID(row.getStatus());
 			textRow[4] = row.getReceiver();
 			textRow[5] = row.getDate();
+			textRow[6] = row.getUuid();
 			// Voeg de String array toe aan de dataList
 			dataList.add(textRow);
 		}
