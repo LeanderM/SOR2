@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.SOR2.hibernate.HibernateThreadObject;
 import com.SOR2.hibernate.InvallidMessage;
+import com.SOR2.hibernate.Messages;
 import com.SOR2.hibernate.ValidationQueItem;
 
 /*	
@@ -56,6 +57,33 @@ public class InformationProviderImpl implements InformationProvider {
 			// We check if the user has access to this message
 			boolean validAccess = false;
 			if (valid) {
+
+				List valItem = hibernate.getMessageForUUID(uuid, true);
+
+				if (!(valItem.size() > 0)) {
+					return "something went wrong retrieving status of existing valid message please try again";
+				}
+
+				Messages valMessage = (Messages) valItem.get(0);
+
+				if (valMessage.getSender() != null
+						&& valMessage.getSender().length() > 0) {
+					if (valMessage.getSender().equals(username)) {
+						validAccess = true;
+					}
+				}
+				//
+				if (valMessage.getReceiver() != null
+						&& valMessage.getReceiver().length() > 0) {
+					if (valMessage.getReceiver().equals(username)) {
+						validAccess = true;
+					}
+				}
+
+				if (!validAccess) {
+					return "You don't have access to the status of this message";
+				}
+
 				status = hibernate.getStatusByUUID(uuid, true);
 				if (status.length() > 0) {
 					return status;
