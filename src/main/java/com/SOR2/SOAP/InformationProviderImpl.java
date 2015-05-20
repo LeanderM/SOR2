@@ -77,7 +77,7 @@ public class InformationProviderImpl implements InformationProvider {
 						validAccess = true;
 					}
 				}
-
+				//
 				if (invMessage.getReceiver() != null
 						&& invMessage.getReceiver().length() > 0) {
 					if (invMessage.getReceiver().equals(username)) {
@@ -126,8 +126,8 @@ public class InformationProviderImpl implements InformationProvider {
 				if (!validAccess) {
 					return "You don't have access to the status of this message";
 
-				} 
-				
+				}
+
 				return "Message is being validated";
 			}
 
