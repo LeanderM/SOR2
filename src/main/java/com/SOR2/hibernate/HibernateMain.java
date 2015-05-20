@@ -510,7 +510,7 @@ public abstract class HibernateMain {
 	 * @param pass
 	 *            de password die ingevoerd is
 	 * @return een lijst met de gespecificeerde usr als hij zou bestaan anders
-	 *         een lege lijst
+	 *         een lege lijst test
 	 */
 	public static List checkLogin(String usr, String pass) {
 		checkFactoryExistsElseInit();
