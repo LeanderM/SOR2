@@ -16,6 +16,7 @@ public interface InformationProvider {
 	 * Met deze SOAP methode kun je de status van een message ophalen op basis
 	 * van een ID
 	 */
+
 	@WebMethod(operationName = "getMessageStatus")
 	String getMessageStatus(@WebParam(name = "messageID") String messageID);
 
