@@ -19,9 +19,9 @@
 	<wicket:extend>
 		<script type="text/javascript">
 			$(function() {
-				$("td[colspan=6]").find("p").hide();
+				$("td[colspan=7]").find("p").hide();
 				$(document).ajaxComplete(function() {
-					$("td[colspan=6]").find("p").hide();
+					$("td[colspan=7]").find("p").hide();
 				});
 				$(".messageTable").on(
 						"click",
@@ -50,10 +50,11 @@
 								<th>Validation status</th>
 								<th>receiver</th>
 								<th>date</th>
+								<th>UUID</th>
 								<tr wicket:id="rows" class="messageRow">
 									<td wicket:id="dataRow" class="messages"></td>
 									<tr class="subRow" >
-										<td colspan="6" >
+										<td colspan="7" >
 											<p wicket:id="slidingRow">test status give some input here</p>
 										</td>
 									</tr>
