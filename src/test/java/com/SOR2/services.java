@@ -17,10 +17,13 @@ public class services {
 	private MessageFactory messageFactory;
 	private SOAPMessage soapMessage;
 	private SOAPPart soapPart;
+	
+	
+	private TestSoapClientSSL soapClient;
+	
 
 	@Before
 	public void setUp() {
-
 	}
 
 	@Test
@@ -53,7 +56,7 @@ public class services {
 		messageContent.setMessage(message);
 		messageContent.setTransactionID(transactieId);
 
-		SoapClientSSL client = new SoapClientSSL(docInfo, messageContent,
+		TestSoapClientSSL client = new TestSoapClientSSL(docInfo, messageContent,
 				"https://localhost:8443/services/documentreceiver?wsdl",
 				"soap", "DocumentReceiver");
 
