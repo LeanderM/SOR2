@@ -446,8 +446,7 @@ public class HibernateThreadObject {
 		return status;
 	}
 
-	
-	public  boolean checkUUIDExistsInMessageOrInvallid(UUID uuid, boolean vallid) {
+	public boolean checkUUIDExistsInMessageOrInvallid(UUID uuid, boolean vallid) {
 		checkFactoryExistsElseInit();
 		initParams();
 		try {
@@ -475,7 +474,7 @@ public class HibernateThreadObject {
 		}
 		return false;
 	}
-	
+
 	public boolean checkUUIDExistsInValidationQue(UUID uuid) {
 		checkFactoryExistsElseInit();
 		initParams();
@@ -496,6 +495,45 @@ public class HibernateThreadObject {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 
+	 * Deze methode geeft het hele User object terug in een lijst waar ook nog
+	 * extra controle op uitgevoerd kan worden. Bijv is deze user een admin of
+	 * niet (accounttype)
+	 * 
+	 * @param usr
+	 *            de gebruikersnaam die ingevoerd is
+	 * @param pass
+	 *            de password die ingevoerd is
+	 * @return een lijst met de gespecificeerde usr als hij zou bestaan anders
+	 *         een lege lijst
+	 */
+	public List checkLogin(String usr, String pass) {
+		checkFactoryExistsElseInit();
+		initParams();
+
+		try {
+
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(Users.class);
+			crit.add(Restrictions.eq("username", usr));
+			crit.add(Restrictions.eq("password", pass));
+			List results = crit.list();
+
+			data = crit.list();
+			trans.commit();
+
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+
+		return data;
 	}
 
 }
