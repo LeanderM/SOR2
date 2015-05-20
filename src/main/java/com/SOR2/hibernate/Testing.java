@@ -84,7 +84,8 @@ public class Testing {
 		System.out.println(obj.getStatusWithStatus_ID(4));
 
 		List dataUser = obj.checkLogin("jesse", "jesse");
-		System.out.println(dataUser.size());
+		
+		System.out.println(obj.getValidationItemByUUID(UUID.fromString("")));
 
 		/*
 		 * System.out.println(HibernateMain.getStatusByUUID(test, true));

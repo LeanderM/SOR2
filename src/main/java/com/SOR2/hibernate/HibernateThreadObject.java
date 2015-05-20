@@ -583,5 +583,34 @@ public class HibernateThreadObject {
 		}
 		return status;
 	}
+	
+	public ValidationQueItem getValidationItemByUUID(UUID uuid) {
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			Criteria crit = openSession.createCriteria(ValidationQueItem.class);
+			crit.add(Restrictions.eq("uuid", uuid.toString()));
+			data = crit.list();
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		
+		if(data.size() != 0){
+			return (ValidationQueItem)data.get(0);
+		}
+		else{
+			return null;
+		}
+		
+		}	
+	
+	
+	
 
 }
