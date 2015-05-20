@@ -5,6 +5,7 @@ import java.util.UUID;
 import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
+import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.HibernateThreadObject;
 
 /**
@@ -39,18 +40,42 @@ public class DocumentReceiverImpl implements DocumentReceiver {
 			return new ResponseMessage(false,
 					"| [Error]: No 'message' found in body");
 		}
-			
+
+		// new HibernateThreadObject that will handle all our db calls
+		HibernateThreadObject hibernate = new HibernateThreadObject();
+
+		// Check for sender and password
+		if (documentInformation.hasSender()
+				&& documentInformation.hasPassword()) {
+			// Compare sender password pair to database entries, 
+			// if there are 0 entries returned it does not exist
+			System.out.println(hibernate.checkLogin(documentInformation.getSender(),
+					documentInformation.getPassword()).size());
+			if (hibernate.checkLogin(documentInformation.getSender(),
+					documentInformation.getPassword()).size() > 0) {
+				// Do nothing username and password are correct
+			} else {
+				return new ResponseMessage(false,
+						"| [Error]: No valid sender and password pair");
+			}
+		} else {
+			return new ResponseMessage(false,
+					"| [Error]: No valid sender and password pair");
+		}
+
 		// We create a UUID
 		UUID uuid = UUID.randomUUID();
 
-		HibernateThreadObject hibernate = new HibernateThreadObject();
-		
-		//TODO er moet iets aan status gedaan worden validatie levert namelijk een status op, maar dat gebeurd nog niet hier
-		hibernate.addValidationQueItem(uuid, message.getMessage(), documentInformation.getSender(), documentInformation.getSubject(), documentInformation.getReceiver(), 1);
-		
-		//TODO op dit punt in de progress is de message nog niet gevalideerd
-		hibernate.addProgress(uuid.toString(), "Message succesfully saved and is ready for validation", false);
-		
+		// Status 1000 geeft aan dat een message nog moet worden gevalideerd
+		hibernate.addValidationQueItem(uuid, message.getMessage(),
+				documentInformation.getSender(),
+				documentInformation.getSubject(),
+				documentInformation.getReceiver(), 1000);
+
+		// op dit punt in de progress is de message nog niet gevalideerd
+		hibernate.addProgress(uuid.toString(),
+				"Message succesfully saved and is ready for validation", false);
+
 		return new ResponseMessage(true, uuid);
 	}
 }

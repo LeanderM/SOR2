@@ -19,11 +19,21 @@ public class DocumentInformation implements Serializable {
 	private String sender;
 	private String receiver;
 	private String subject;
-	
-	public DocumentInformation(){}
-	
+	private String password;
+
+	public DocumentInformation() {
+	}
+
 	public DocumentInformation(String sender, String receiver, String subject) {
 		this.sender = sender;
+		this.receiver = receiver;
+		this.subject = subject;
+	}
+
+	public DocumentInformation(String sender, String password, String receiver,
+			String subject) {
+		this.sender = sender;
+		this.password = password;
 		this.receiver = receiver;
 		this.subject = subject;
 	}
@@ -55,6 +65,15 @@ public class DocumentInformation implements Serializable {
 		this.sender = sender;
 	}
 
+	@XmlElement(name = "password", required = true, nillable = false)
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public boolean hasReceiver() {
 		System.out.println(receiver);
 		if (receiver == null || receiver.length() == 0) {
@@ -72,6 +91,13 @@ public class DocumentInformation implements Serializable {
 
 	public boolean hasSender() {
 		if (sender == null || sender.length() == 0) {
+			return false;
+		}
+		return true;
+	}
+
+	public boolean hasPassword() {
+		if (password == null || password.length() == 0) {
 			return false;
 		}
 		return true;
