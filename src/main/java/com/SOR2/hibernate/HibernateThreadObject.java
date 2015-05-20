@@ -446,6 +446,36 @@ public class HibernateThreadObject {
 		return status;
 	}
 
+	
+	public  boolean checkUUIDExistsInMessageOrInvallid(UUID uuid, boolean vallid) {
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			if (vallid) {
+				Criteria crit = openSession.createCriteria(Messages.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			} else {
+				Criteria crit = openSession
+						.createCriteria(InvallidMessage.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		if (data.size() != 0) {
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean checkUUIDExistsInValidationQue(UUID uuid) {
 		checkFactoryExistsElseInit();
 		initParams();
