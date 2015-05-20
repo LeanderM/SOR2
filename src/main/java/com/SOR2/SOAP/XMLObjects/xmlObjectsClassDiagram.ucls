@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" name="com.SOR2.SOAP.XMLObjects.ResponseMessage" project="SOR2-v3" 
+    file="/SOR2-v3/src/main/java/com/SOR2/SOAP/XMLObjects/ResponseMessage.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="297" width="222" x="223" y="42"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="com.SOR2.SOAP.XMLObjects.Message" project="SOR2-v3" 
+    file="/SOR2-v3/src/main/java/com/SOR2/SOAP/XMLObjects/Message.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="261" width="171" x="485" y="42"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" name="com.SOR2.SOAP.XMLObjects.DocumentInformation" project="SOR2-v3" 
+    file="/SOR2-v3/src/main/java/com/SOR2/SOAP/XMLObjects/DocumentInformation.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="405" width="256" x="696" y="42"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true" static="true"/>    
+    <operations public="true" package="true" protected="true" private="true" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
