@@ -508,7 +508,7 @@ public class HibernateThreadObject {
 	 * @param pass
 	 *            de password die ingevoerd is
 	 * @return een lijst met de gespecificeerde usr als hij zou bestaan anders
-	 *         een lege lijst
+	 *         een lege lijst test
 	 */
 	public List checkLogin(String usr, String pass) {
 		checkFactoryExistsElseInit();
