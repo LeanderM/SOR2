@@ -49,6 +49,7 @@ public class HibernateThreadObject {
 					.addAnnotatedClass(Messages.class)
 					.addAnnotatedClass(InvallidMessage.class)
 					.addAnnotatedClass(BerichtStatus.class)
+					.addAnnotatedClass(Users.class)
 					.addAnnotatedClass(Progress.class).buildSessionFactory();
 
 		} catch (Throwable ex) {
