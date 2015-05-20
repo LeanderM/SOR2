@@ -84,7 +84,10 @@ public class Testing {
 		System.out.println(obj.getStatusWithStatus_ID(4));
 
 		List dataUser = obj.checkLogin("jesse", "jesse");
-		
+
+		obj.addValidationQueItem(test, "hallo iedereentoVAL", "test", "",
+				"Belastingsdienst", 1);
+
 		System.out.println(obj.getValidationItemByUUID(UUID.fromString("")));
 
 		/*

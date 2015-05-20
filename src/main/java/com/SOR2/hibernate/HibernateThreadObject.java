@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -609,6 +610,44 @@ public class HibernateThreadObject {
 		}
 		
 		}	
+	
+	/**
+	 * 
+	 * @param sender
+	 *            stelt een sender voor die moet bestaan in de db
+	 * @param receiver
+	 *            stelt een receiver voor die moet bestaan in de db
+	 * @return een lijst met invallid messages afhankelijk van de uitkomst van
+	 *         de where
+	 */
+	public  List getMessageForUUID(
+			UUID uuid, boolean vallid) {
+		checkFactoryExistsElseInit();
+		initParams();
+		try {
+			trans = openSession.beginTransaction();
+			if (vallid) {
+				Criteria crit = openSession.createCriteria(Messages.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			} else {
+				Criteria crit = openSession.createCriteria(InvallidMessage.class);
+				crit.add(Restrictions.eq("uuid", uuid.toString()));
+				data = crit.list();
+			}
+			trans.commit();
+		} catch (HibernateException e) {
+			if (trans != null)
+				trans.rollback();
+			e.printStackTrace();
+		} finally {
+			openSession.close();
+		}
+		return data;
+	}	
+	
+	
+	
 	
 	
 	
