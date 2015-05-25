@@ -12,9 +12,18 @@ import com.SOR2.hibernate.ValidationQueItem;
  * De implementatie van InformationProvider
  * 	Deze webservice is bedoelt om de status van berichten op te halen doormiddel van een ID
  */
+
+/**
+ * De implementatie van InformationProvider Deze webservice is bedoelt om de
+ * status van berichten op te halen doormiddel van een ID
+ * 
+ * @author Jesse
+ * @version 1.0.0
+ *
+ */
 public class InformationProviderImpl implements InformationProvider {
 
-	/*
+	/**
 	 * Met deze SOAP methode kun je de status van een message ophalen op basis
 	 * van een ID
 	 */
