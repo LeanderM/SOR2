@@ -11,6 +11,14 @@ import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.hibernate.HibernateThreadObject;
 import com.SOR2.hibernate.ValidationQueItem;
 
+/**
+ * Runnable klasse die berichten uit de ValidationQue valideert
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
+
 public class ValidationRunnable implements Runnable {
 
 	private boolean running;
@@ -18,12 +26,20 @@ public class ValidationRunnable implements Runnable {
 	private boolean sleep;
 	private HibernateThreadObject hibernate;
 
+	/**
+	 * Constructor
+	 *
+	 */
 	public ValidationRunnable() {
 		running = false;
 		cycle = false;
 		sleep = false;
 	}
 
+	/**
+	 * Run method that gets called when starting the thread
+	 *
+	 */
 	@Override
 	public void run() {
 		checkForSleep();
@@ -37,14 +53,27 @@ public class ValidationRunnable implements Runnable {
 		startValidating();
 	}
 
+	/**
+	 * getter for running
+	 *
+	 */
 	public boolean isRunning() {
 		return running;
 	}
 
+	/**
+	 * setter for running
+	 *
+	 */
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
 
+	/**
+	 * method with the while loop, that will be looping until running is set to
+	 * false
+	 *
+	 */
 	private void startValidating() {
 		System.out.println("Start validating");
 		// Variable that contains all the messages
@@ -53,7 +82,7 @@ public class ValidationRunnable implements Runnable {
 		while (running) {
 			checkForSleep();
 
-			cycle = false;
+			cycle = true;
 			System.out.println("Starting Validation Cycle");
 
 			// hibernateMethod that gets all the messages from the
@@ -80,6 +109,10 @@ public class ValidationRunnable implements Runnable {
 		}
 	}
 
+	/**
+	 * method that validates the queItems
+	 *
+	 */
 	private void validateItems(List<ValidationQueItem> queItems) {
 
 		// Variable we use to temp store objects in
@@ -179,6 +212,10 @@ public class ValidationRunnable implements Runnable {
 		}
 	}
 
+	/**
+	 * Check if sleep is true if so then sleep
+	 *
+	 */
 	private void checkForSleep() {
 		while (sleep) {
 			try {
@@ -189,18 +226,33 @@ public class ValidationRunnable implements Runnable {
 		}
 	}
 
+	/**
+	 * returns the boolean that is set to true when the thread is in a cycle and
+	 * not sleeping
+	 */
 	public boolean isCycle() {
 		return cycle;
 	}
 
+	/**
+	 * setter for cycle
+	 * 
+	 */
 	public void setCycle(boolean cycle) {
 		this.cycle = cycle;
 	}
 
+	/**
+	 * getter for sleep
+	 */
 	public boolean isSleep() {
 		return sleep;
 	}
 
+	/**
+	 * setter for sleep
+	 * 
+	 */
 	public void setSleep(boolean sleep) {
 		this.sleep = sleep;
 	}

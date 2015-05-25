@@ -10,6 +10,15 @@ import com.SOR2.SOAP.XMLObjects.DocumentInformation;
 import com.SOR2.SOAP.XMLObjects.Message;
 import com.SOR2.SOAP.XMLObjects.ResponseMessage;
 
+/**
+ * De SOAPclient klasse kan op basis van een DocumentInformation, Message, url,
+ * namespace, serviceName een SOAP bericht opstellen en verzenden
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
+
 public class SoapClientSSL {
 
 	private URL url;
@@ -20,6 +29,9 @@ public class SoapClientSSL {
 	private Message message;
 	private boolean succesFull;
 
+	/**
+	 * Stuk code omdat we met een self-signed sertificate werken
+	 */
 	static {
 		// for localhost testing only
 		// anders werkt het verzenden met SSL selfsigned-certificaat niet lekker
@@ -37,6 +49,9 @@ public class SoapClientSSL {
 				});
 	}
 
+	/**
+	 * Constructor
+	 */
 	public SoapClientSSL(DocumentInformation documentInformation,
 			Message message, String url, String nameSpace, String serviceName) {
 
@@ -65,6 +80,9 @@ public class SoapClientSSL {
 
 	}
 
+	/**
+	 * roep de sendDocument methode aan van DocumentReceiver via SOAP
+	 */
 	public void sendSoapCall() {
 		// we call the method
 		ResponseMessage response = receiver.sendDocument(message,
@@ -78,6 +96,9 @@ public class SoapClientSSL {
 		succesFull = response.getSuccess();
 	}
 
+	/**
+	 * getter van succesfull
+	 */
 	public boolean successFull() {
 		return succesFull;
 	}

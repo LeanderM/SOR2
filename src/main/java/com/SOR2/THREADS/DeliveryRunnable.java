@@ -10,6 +10,14 @@ import com.SOR2.hibernate.HibernateMain;
 import com.SOR2.hibernate.HibernateThreadObject;
 import com.SOR2.hibernate.SendQueItem;
 
+/**
+ * Runnable klasse die berichten uit de DeliveryQue verzend
+ * 
+ * @author Jesse
+ * @version 0.1.0
+ *
+ */
+
 public class DeliveryRunnable implements Runnable {
 
 	private boolean running;
@@ -17,12 +25,20 @@ public class DeliveryRunnable implements Runnable {
 	private boolean sleep;
 	private HibernateThreadObject hibernate;
 
+	/**
+	 * Constructor
+	 *
+	 */
 	public DeliveryRunnable() {
 		running = false;
 		cycle = false;
 		sleep = false;
 	}
 
+	/**
+	 * Run method that gets called when starting the thread
+	 *
+	 */
 	@Override
 	public void run() {
 		checkForSleep();
@@ -36,14 +52,27 @@ public class DeliveryRunnable implements Runnable {
 		startDelivering();
 	}
 
+	/**
+	 * getter for running
+	 *
+	 */
 	public boolean isRunning() {
 		return running;
 	}
 
+	/**
+	 * setter for running
+	 *
+	 */
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
 
+	/**
+	 * method with the while loop, that will be looping until running is set to
+	 * false
+	 *
+	 */
 	private void startDelivering() {
 		// List with queItems
 		List<SendQueItem> queItems;
@@ -57,7 +86,7 @@ public class DeliveryRunnable implements Runnable {
 
 		while (running) {
 			checkForSleep();
-			setCycle(true);
+			cycle = true;
 			System.out.println("Start delivery cycle");
 			queItems = (List<SendQueItem>) (List<?>) hibernate
 					.getAllSendQueItems();
@@ -68,7 +97,7 @@ public class DeliveryRunnable implements Runnable {
 			}
 			try {
 				System.out.println("Ending delivery Cycle");
-				setCycle(false);
+				cycle = false;
 				Thread.sleep(30000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
@@ -76,6 +105,10 @@ public class DeliveryRunnable implements Runnable {
 		}
 	}
 
+	/**
+	 * method that delivers the queItems
+	 *
+	 */
 	private void deliverItems(List<SendQueItem> queItems) {
 
 		// Variable we use to temp store objects in
@@ -146,6 +179,10 @@ public class DeliveryRunnable implements Runnable {
 		hibernate.deleteItemsFromDB(queItems);
 	}
 
+	/**
+	 * Check if sleep is true if so then sleep
+	 *
+	 */
 	private void checkForSleep() {
 		while (sleep) {
 			try {
@@ -156,18 +193,33 @@ public class DeliveryRunnable implements Runnable {
 		}
 	}
 
+	/**
+	 * returns the boolean that is set to true when the thread is in a cycle and
+	 * not sleeping
+	 */
 	public boolean isCycle() {
 		return cycle;
 	}
 
+	/**
+	 * setter for cycle
+	 * 
+	 */
 	public void setCycle(boolean cycle) {
 		this.cycle = cycle;
 	}
 
+	/**
+	 * getter for sleep
+	 */
 	public boolean isSleep() {
 		return sleep;
 	}
 
+	/**
+	 * setter for sleep
+	 * 
+	 */
 	public void setSleep(boolean sleep) {
 		this.sleep = sleep;
 	}
