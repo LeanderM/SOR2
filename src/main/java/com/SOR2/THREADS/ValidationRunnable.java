@@ -101,7 +101,7 @@ public class ValidationRunnable implements Runnable {
 			try {
 				cycle = false;
 				System.out.println("Ending Validation Cycle");
-				Thread.sleep(30000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -207,9 +207,11 @@ public class ValidationRunnable implements Runnable {
 
 				}
 			}
-			System.out.println("Validated: " + queItems.size() + " items");
-			hibernate.deleteItemsFromDB(queItems);
+
 		}
+
+		System.out.println("Validated: " + queItems.size() + " items");
+		hibernate.deleteItemsFromDB(queItems);
 	}
 
 	/**

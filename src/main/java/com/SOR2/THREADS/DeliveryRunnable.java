@@ -98,7 +98,7 @@ public class DeliveryRunnable implements Runnable {
 			try {
 				System.out.println("Ending delivery Cycle");
 				cycle = false;
-				Thread.sleep(30000);
+				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
