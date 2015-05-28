@@ -13,5 +13,5 @@ public class AccessDenied extends WebPage {
 		add(new Label("name", getApplication().getName()));
 
 	}
-
+//ConnnflictComment2
 }
